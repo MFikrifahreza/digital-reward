@@ -1686,69 +1686,58 @@
   }
 
 function showOtpNotification(otp, phoneNumber) {
-    const existing = document.getElementById("otpNotif");
-    if (existing) {
-      existing.style.animation = "notifSlideOut 0.25s ease both";
-      setTimeout(() => existing.remove(), 250);
-    }
-
-    // Inject keyframes sekali saja
+    // Inject styles sekali saja
     if (!document.getElementById("notifStyles")) {
       const s = document.createElement("style");
       s.id = "notifStyles";
       s.textContent = `
-        @keyframes notifSlideIn {
-          from { opacity: 0; transform: translateY(-16px); }
-          to   { opacity: 1; transform: translateY(0); }
+        @keyframes notifDropIn {
+          from { opacity: 0; transform: translateY(-10px); max-height: 0; }
+          to   { opacity: 1; transform: translateY(0); max-height: 200px; }
         }
-        @keyframes notifSlideOut {
-          from { opacity: 1; transform: translateY(0); }
-          to   { opacity: 0; transform: translateY(-12px); }
+        @keyframes notifFadeOut {
+          from { opacity: 1; max-height: 200px; }
+          to   { opacity: 0; max-height: 0; }
         }
-        @keyframes notifPulse {
-          0%, 100% { box-shadow: 0 0 0 0 rgba(193,154,91,0.15); }
-          50%       { box-shadow: 0 0 0 5px rgba(193,154,91,0.04); }
+        @keyframes otpPulse {
+          0%, 100% { box-shadow: 0 0 0 0 rgba(193,154,91,0.2); }
+          50%       { box-shadow: 0 0 0 6px rgba(193,154,91,0.05); }
+        }
+        @keyframes notifCountdown {
+          from { width: 100%; }
+          to   { width: 0%; }
         }
         #otpNotif {
-          position: fixed;
-          top: 18px;
-          left: 50%;
-          transform-origin: top center;
-          transform: translateX(-50%);
-          z-index: 9999;
-          width: min(340px, calc(100vw - 28px));
-          background: #1a2130;
+          overflow: hidden;
+          animation: notifDropIn 0.35s cubic-bezier(0.22,1,0.36,1) both;
+          margin-bottom: 16px;
+          border-radius: 10px;
           border: 1px solid #2f3d54;
           border-top: 2px solid #c19a5b;
-          border-radius: 12px;
-          padding: 0;
-          box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.2);
-          animation: notifSlideIn 0.32s cubic-bezier(0.22,1,0.36,1) both;
-          font-family: "Plus Jakarta Sans", sans-serif;
-          overflow: hidden;
+          background: #131921;
         }
         #otpNotif .nf-topbar {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 10px 14px 8px;
-          border-bottom: 1px solid #232d3d;
+          padding: 9px 13px 8px;
+          border-bottom: 1px solid #1e2836;
         }
         #otpNotif .nf-brand {
           display: flex;
           align-items: center;
-          gap: 7px;
+          gap: 6px;
         }
         #otpNotif .nf-dot {
           width: 6px;
           height: 6px;
           border-radius: 50%;
           background: #c19a5b;
-          animation: notifPulse 2s ease infinite;
+          animation: otpPulse 2s ease infinite;
         }
         #otpNotif .nf-brand-name {
-          color: #8d9ab0;
-          font-size: 10px;
+          color: #7a8699;
+          font-size: 9.5px;
           font-weight: 700;
           letter-spacing: 0.9px;
           text-transform: uppercase;
@@ -1756,44 +1745,40 @@ function showOtpNotification(otp, phoneNumber) {
         #otpNotif .nf-meta {
           display: flex;
           align-items: center;
-          gap: 8px;
+          gap: 7px;
         }
         #otpNotif .nf-time {
-          color: #4e5a6a;
-          font-size: 9.5px;
+          color: #445060;
+          font-size: 9px;
         }
         #otpNotif .nf-close {
-          width: 22px;
-          height: 22px;
+          width: 20px;
+          height: 20px;
           display: flex;
           align-items: center;
           justify-content: center;
           background: transparent;
           border: none;
-          border-radius: 5px;
-          color: #4e5a6a;
-          font-size: 13px;
+          border-radius: 4px;
+          color: #445060;
+          font-size: 12px;
           cursor: pointer;
-          transition: background 0.15s ease, color 0.15s ease;
-          line-height: 1;
+          transition: background 0.15s, color 0.15s;
           padding: 0;
           flex-shrink: 0;
         }
-        #otpNotif .nf-close:hover {
-          background: #2c3444;
-          color: #a0abbe;
-        }
+        #otpNotif .nf-close:hover { background: #1e2836; color: #8a9ab0; }
         #otpNotif .nf-body {
-          padding: 13px 14px 14px;
+          padding: 11px 13px 13px;
         }
         #otpNotif .nf-label {
-          color: #7c8798;
-          font-size: 11.5px;
+          color: #6b7688;
+          font-size: 11px;
+          margin-bottom: 9px;
           line-height: 1.5;
-          margin-bottom: 10px;
         }
         #otpNotif .nf-label strong {
-          color: #b8c0cc;
+          color: #9aa5b7;
           font-weight: 600;
         }
         #otpNotif .nf-otp-wrap {
@@ -1801,29 +1786,29 @@ function showOtpNotification(otp, phoneNumber) {
           align-items: center;
           justify-content: space-between;
           gap: 10px;
-          background: #131921;
-          border: 1px solid #273040;
-          border-radius: 8px;
-          padding: 10px 13px;
-          margin-bottom: 10px;
+          background: #0f141c;
+          border: 1px solid #1e2836;
+          border-radius: 7px;
+          padding: 9px 12px;
+          margin-bottom: 9px;
         }
         #otpNotif .nf-otp-code {
           font-family: "IBM Plex Mono", monospace;
-          font-size: 26px;
+          font-size: 24px;
           font-weight: 600;
           letter-spacing: 5px;
           color: #e8ecf1;
           line-height: 1;
         }
         #otpNotif .nf-otp-badge {
-          font-size: 9px;
+          font-size: 8.5px;
           font-weight: 700;
-          letter-spacing: 0.6px;
+          letter-spacing: 0.5px;
           color: #8d7957;
           background: #2a2418;
           border: 1px solid #3d3423;
           border-radius: 4px;
-          padding: 3px 8px;
+          padding: 3px 7px;
           white-space: nowrap;
           text-transform: uppercase;
           flex-shrink: 0;
@@ -1831,40 +1816,38 @@ function showOtpNotification(otp, phoneNumber) {
         #otpNotif .nf-hint {
           display: flex;
           align-items: flex-start;
-          gap: 6px;
-          color: #4e5a6a;
-          font-size: 10.5px;
+          gap: 5px;
+          color: #445060;
+          font-size: 10px;
           line-height: 1.5;
         }
         #otpNotif .nf-hint svg {
-          width: 12px;
-          height: 12px;
+          width: 11px;
+          height: 11px;
           flex-shrink: 0;
-          margin-top: 1px;
-          color: #5a6a7e;
+          margin-top: 1.5px;
+          color: #4e6070;
         }
         #otpNotif .nf-progress {
           height: 2px;
-          background: #1f2836;
+          background: #0f141c;
         }
         #otpNotif .nf-progress-bar {
           height: 100%;
           background: linear-gradient(90deg, #3d5a80, #c19a5b);
-          border-radius: 0;
           animation: notifCountdown 60s linear forwards;
-        }
-        @keyframes notifCountdown {
-          from { width: 100%; }
-          to   { width: 0%; }
         }
       `;
       document.head.appendChild(s);
     }
 
+    // Hapus notif lama jika ada
+    const existing = document.getElementById("otpNotif");
+    if (existing) existing.remove();
+
     const notif = document.createElement("div");
     notif.id = "otpNotif";
-    notif.setAttribute("role", "alert");
-    notif.setAttribute("aria-live", "assertive");
+    notif.setAttribute("role", "status");
 
     notif.innerHTML = `
       <div class="nf-topbar">
@@ -1874,20 +1857,15 @@ function showOtpNotification(otp, phoneNumber) {
         </div>
         <div class="nf-meta">
           <span class="nf-time">Baru saja</span>
-          <button class="nf-close" onclick="document.getElementById('otpNotif').remove()" aria-label="Tutup notifikasi">✕</button>
+          <button class="nf-close" aria-label="Tutup">✕</button>
         </div>
       </div>
-
       <div class="nf-body">
-        <div class="nf-label">
-          Kode verifikasi untuk <strong>${phoneNumber}</strong>
-        </div>
-
+        <div class="nf-label">Kode verifikasi untuk <strong>${phoneNumber}</strong></div>
         <div class="nf-otp-wrap">
           <div class="nf-otp-code">${otp}</div>
           <div class="nf-otp-badge">1x pakai</div>
         </div>
-
         <div class="nf-hint">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M12 3 4 6v5c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V6l-8-3Z"/>
@@ -1895,20 +1873,21 @@ function showOtpNotification(otp, phoneNumber) {
           Jangan bagikan kode ini kepada siapapun.
         </div>
       </div>
-
-      <div class="nf-progress">
-        <div class="nf-progress-bar"></div>
-      </div>
+      <div class="nf-progress"><div class="nf-progress-bar"></div></div>
     `;
 
-    document.body.appendChild(notif);
+    // Sisipkan di DALAM otpCard, sebelum form OTP
+    const otpForm = document.getElementById("otpForm");
+    otpCard.insertBefore(notif, otpForm);
 
-    // Auto hilang setelah 60 detik
+    // Tombol tutup
+    notif.querySelector(".nf-close").addEventListener("click", () => notif.remove());
+
+    // Auto hilang 60 detik
     setTimeout(() => {
-      const el = document.getElementById("otpNotif");
-      if (el) {
-        el.style.animation = "notifSlideOut 0.25s ease both";
-        setTimeout(() => el.remove(), 250);
+      if (document.getElementById("otpNotif")) {
+        notif.style.animation = "notifFadeOut 0.3s ease both";
+        setTimeout(() => notif.remove(), 300);
       }
     }, 60000);
   }

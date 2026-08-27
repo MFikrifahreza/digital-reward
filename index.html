@@ -6,52 +6,25 @@
   <meta name="theme-color" content="#171d29">
   <meta name="description" content="Simulasi edukasi phishing awareness - Computer Security">
   <title>Digital Reward — Simulasi Edukasi</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
-
   <style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
+  * { margin: 0; padding: 0; box-sizing: border-box; }
   :root {
-    --bg: #171d29;
-    --card: #1e2530;
-    --input: #171d29;
-    --border: #2c3444;
-    --border-soft: #262e3d;
-    --text: #eef1f5;
-    --text-soft: #c8ceda;
-    --muted: #8b96a8;
-    --muted-dark: #6b7688;
-    --blue: #3d5a80;
-    --blue-light: #4a6d99;
-    --gold: #c19a5b;
-    --gold-soft: #2a2418;
-    --gold-border: #3d3423;
-    --success: #6fa889;
-    --success-soft: #1f3028;
-    --danger: #b87575;
-    --radius: 12px;
+    --bg: #171d29; --card: #1e2530; --input: #171d29;
+    --border: #2c3444; --border-soft: #262e3d;
+    --text: #eef1f5; --text-soft: #c8ceda;
+    --muted: #8b96a8; --muted-dark: #6b7688;
+    --blue: #3d5a80; --blue-light: #4a6d99;
+    --gold: #c19a5b; --gold-soft: #2a2418; --gold-border: #3d3423;
+    --success: #6fa889; --success-soft: #1f3028;
+    --danger: #b87575; --radius: 12px;
   }
-
-  html {
-    scroll-behavior: smooth;
-  }
-
+  html { scroll-behavior: smooth; }
   body {
     font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
-    background:
-      radial-gradient(
-        circle at 50% -10%,
-        rgba(61, 90, 128, 0.14),
-        transparent 34%
-      ),
-      var(--bg);
+    background: radial-gradient(circle at 50% -10%, rgba(61,90,128,0.14), transparent 34%), var(--bg);
     color: var(--text);
     min-height: 100vh;
     display: flex;
@@ -60,1142 +33,254 @@
     justify-content: center;
     padding: 20px 24px;
   }
+  button, input { font: inherit; }
+  button { border: 0; }
+  .app { width: 100%; max-width: 500px; }
+  .hidden { display: none !important; }
 
-  button,
-  input {
-    font: inherit;
-  }
-
-  button {
-    border: 0;
-  }
-
-  .app {
-    width: 100%;
-    max-width: 500px;
-  }
-
-  .app.wide {
-    max-width: 1280px;
-  }
-
-  /* ================================
-     PROGRESS
-  ================================= */
-
-  .progress-wrapper {
-    width: 100%;
-    max-width: 700px;
-    margin: 0 auto 16px;
-    padding: 0 4px;
-  }
-
-  .progress {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .progress-step {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    min-width: 0;
-  }
-
+  /* PROGRESS */
+  .progress-wrapper { width: 100%; max-width: 700px; margin: 0 auto 16px; padding: 0 4px; }
+  .progress { display: flex; align-items: center; gap: 8px; }
+  .progress-step { display: flex; align-items: center; gap: 7px; min-width: 0; }
   .progress-number {
-    width: 28px;
-    height: 28px;
-    flex-shrink: 0;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #202837;
-    border: 1px solid var(--border);
-    color: var(--muted-dark);
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 11px;
-    font-weight: 600;
-    transition: all 0.3s ease;
+    width: 28px; height: 28px; flex-shrink: 0; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: #202837; border: 1px solid var(--border);
+    color: var(--muted-dark); font-family: "IBM Plex Mono", monospace;
+    font-size: 11px; font-weight: 600; transition: all 0.3s ease;
   }
-
   .progress-step.active .progress-number {
-    background: var(--blue);
-    border-color: var(--blue-light);
-    color: #fff;
-    box-shadow: 0 0 0 3px rgba(61, 90, 128, 0.15);
+    background: var(--blue); border-color: var(--blue-light);
+    color: #fff; box-shadow: 0 0 0 3px rgba(61,90,128,0.15);
   }
-
   .progress-step.completed .progress-number {
-    background: var(--success-soft);
-    border-color: #345643;
-    color: #8cc39f;
+    background: var(--success-soft); border-color: #345643; color: #8cc39f;
   }
+  .progress-label { font-size: 11px; color: var(--muted-dark); white-space: nowrap; transition: color 0.3s ease; }
+  .progress-step.active .progress-label { color: var(--text-soft); font-weight: 700; }
+  .progress-line { height: 1px; flex: 1; min-width: 10px; background: var(--border); transition: background 0.3s ease; }
+  .progress-line.completed { background: #45604f; }
 
-  .progress-label {
-    font-size: 11px;
-    color: var(--muted-dark);
-    white-space: nowrap;
-    transition: color 0.3s ease;
-  }
-
-  .progress-step.active .progress-label {
-    color: var(--text-soft);
-    font-weight: 700;
-  }
-
-  .progress-line {
-    height: 1px;
-    flex: 1;
-    min-width: 10px;
-    background: var(--border);
-    transition: background 0.3s ease;
-  }
-
-  .progress-line.completed {
-    background: #45604f;
-  }
-
-  /* ================================
-     CARD
-  ================================= */
-
+  /* CARD */
   .card {
     width: 100%;
-    background: rgba(30, 37, 48, 0.98);
+    background: rgba(30,37,48,0.98);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 22px;
-    box-shadow:
-      0 18px 50px rgba(0, 0, 0, 0.18),
-      0 2px 8px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 18px 50px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.08);
     animation: cardIn 0.35s ease both;
   }
-
   @keyframes cardIn {
-    from {
-      opacity: 0;
-      transform: translateY(8px);
-    }
-
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
-  .hidden {
-    display: none !important;
-  }
-
-  /* ================================
-     BADGE
-  ================================= */
-
+  /* BADGE */
   .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    background: #262e3d;
-    border: 1px solid #333d4f;
-    color: #a6b0c3;
-    font-size: 10.5px;
-    font-weight: 700;
-    letter-spacing: 0.7px;
-    padding: 5px 11px;
-    border-radius: 5px;
-    margin-bottom: 11px;
+    display: inline-flex; align-items: center; gap: 7px;
+    background: #262e3d; border: 1px solid #333d4f;
+    color: #a6b0c3; font-size: 10.5px; font-weight: 700;
+    letter-spacing: 0.7px; padding: 5px 11px;
+    border-radius: 5px; margin-bottom: 11px;
   }
+  .badge svg { width: 12px; height: 12px; color: var(--gold); }
 
-  .badge svg {
-    width: 12px;
-    height: 12px;
-    color: var(--gold);
-  }
+  h1 { color: var(--text); font-size: 19px; font-weight: 700; line-height: 1.3; letter-spacing: -0.35px; margin-bottom: 5px; }
+  .subtitle { color: #7c8798; font-size: 12.5px; line-height: 1.5; margin-bottom: 14px; }
 
-  /* ================================
-     HEADINGS
-  ================================= */
-
-  h1 {
-    color: var(--text);
-    font-size: 19px;
-    font-weight: 700;
-    line-height: 1.3;
-    letter-spacing: -0.35px;
-    margin-bottom: 5px;
-  }
-
-  .subtitle {
-    color: #7c8798;
-    font-size: 12.5px;
-    line-height: 1.5;
-    margin-bottom: 14px;
-  }
-
-  /* ================================
-     VOUCHER
-  ================================= */
-
+  /* VOUCHER */
   .voucher {
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(
-      135deg,
-      #202936 0%,
-      #1b2330 100%
-    );
-    border: 1px solid #343e50;
-    border-radius: 10px;
-    margin-bottom: 14px;
-    padding: 14px 15px 12px;
+    position: relative; overflow: hidden;
+    background: linear-gradient(135deg, #202936 0%, #1b2330 100%);
+    border: 1px solid #343e50; border-radius: 10px;
+    margin-bottom: 14px; padding: 14px 15px 12px;
   }
-
   .voucher::before {
-    content: "";
-    position: absolute;
-    top: -40px;
-    right: -35px;
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-    border: 1px solid rgba(193, 154, 91, 0.10);
-    box-shadow:
-      0 0 0 16px rgba(193, 154, 91, 0.025),
-      0 0 0 32px rgba(193, 154, 91, 0.018);
+    content: ""; position: absolute; top: -40px; right: -35px;
+    width: 130px; height: 130px; border-radius: 50%;
+    border: 1px solid rgba(193,154,91,0.10);
+    box-shadow: 0 0 0 16px rgba(193,154,91,0.025), 0 0 0 32px rgba(193,154,91,0.018);
   }
-
-  .voucher-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
-
-  .voucher-brand {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #aeb7c7;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.8px;
-  }
-
+  .voucher-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+  .voucher-brand { display: flex; align-items: center; gap: 8px; color: #aeb7c7; font-size: 10px; font-weight: 700; letter-spacing: 0.8px; }
   .voucher-brand-icon {
-    width: 26px;
-    height: 26px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--gold-soft);
-    border: 1px solid var(--gold-border);
-    border-radius: 6px;
-    color: var(--gold);
+    width: 26px; height: 26px; display: flex; align-items: center; justify-content: center;
+    background: var(--gold-soft); border: 1px solid var(--gold-border); border-radius: 6px; color: var(--gold);
   }
+  .voucher-brand-icon svg { width: 13px; height: 13px; }
+  .voucher-status { color: #8d7957; font-size: 9px; font-weight: 700; letter-spacing: 0.5px; }
+  .voucher-divider { border-top: 1px dashed #394354; margin: 0 0 10px; }
+  .amount-label { color: var(--muted-dark); font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 3px; }
+  .amount { font-family: "IBM Plex Mono", monospace; color: #e7ebf0; font-size: 25px; font-weight: 600; letter-spacing: -0.8px; line-height: 1.2; }
+  .voucher-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; padding-top: 9px; border-top: 1px solid rgba(44,52,68,0.75); }
+  .voucher-code-label { color: var(--muted-dark); font-size: 8px; letter-spacing: 0.7px; text-transform: uppercase; }
+  .voucher-code { color: #9da8ba; font-family: "IBM Plex Mono", monospace; font-size: 10.5px; margin-top: 2px; }
+  .voucher-valid { color: #707b8c; font-size: 9px; text-align: right; line-height: 1.4; }
 
-  .voucher-brand-icon svg {
-    width: 13px;
-    height: 13px;
-  }
-
-  .voucher-status {
-    color: #8d7957;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-  }
-
-  .voucher-divider {
-    border-top: 1px dashed #394354;
-    margin: 0 0 10px;
-  }
-
-  .amount-label {
-    color: var(--muted-dark);
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 3px;
-  }
-
-  .amount {
-    font-family: "IBM Plex Mono", monospace;
-    color: #e7ebf0;
-    font-size: 25px;
-    font-weight: 600;
-    letter-spacing: -0.8px;
-    line-height: 1.2;
-  }
-
-  .voucher-bottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 10px;
-    padding-top: 9px;
-    border-top: 1px solid rgba(44, 52, 68, 0.75);
-  }
-
-  .voucher-code-label {
-    color: var(--muted-dark);
-    font-size: 8px;
-    letter-spacing: 0.7px;
-    text-transform: uppercase;
-  }
-
-  .voucher-code {
-    color: #9da8ba;
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 10.5px;
-    margin-top: 2px;
-  }
-
-  .voucher-valid {
-    color: #707b8c;
-    font-size: 9px;
-    text-align: right;
-    line-height: 1.4;
-  }
-
-  /* ================================
-     FORM
-  ================================= */
-
-  .form-group {
-    margin-top: 11px;
-  }
-
-  .form-label {
-    display: block;
-    text-align: left;
-    color: #8b96a8;
-    font-size: 11.5px;
-    font-weight: 600;
-    margin-bottom: 5px;
-  }
-
-  .input-wrap {
-    position: relative;
-  }
-
+  /* FORM */
+  .form-group { margin-top: 11px; }
+  .form-label { display: block; text-align: left; color: #8b96a8; font-size: 11.5px; font-weight: 600; margin-bottom: 5px; }
+  .input-wrap { position: relative; }
   input {
-    width: 100%;
-    height: 43px;
-    padding: 0 13px;
-    background: var(--input);
-    border: 1px solid var(--border);
-    border-radius: 7px;
-    color: var(--text);
-    outline: none;
-    font-size: 13px;
-    transition:
-      border-color 0.18s ease,
-      box-shadow 0.18s ease;
+    width: 100%; height: 43px; padding: 0 13px;
+    background: var(--input); border: 1px solid var(--border);
+    border-radius: 7px; color: var(--text); outline: none; font-size: 13px;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
   }
+  input::placeholder { color: #556072; }
+  input:focus { border-color: #4a5a75; box-shadow: 0 0 0 3px rgba(74,90,117,0.08); }
+  input.input-error { border-color: var(--danger); }
+  .input-hint { text-align: left; color: var(--muted-dark); font-size: 9.5px; margin-top: 4px; }
 
-  input::placeholder {
-    color: #556072;
-  }
-
-  input:focus {
-    border-color: #4a5a75;
-    box-shadow: 0 0 0 3px rgba(74, 90, 117, 0.08);
-  }
-
-  input.input-error {
-    border-color: var(--danger);
-  }
-
-  .input-hint {
-    text-align: left;
-    color: var(--muted-dark);
-    font-size: 9.5px;
-    margin-top: 4px;
-  }
-
-  /* ================================
-     BUTTON
-  ================================= */
-
+  /* BUTTON */
   .primary-button {
-    position: relative;
-    width: 100%;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 14px;
-    background: var(--blue);
-    border: 1px solid var(--blue-light);
-    border-radius: 7px;
-    color: #eef1f5;
-    font-size: 13.5px;
-    font-weight: 700;
-    cursor: pointer;
-    transition:
-      background 0.18s ease,
-      transform 0.12s ease,
-      box-shadow 0.18s ease;
+    position: relative; width: 100%; height: 44px;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    margin-top: 14px; background: var(--blue); border: 1px solid var(--blue-light);
+    border-radius: 7px; color: #eef1f5; font-size: 13.5px; font-weight: 700; cursor: pointer;
+    transition: background 0.18s ease, transform 0.12s ease, box-shadow 0.18s ease;
   }
-
-  .primary-button:hover:not(:disabled) {
-    background: #466a94;
-    box-shadow: 0 5px 18px rgba(61, 90, 128, 0.18);
-  }
-
-  .primary-button:active:not(:disabled) {
-    transform: translateY(1px);
-  }
-
-  .primary-button:disabled {
-    background: #2c3444;
-    border-color: #2c3444;
-    color: #6b7688;
-    cursor: not-allowed;
-  }
-
+  .primary-button:hover:not(:disabled) { background: #466a94; box-shadow: 0 5px 18px rgba(61,90,128,0.18); }
+  .primary-button:active:not(:disabled) { transform: translateY(1px); }
+  .primary-button:disabled { background: #2c3444; border-color: #2c3444; color: #6b7688; cursor: not-allowed; }
   .button-spinner {
-    width: 14px;
-    height: 14px;
-    border: 2px solid rgba(255, 255, 255, 0.25);
-    border-top-color: #fff;
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
+    width: 14px; height: 14px;
+    border: 2px solid rgba(255,255,255,0.25); border-top-color: #fff;
+    border-radius: 50%; animation: spin 0.7s linear infinite;
   }
+  @keyframes spin { to { transform: rotate(360deg); } }
 
-  @keyframes spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
+  /* TIMER */
+  .timer-row { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 11px; color: #7e6a4e; font-size: 11px; font-weight: 600; }
+  .timer-row svg { width: 12px; height: 12px; }
+  .countdown { font-family: "IBM Plex Mono", monospace; color: var(--gold); font-weight: 600; }
+  .micro-footer { margin-top: 11px; text-align: center; color: #4f5969; font-size: 9px; letter-spacing: 0.45px; text-transform: uppercase; }
 
-  /* ================================
-     TIMER
-  ================================= */
+  /* LOADING */
+  .loading-card { padding: 50px 26px; text-align: center; }
+  .loading-icon { width: 52px; height: 52px; margin: 0 auto 18px; display: flex; align-items: center; justify-content: center; background: #242d3b; border: 1px solid #343e50; border-radius: 12px; }
+  .spinner { width: 25px; height: 25px; border: 2.5px solid #343e50; border-top-color: #718eae; border-radius: 50%; animation: spin 0.8s linear infinite; }
+  .loading-title { color: var(--text); font-size: 14px; font-weight: 700; margin-bottom: 5px; }
+  .loading-text { color: var(--muted); font-size: 12px; line-height: 1.5; min-height: 18px; }
+  .loading-progress { height: 3px; background: #293241; border-radius: 99px; overflow: hidden; margin-top: 20px; }
+  .loading-progress-bar { width: 0%; height: 100%; background: #5b7798; border-radius: inherit; transition: width 0.8s ease; }
 
-  .timer-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    margin-top: 11px;
-    color: #7e6a4e;
-    font-size: 11px;
-    font-weight: 600;
-  }
-
-  .timer-row svg {
-    width: 12px;
-    height: 12px;
-  }
-
-  .countdown {
-    font-family: "IBM Plex Mono", monospace;
-    color: var(--gold);
-    font-weight: 600;
-  }
-
-  .micro-footer {
-    margin-top: 11px;
-    text-align: center;
-    color: #4f5969;
-    font-size: 9px;
-    letter-spacing: 0.45px;
-    text-transform: uppercase;
-  }
-
-  /* ================================
-     LOADING
-  ================================= */
-
-  .loading-card {
-    padding: 50px 26px;
-    text-align: center;
-  }
-
-  .loading-icon {
-    width: 52px;
-    height: 52px;
-    margin: 0 auto 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #242d3b;
-    border: 1px solid #343e50;
-    border-radius: 12px;
-  }
-
-  .spinner {
-    width: 25px;
-    height: 25px;
-    border: 2.5px solid #343e50;
-    border-top-color: #718eae;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-
-  .loading-title {
-    color: var(--text);
-    font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 5px;
-  }
-
-  .loading-text {
-    color: var(--muted);
-    font-size: 12px;
-    line-height: 1.5;
-    min-height: 18px;
-  }
-
-  .loading-progress {
-    height: 3px;
-    background: #293241;
-    border-radius: 99px;
-    overflow: hidden;
-    margin-top: 20px;
-  }
-
-  .loading-progress-bar {
-    width: 0%;
-    height: 100%;
-    background: #5b7798;
-    border-radius: inherit;
-    transition: width 0.8s ease;
-  }
-
-  /* ================================
-     OTP
-  ================================= */
-
-  .otp-card {
-    text-align: center;
-  }
-
-  .otp-icon {
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 15px;
-    background: #262e3d;
-    border: 1px solid #333d4f;
-    border-radius: 9px;
-    color: #8b96a8;
-  }
-
-  .otp-icon svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  .otp-sent-info {
-    color: #7c8798;
-    font-size: 12px;
-    line-height: 1.6;
-    margin-bottom: 19px;
-  }
-
-  .otp-sent-info strong {
-    display: inline-block;
-    margin-top: 2px;
-    color: #c8ceda;
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 12.5px;
-    font-weight: 500;
-  }
-
-  .otp-label {
-    display: block;
-    color: #8b96a8;
-    font-size: 11px;
-    font-weight: 600;
-    margin-bottom: 9px;
-  }
-
-  .otp-boxes {
-    display: flex;
-    justify-content: center;
-    gap: 7px;
-  }
-
+  /* OTP */
+  .otp-card { text-align: center; }
+  .otp-icon { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; background: #262e3d; border: 1px solid #333d4f; border-radius: 9px; color: #8b96a8; }
+  .otp-icon svg { width: 20px; height: 20px; }
+  .otp-sent-info { color: #7c8798; font-size: 12px; line-height: 1.6; margin-bottom: 19px; }
+  .otp-sent-info strong { display: inline-block; margin-top: 2px; color: #c8ceda; font-family: "IBM Plex Mono", monospace; font-size: 12.5px; font-weight: 500; }
+  .otp-label { display: block; color: #8b96a8; font-size: 11px; font-weight: 600; margin-bottom: 9px; }
+  .otp-boxes { display: flex; justify-content: center; gap: 7px; }
   .otp-box {
-    width: 46px;
-    height: 50px;
-    padding: 0;
-    text-align: center;
-    background: #171d29;
-    border: 1px solid #2c3444;
-    border-radius: 7px;
-    color: var(--text);
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 20px;
-    font-weight: 600;
-    outline: none;
-    transition:
-      border-color 0.15s ease,
-      background 0.15s ease,
-      box-shadow 0.15s ease;
+    width: 46px; height: 50px; padding: 0; text-align: center;
+    background: #171d29; border: 1px solid #2c3444; border-radius: 7px;
+    color: var(--text); font-family: "IBM Plex Mono", monospace;
+    font-size: 20px; font-weight: 600; outline: none;
+    transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
   }
+  .otp-box:focus { border-color: #58779e; background: #1a2230; box-shadow: 0 0 0 3px rgba(74,109,153,0.09); }
+  .otp-box.filled { border-color: #40516a; }
+  .otp-note { color: #586375; font-size: 10px; margin-top: 9px; }
+  .resend-text { color: #606b7c; font-size: 11px; margin-top: 14px; }
+  .resend-button { color: #8b9fc0; background: transparent; font-size: 11px; font-weight: 600; cursor: pointer; padding: 0; border-bottom: 1px solid #3d5a80; }
+  .resend-button:disabled { color: #4f5969; border-bottom-color: transparent; cursor: not-allowed; }
 
-  .otp-box:focus {
-    border-color: #58779e;
-    background: #1a2230;
-    box-shadow: 0 0 0 3px rgba(74, 109, 153, 0.09);
-  }
-
-  .otp-box.filled {
-    border-color: #40516a;
-  }
-
-  .otp-note {
-    color: #586375;
-    font-size: 10px;
-    margin-top: 9px;
-  }
-
-  .resend-text {
-    color: #606b7c;
-    font-size: 11px;
-    margin-top: 14px;
-  }
-
-  .resend-button {
-    color: #8b9fc0;
-    background: transparent;
-    font-size: 11px;
-    font-weight: 600;
-    cursor: pointer;
-    padding: 0;
-    border-bottom: 1px solid #3d5a80;
-  }
-
-  .resend-button:disabled {
-    color: #4f5969;
-    border-bottom-color: transparent;
-    cursor: not-allowed;
-  }
-
-  /* ================================
-     REVEAL
-  ================================= */
-
-  .reveal-card {
-    text-align: center;
-    padding: 48px 26px;
-  }
-
+  /* REVEAL */
+  .reveal-card { text-align: center; padding: 48px 26px; }
   .reveal-icon {
-    width: 58px;
-    height: 58px;
-    margin: 0 auto 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 14px;
-    background: var(--gold-soft);
-    border: 1px solid var(--gold-border);
-    color: var(--gold);
+    width: 58px; height: 58px; margin: 0 auto 18px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 14px; background: var(--gold-soft);
+    border: 1px solid var(--gold-border); color: var(--gold);
     animation: revealPulse 1.4s ease infinite;
   }
-
-  .reveal-icon svg {
-    width: 27px;
-    height: 27px;
-  }
-
+  .reveal-icon svg { width: 27px; height: 27px; }
   @keyframes revealPulse {
-    0%,
-    100% {
-      box-shadow: 0 0 0 0 rgba(193, 154, 91, 0.08);
-    }
-
-    50% {
-      box-shadow: 0 0 0 8px rgba(193, 154, 91, 0.04);
-    }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(193,154,91,0.08); }
+    50%       { box-shadow: 0 0 0 8px rgba(193,154,91,0.04); }
   }
+  .reveal-card h2 { color: var(--text); font-size: 20px; line-height: 1.35; margin-bottom: 8px; }
+  .reveal-card p { color: var(--muted); font-size: 12px; line-height: 1.6; }
 
-  .reveal-card h2 {
-    color: var(--text);
-    font-size: 20px;
-    line-height: 1.35;
-    margin-bottom: 8px;
-  }
-
-  .reveal-card p {
-    color: var(--muted);
-    font-size: 12px;
-    line-height: 1.6;
-  }
-
-  /* =========================================================
-     EDUKASI — UKURAN TEKS DIPERBESAR
-  ========================================================= */
-
+  /* EDUKASI */
   .edu-card {
-    width: 100%;
-    background: rgba(30, 37, 48, 0.98);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
+    width: 100%; background: rgba(30,37,48,0.98);
+    border: 1px solid var(--border); border-radius: var(--radius);
     padding: 32px 36px;
-    box-shadow:
-      0 18px 50px rgba(0, 0, 0, 0.18),
-      0 2px 8px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 18px 50px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.08);
     animation: cardIn 0.35s ease both;
   }
+  .edu-header { text-align: center; margin-bottom: 28px; }
+  .edu-card h2 { color: var(--text); font-size: 28px; line-height: 1.35; margin-bottom: 13px; font-weight: 700; }
+  .edu-lead { color: #b0bac9; font-size: 16px; line-height: 1.75; max-width: 760px; margin: 0 auto; }
+  .simulation-summary { display: flex; align-items: center; gap: 14px; padding: 17px 19px; background: #202936; border: 1px solid #303a4b; border-radius: 8px; margin-bottom: 28px; }
+  .summary-text strong { display: block; color: #d3d8e0; font-size: 15px; margin-bottom: 4px; }
+  .summary-text span { color: #919cad; font-size: 14px; line-height: 1.55; }
+  .edu-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+  .section-title { color: #8b97a9; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; padding-bottom: 10px; border-bottom: 1px solid var(--border); margin-bottom: 6px; }
+  .timeline { display: flex; flex-direction: column; gap: 7px; }
+  .timeline-item { display: flex; gap: 13px; align-items: flex-start; padding: 14px 15px; background: #1b222e; border: 1px solid #293241; border-radius: 8px; }
+  .timeline-number { width: 27px; height: 27px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: #262e3d; border: 1px solid #333d4f; border-radius: 6px; color: #8290a3; font-family: "IBM Plex Mono", monospace; font-size: 11px; font-weight: 600; }
+  .timeline-content strong { display: block; color: #cfd6e0; font-size: 15px; margin-bottom: 5px; }
+  .timeline-content span { color: #98a3b3; font-size: 14px; line-height: 1.65; }
+  .indicator-grid { display: flex; flex-direction: column; gap: 7px; }
+  .indicator { display: flex; align-items: flex-start; gap: 12px; padding: 14px 15px; background: #1b222e; border: 1px solid #293241; border-radius: 8px; }
+  .indicator-icon { width: 30px; height: 30px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: #252d3a; border-radius: 6px; color: #8290a3; }
+  .indicator-icon svg { width: 14px; height: 14px; }
+  .indicator-text { color: #98a3b3; font-size: 14px; line-height: 1.65; }
+  .indicator-text strong { display: block; color: #cfd6e0; font-size: 15px; margin-bottom: 4px; }
+  .edu-bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+  .safety-box { padding: 16px; background: #202936; border: 1px solid #303a4b; border-left: 2px solid #6b8cae; border-radius: 0 8px 8px 0; }
+  .safety-title { display: flex; align-items: center; gap: 8px; color: #cbd3de; font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+  .safety-title svg { width: 15px; height: 15px; color: #7893b1; }
+  .safety-list { list-style: none; }
+  .safety-list li { position: relative; padding-left: 15px; color: #9aa5b5; font-size: 14px; line-height: 1.7; margin-top: 6px; }
+  .safety-list li::before { content: "•"; position: absolute; left: 0; color: #657d9c; }
+  .tip-box { padding: 16px; background: #171d29; border: 1px solid var(--border); color: #9aa5b5; font-size: 14px; line-height: 1.7; border-radius: 8px; display: flex; align-items: flex-start; }
+  .tip-box strong { color: #d0d6df; }
+  .edu-footer-note { text-align: center; color: #5b6677; font-size: 10px; letter-spacing: 0.4px; text-transform: uppercase; margin-top: 8px; }
 
-  .edu-header {
-    text-align: center;
-    margin-bottom: 28px;
-  }
+  /* COMPLETED */
+  .complete-card { text-align: center; padding: 52px 26px; }
+  .complete-icon { width: 60px; height: 60px; margin: 0 auto 18px; display: flex; align-items: center; justify-content: center; background: var(--success-soft); border: 1px solid #345643; border-radius: 14px; color: #86bd98; }
+  .complete-icon svg { width: 28px; height: 28px; }
+  .complete-card h2 { color: var(--text); font-size: 20px; margin-bottom: 8px; }
+  .complete-card p { color: var(--muted); font-size: 12.5px; line-height: 1.6; }
 
-  /* Judul edukasi */
-  .edu-card h2 {
-    color: var(--text);
-    font-size: 28px;
-    line-height: 1.35;
-    margin-bottom: 13px;
-    font-weight: 700;
-  }
-
-  /* Paragraf pembuka */
-  .edu-lead {
-    color: #b0bac9;
-    font-size: 16px;
-    line-height: 1.75;
-    max-width: 760px;
-    margin: 0 auto;
-  }
-
-  /* =========================================================
-     IKON TOPI WISUDA
-     Dibuat kecil agar tidak mendominasi header
-  ========================================================= */
-
-  .edu-header .edu-icon,
-  .edu-header .icon {
-    width: 36px !important;
-    height: 36px !important;
-    min-width: 36px !important;
-    min-height: 36px !important;
-    border-radius: 8px;
-  }
-
-  .edu-header .edu-icon svg,
-  .edu-header .icon svg {
-    width: 18px !important;
-    height: 18px !important;
-    max-width: 18px !important;
-    max-height: 18px !important;
-  }
-
-  /* Jika ikon topi menggunakan class lain */
-  .edu-header > svg {
-    width: 22px !important;
-    height: 22px !important;
-    max-width: 22px !important;
-    max-height: 22px !important;
-  }
-
-  /* =========================================================
-     RINGKASAN SIMULASI
-  ========================================================= */
-
-  .simulation-summary {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 17px 19px;
-    background: #202936;
-    border: 1px solid #303a4b;
-    border-radius: 8px;
-    margin-bottom: 28px;
-  }
-
-  .summary-text strong {
-    display: block;
-    color: #d3d8e0;
-    font-size: 15px;
-    margin-bottom: 4px;
-  }
-
-  .summary-text span {
-    color: #919cad;
-    font-size: 14px;
-    line-height: 1.55;
-  }
-
-  /* =========================================================
-     JUDUL SECTION
-  ========================================================= */
-
-  .section-title {
-    color: #8b97a9;
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.7px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 6px;
-  }
-
-  /* =========================================================
-     TIMELINE
-  ========================================================= */
-
-  .timeline {
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-  }
-
-  .timeline-item {
-    display: flex;
-    gap: 13px;
-    align-items: flex-start;
-    padding: 14px 15px;
-    background: #1b222e;
-    border: 1px solid #293241;
-    border-radius: 8px;
-  }
-
-  .timeline-number {
-    width: 27px;
-    height: 27px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #262e3d;
-    border: 1px solid #333d4f;
-    border-radius: 6px;
-    color: #8290a3;
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 11px;
-    font-weight: 600;
-  }
-
-  .timeline-content strong {
-    display: block;
-    color: #cfd6e0;
-    font-size: 15px;
-    margin-bottom: 5px;
-  }
-
-  .timeline-content span {
-    color: #98a3b3;
-    font-size: 14px;
-    line-height: 1.65;
-  }
-
-  /* =========================================================
-     INDICATOR
-  ========================================================= */
-
-  .indicator-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-  }
-
-  .indicator {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 14px 15px;
-    background: #1b222e;
-    border: 1px solid #293241;
-    border-radius: 8px;
-  }
-
-  .indicator-icon {
-    width: 30px;
-    height: 30px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #252d3a;
-    border-radius: 6px;
-    color: #8290a3;
-  }
-
-  .indicator-icon svg {
-    width: 14px;
-    height: 14px;
-  }
-
-  .indicator-text {
-    color: #98a3b3;
-    font-size: 14px;
-    line-height: 1.65;
-  }
-
-  .indicator-text strong {
-    display: block;
-    color: #cfd6e0;
-    font-size: 15px;
-    margin-bottom: 4px;
-  }
-
-  /* =========================================================
-     BOTTOM ROW
-  ========================================================= */
-
-  .edu-bottom {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-bottom: 20px;
-  }
-
-  /* =========================================================
-     SAFETY BOX
-  ========================================================= */
-
-  .safety-box {
-    padding: 16px;
-    background: #202936;
-    border: 1px solid #303a4b;
-    border-left: 2px solid #6b8cae;
-    border-radius: 0 8px 8px 0;
-  }
-
-  .safety-title {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #cbd3de;
-    font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 10px;
-  }
-
-  .safety-title svg {
-    width: 15px;
-    height: 15px;
-    color: #7893b1;
-  }
-
-  .safety-list {
-    list-style: none;
-  }
-
-  .safety-list li {
-    position: relative;
-    padding-left: 15px;
-    color: #9aa5b5;
-    font-size: 14px;
-    line-height: 1.7;
-    margin-top: 6px;
-  }
-
-  .safety-list li::before {
-    content: "•";
-    position: absolute;
-    left: 0;
-    color: #657d9c;
-  }
-
-  /* =========================================================
-     TIP BOX
-  ========================================================= */
-
-  .tip-box {
-    padding: 16px;
-    background: #171d29;
-    border: 1px solid var(--border);
-    color: #9aa5b5;
-    font-size: 14px;
-    line-height: 1.7;
-    border-radius: 8px;
-    display: flex;
-    align-items: flex-start;
-  }
-
-  .tip-box strong {
-    color: #d0d6df;
-  }
-
-  /* =========================================================
-     FOOTER EDUKASI
-  ========================================================= */
-
-  .edu-footer-note {
-    text-align: center;
-    color: #5b6677;
-    font-size: 10px;
-    letter-spacing: 0.4px;
-    text-transform: uppercase;
-    margin-top: 8px;
-  }
-
-  /* =========================================================
-     COMPLETED
-  ========================================================= */
-
-  .complete-card {
-    text-align: center;
-    padding: 52px 26px;
-  }
-
-  .complete-icon {
-    width: 60px;
-    height: 60px;
-    margin: 0 auto 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--success-soft);
-    border: 1px solid #345643;
-    border-radius: 14px;
-    color: #86bd98;
-  }
-
-  .complete-icon svg {
-    width: 28px;
-    height: 28px;
-  }
-
-  .complete-card h2 {
-    color: var(--text);
-    font-size: 20px;
-    margin-bottom: 8px;
-  }
-
-  .complete-card p {
-    color: var(--muted);
-    font-size: 12.5px;
-    line-height: 1.6;
-  }
-
-  /* =========================================================
-     RESPONSIVE
-  ========================================================= */
-
+  /* RESPONSIVE */
   @media (max-width: 768px) {
-    body {
-      padding: 14px 12px;
-    }
-
-    .edu-card {
-      padding: 24px 18px;
-    }
-
-    .edu-card h2 {
-      font-size: 24px;
-    }
-
-    .edu-lead {
-      font-size: 15px;
-    }
-
-    .edu-columns {
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-
-    .edu-bottom {
-      grid-template-columns: 1fr;
-    }
-
-    .timeline-content strong,
-    .indicator-text strong {
-      font-size: 14px;
-    }
-
-    .timeline-content span,
-    .indicator-text,
-    .safety-list li,
-    .tip-box {
-      font-size: 13.5px;
-    }
+    body { padding: 14px 12px; }
+    .edu-card { padding: 24px 18px; }
+    .edu-card h2 { font-size: 24px; }
+    .edu-lead { font-size: 15px; }
+    .edu-columns { grid-template-columns: 1fr; gap: 16px; }
+    .edu-bottom { grid-template-columns: 1fr; }
+    .timeline-content strong, .indicator-text strong { font-size: 14px; }
+    .timeline-content span, .indicator-text, .safety-list li, .tip-box { font-size: 13.5px; }
   }
-
   @media (max-width: 390px) {
-    .card {
-      padding: 18px 15px;
-    }
-
-    .progress-label {
-      display: none;
-    }
-
-    .progress {
-      gap: 5px;
-    }
-
-    .progress-line {
-      min-width: 5px;
-    }
-
-    .otp-boxes {
-      gap: 5px;
-    }
-
-    .otp-box {
-      width: 41px;
-      height: 46px;
-    }
-
-    .amount {
-      font-size: 22px;
-    }
-
-    .edu-card {
-      padding: 20px 15px;
-    }
-
-    .edu-card h2 {
-      font-size: 22px;
-    }
-
-    .edu-lead {
-      font-size: 14px;
-      line-height: 1.65;
-    }
-
-    .timeline-item,
-    .indicator {
-      padding: 12px;
-    }
-
-    .timeline-content strong,
-    .indicator-text strong {
-      font-size: 13.5px;
-    }
-
-    .timeline-content span,
-    .indicator-text,
-    .safety-list li,
-    .tip-box {
-      font-size: 13px;
-    }
+    .card { padding: 18px 15px; }
+    .progress-label { display: none; }
+    .progress { gap: 5px; }
+    .progress-line { min-width: 5px; }
+    .otp-boxes { gap: 5px; }
+    .otp-box { width: 41px; height: 46px; }
+    .amount { font-size: 22px; }
+    .edu-card { padding: 20px 15px; }
+    .edu-card h2 { font-size: 22px; }
+    .edu-lead { font-size: 14px; line-height: 1.65; }
+    .timeline-item, .indicator { padding: 12px; }
+    .timeline-content strong, .indicator-text strong { font-size: 13.5px; }
+    .timeline-content span, .indicator-text, .safety-list li, .tip-box { font-size: 13px; }
   }
-
-  /* =========================================================
-     REDUCED MOTION
-  ========================================================= */
-
   @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
   }
-</style>
+  </style>
 </head>
-
 <body>
 
   <div id="progressWrapperOuter" class="progress-wrapper">
@@ -1222,12 +307,10 @@
     </div>
   </div>
 
-  <!-- wrapper berubah lebar saat edu -->
   <main class="app" id="appWrapper">
 
     <!-- STEP 1 — FORM -->
     <section class="card" id="formCard">
-
       <div class="badge">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M20 12V8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v4"/>
@@ -1236,10 +319,8 @@
         </svg>
         PENAWARAN TERBATAS
       </div>
-
       <h1>Selamat, Kamu Terpilih!</h1>
       <p class="subtitle">Nomor kamu terpilih sebagai penerima voucher digital hari ini.</p>
-
       <div class="voucher">
         <div class="voucher-top">
           <div class="voucher-brand">
@@ -1263,7 +344,6 @@
           <div class="voucher-valid">Berlaku hari ini<br>1 pengguna</div>
         </div>
       </div>
-
       <form id="claimForm" novalidate>
         <div class="form-group">
           <label class="form-label" for="nama">Nama Lengkap</label>
@@ -1282,7 +362,6 @@
           <span id="submitBtnText">Klaim Sekarang</span>
         </button>
       </form>
-
       <div class="timer-row">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2" stroke-linecap="round"/>
@@ -1290,20 +369,17 @@
         <span>Berakhir dalam <span class="countdown" id="countdown">05:00</span></span>
       </div>
       <div class="micro-footer">Simulasi Edukasi • Computer Security</div>
-
     </section>
-
 
     <!-- STEP 2 — LOADING -->
     <section class="card loading-card hidden" id="loadingCard">
       <div class="loading-icon"><div class="spinner"></div></div>
       <div class="loading-title" id="loadingTitle">Memproses klaim...</div>
-      <div class="loading-text"  id="loadingText">Sedang menyiapkan verifikasi...</div>
+      <div class="loading-text" id="loadingText">Sedang menyiapkan verifikasi...</div>
       <div class="loading-progress">
         <div class="loading-progress-bar" id="loadingProgressBar"></div>
       </div>
     </section>
-
 
     <!-- STEP 3 — OTP -->
     <section class="card otp-card hidden" id="otpCard">
@@ -1345,7 +421,6 @@
       </div>
     </section>
 
-
     <!-- REVEAL -->
     <section class="card reveal-card hidden" id="revealCard">
       <div class="reveal-icon">
@@ -1359,281 +434,98 @@
       <p>Verifikasi selesai. Menyiapkan halaman berikutnya...</p>
     </section>
 
-
-  <!-- STEP 4 — EDUKASI -->
-<section class="edu-card hidden" id="eduCard">
-
-  <!-- HEADER -->
-  <div class="edu-header">
-    <div class="edu-icon">
-      
-    </div>
-
-    <h2>Simulasi Phishing Selesai</h2>
-
-    <p class="edu-lead">
-      Anda baru saja menyelesaikan simulasi <strong>phishing</strong>.
-      Voucher dan OTP yang ditampilkan merupakan bagian dari simulasi
-      dan <strong>bukan transaksi sungguhan</strong>.
-      Simulasi ini dirancang sebagai bagian dari pembelajaran
-      <strong>Computer Security</strong> untuk meningkatkan kesadaran
-      terhadap ancaman phishing.
-    </p>
-  </div>
-
-  <!-- SUMMARY BAR -->
-  <div class="simulation-summary">
-    <div class="summary-check">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-        <path d="m5 12 4 4L19 6"
-              stroke-linecap="round"
-              stroke-linejoin="round"/>
-      </svg>
-    </div>
-
-    <div class="summary-text">
-      <strong>Simulasi selesai</strong>
-      <span>
-        Respons partisipan digunakan untuk evaluasi kegiatan pembelajaran.
-      </span>
-    </div>
-  </div>
-
-  <!-- 2 KOLOM UTAMA -->
-  <div class="edu-columns">
-
-    <!-- KIRI: TAHAPAN SIMULASI -->
-    <div class="edu-col">
-
-      <div class="section-title">
-        Tahapan yang Diamati
+    <!-- STEP 4 — EDUKASI -->
+    <section class="edu-card hidden" id="eduCard">
+      <div class="edu-header">
+        <h2>Simulasi Phishing Selesai</h2>
+        <p class="edu-lead">
+          Anda baru saja menyelesaikan simulasi <strong>phishing</strong>.
+          Voucher dan OTP yang ditampilkan merupakan bagian dari simulasi
+          dan <strong>bukan transaksi sungguhan</strong>.
+          Simulasi ini dirancang sebagai bagian dari pembelajaran
+          <strong>Computer Security</strong> untuk meningkatkan kesadaran
+          terhadap ancaman phishing.
+        </p>
       </div>
-
-      <div class="timeline">
-
-        <div class="timeline-item">
-          <div class="timeline-number">01</div>
-
-          <div class="timeline-content">
-            <strong>Iming-iming hadiah</strong>
-            <span>
-              Partisipan diberikan tawaran voucher yang menarik
-              sebagai pemicu perhatian.
-            </span>
-          </div>
+      <div class="simulation-summary">
+        <div class="summary-check">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="m5 12 4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </div>
-
-        <div class="timeline-item">
-          <div class="timeline-number">02</div>
-
-          <div class="timeline-content">
-            <strong>Tekanan waktu</strong>
-            <span>
-              Batas waktu digunakan untuk menciptakan rasa urgensi
-              dan mendorong keputusan terburu-buru.
-            </span>
-          </div>
+        <div class="summary-text">
+          <strong>Simulasi selesai</strong>
+          <span>Respons partisipan digunakan untuk evaluasi kegiatan pembelajaran.</span>
         </div>
-
-        <div class="timeline-item">
-          <div class="timeline-number">03</div>
-
-          <div class="timeline-content">
-            <strong>Permintaan data</strong>
-            <span>
-              Nama dan nomor HP diminta sebelum proses verifikasi selesai.
-            </span>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-number">04</div>
-
-          <div class="timeline-content">
-            <strong>Permintaan OTP</strong>
-            <span>
-              Partisipan diarahkan untuk memasukkan kode verifikasi (OTP).
-            </span>
-          </div>
-        </div>
-
       </div>
-    </div>
-
-    <!-- KANAN: INDIKATOR PHISHING -->
-    <div class="edu-col">
-
-      <div class="section-title">
-        Indikator Phishing yang Ditemui
+      <div class="edu-columns">
+        <div class="edu-col">
+          <div class="section-title">Tahapan yang Diamati</div>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-number">01</div>
+              <div class="timeline-content"><strong>Iming-iming hadiah</strong><span>Partisipan diberikan tawaran voucher yang menarik sebagai pemicu perhatian.</span></div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-number">02</div>
+              <div class="timeline-content"><strong>Tekanan waktu</strong><span>Batas waktu digunakan untuk menciptakan rasa urgensi dan mendorong keputusan terburu-buru.</span></div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-number">03</div>
+              <div class="timeline-content"><strong>Permintaan data</strong><span>Nama dan nomor HP diminta sebelum proses verifikasi selesai.</span></div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-number">04</div>
+              <div class="timeline-content"><strong>Permintaan OTP</strong><span>Partisipan diarahkan untuk memasukkan kode verifikasi (OTP).</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="edu-col">
+          <div class="section-title">Indikator Phishing yang Ditemui</div>
+          <div class="indicator-grid">
+            <div class="indicator">
+              <div class="indicator-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18"/><path d="M5 7h14M5 17h14"/></svg></div>
+              <div class="indicator-text"><strong>Hadiah tidak terduga</strong>Tawaran hadiah yang tidak terduga dan tidak memiliki konteks yang jelas.</div>
+            </div>
+            <div class="indicator">
+              <div class="indicator-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round"/></svg></div>
+              <div class="indicator-text"><strong>Urgensi</strong>Batas waktu digunakan untuk menciptakan tekanan agar pengguna segera mengambil keputusan.</div>
+            </div>
+            <div class="indicator">
+              <div class="indicator-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3"/><path d="M5 20c.7-3.4 3-5 7-5s6.3 1.6 7 5"/></svg></div>
+              <div class="indicator-text"><strong>Permintaan data</strong>Data identitas diminta sebelum tujuan dan sumber permintaan dapat diverifikasi.</div>
+            </div>
+            <div class="indicator">
+              <div class="indicator-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+              <div class="indicator-text"><strong>Permintaan OTP</strong>OTP merupakan informasi rahasia yang tidak boleh dibagikan kepada pihak lain.</div>
+            </div>
+            <div class="indicator">
+              <div class="indicator-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 3.5 5.6 3.5 9s-1 6.4-3.5 9"/></svg></div>
+              <div class="indicator-text"><strong>Sumber tidak terverifikasi</strong>Tampilan yang meyakinkan tidak menjamin bahwa sumber tersebut resmi.</div>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <div class="indicator-grid">
-
-        <div class="indicator">
-          <div class="indicator-icon">
-            <svg viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="1.8">
-              <path d="M12 3v18"/>
-              <path d="M5 7h14M5 17h14"/>
-            </svg>
+      <div class="edu-bottom">
+        <div class="safety-box">
+          <div class="safety-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 4 6v5c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V6l-8-3Z"/><path d="m9 12 2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Langkah Pencegahan
           </div>
-
-          <div class="indicator-text">
-            <strong>Hadiah tidak terduga</strong>
-            Tawaran hadiah yang tidak terduga dan tidak memiliki
-            konteks yang jelas.
-          </div>
+          <ul class="safety-list">
+            <li>Periksa alamat situs dan sumber informasi sebelum memasukkan data.</li>
+            <li>Jangan mengambil keputusan terburu-buru karena tekanan waktu atau iming-iming hadiah.</li>
+            <li>Jangan pernah membagikan kode OTP kepada siapa pun.</li>
+            <li>Lakukan verifikasi melalui aplikasi, situs, atau kanal resmi.</li>
+          </ul>
         </div>
-
-        <div class="indicator">
-          <div class="indicator-icon">
-            <svg viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="1.8">
-              <circle cx="12" cy="12" r="9"/>
-              <path d="M12 7v5l3 2" stroke-linecap="round"/>
-            </svg>
-          </div>
-
-          <div class="indicator-text">
-            <strong>Urgensi</strong>
-            Batas waktu digunakan untuk menciptakan tekanan
-            agar pengguna segera mengambil keputusan.
-          </div>
+        <div class="tip-box">
+          <div><strong>Penting:</strong> OTP merupakan informasi rahasia. Jangan memasukkan atau membagikan kode OTP pada situs atau pihak lain yang tidak dapat diverifikasi.</div>
         </div>
-
-        <div class="indicator">
-          <div class="indicator-icon">
-            <svg viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="1.8">
-              <circle cx="12" cy="8" r="3"/>
-              <path d="M5 20c.7-3.4 3-5 7-5s6.3 1.6 7 5"/>
-            </svg>
-          </div>
-
-          <div class="indicator-text">
-            <strong>Permintaan data</strong>
-            Data identitas diminta sebelum tujuan dan sumber
-            permintaan dapat diverifikasi.
-          </div>
-        </div>
-
-        <div class="indicator">
-          <div class="indicator-icon">
-            <svg viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="1.8">
-              <rect x="5" y="11" width="14" height="10" rx="2"/>
-              <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
-            </svg>
-          </div>
-
-          <div class="indicator-text">
-            <strong>Permintaan OTP</strong>
-            OTP merupakan informasi rahasia yang tidak boleh
-            dibagikan kepada pihak lain.
-          </div>
-        </div>
-
-        <div class="indicator">
-          <div class="indicator-icon">
-            <svg viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="1.8">
-              <circle cx="12" cy="12" r="9"/>
-              <path d="M3 12h18"/>
-              <path d="M12 3c2.5 2.6 3.5 5.6 3.5 9s-1 6.4-3.5 9"/>
-            </svg>
-          </div>
-
-          <div class="indicator-text">
-            <strong>Sumber tidak terverifikasi</strong>
-            Tampilan yang meyakinkan tidak menjamin bahwa
-            sumber tersebut resmi.
-          </div>
-        </div>
-
       </div>
-    </div>
-
-  </div>
-
-  <!-- BOTTOM -->
-  <div class="edu-bottom">
-
-    <!-- LANGKAH PENCEGAHAN -->
-    <div class="safety-box">
-
-      <div class="safety-title">
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2">
-          <path d="M12 3 4 6v5c0 5 3.4 8.4 8 10
-                   4.6-1.6 8-5 8-10V6l-8-3Z"/>
-          <path d="m9 12 2 2 4-4"
-                stroke-linecap="round"
-                stroke-linejoin="round"/>
-        </svg>
-
-        Langkah Pencegahan
-      </div>
-
-      <ul class="safety-list">
-        <li>
-          Periksa alamat situs dan sumber informasi
-          sebelum memasukkan data.
-        </li>
-
-        <li>
-          Jangan mengambil keputusan terburu-buru karena
-          tekanan waktu atau iming-iming hadiah.
-        </li>
-
-        <li>
-          Jangan pernah membagikan kode OTP kepada siapa pun.
-        </li>
-
-        <li>
-          Lakukan verifikasi melalui aplikasi, situs,
-          atau kanal resmi.
-        </li>
-      </ul>
-
-    </div>
-
-    <!-- TIP -->
-    <div class="tip-box">
-      <div>
-        <strong>Penting:</strong>
-        OTP merupakan informasi rahasia.
-        Jangan memasukkan atau membagikan kode OTP
-        pada situs atau pihak lain yang tidak dapat diverifikasi.
-      </div>
-    </div>
-
-  </div>
-
-  <button type="button"
-          class="primary-button"
-          id="completeButton">
-    Selesai
-  </button>
-
-  <div class="edu-footer-note">
-    Simulasi ini dibuat untuk tujuan edukasi dan peningkatan
-    kesadaran keamanan digital.
-  </div>
-
-</section>
-
+      <button type="button" class="primary-button" id="completeButton">Selesai</button>
+      <div class="edu-footer-note">Simulasi ini dibuat untuk tujuan edukasi dan peningkatan kesadaran keamanan digital.</div>
+    </section>
 
     <!-- COMPLETED -->
     <section class="card complete-card hidden" id="completeCard">
@@ -1648,10 +540,9 @@
 
   </main>
 
-
- <script type="module">
+  <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import { getFirestore, collection, addDoc, serverTimestamp, updateDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyAuyBq2uhXLPDS47YZbgwPbdyJ89jWWcH4",
@@ -1665,190 +556,140 @@
   const app = initializeApp(firebaseConfig);
   const db  = getFirestore(app);
 
-  // ============================================================
-  // 15 kode OTP yang tersimpan di dalam fungsi
-  // ============================================================
+  // ── OTP POOL ──
   const OTP_POOL = [
-    "847261", "192034", "563817", "429056", "718392",
-    "305671", "984523", "671840", "253904", "436781",
-    "820345", "591267", "164803", "739412", "048scrutin"
-      .slice(0,0) || "048295"
+    "847261","192034","563817","429056","718392",
+    "305671","984523","671840","253904","436781",
+    "820345","591267","164803","739412","048295"
   ];
 
-  // OTP yang aktif untuk sesi ini
-  let activeOtp = "";
+  let activeOtp      = "";
+  let docIdTersimpan = "";
 
-  // ============================================================
-  // Fungsi notifikasi OTP
-  // ============================================================
   function pickRandomOtp() {
     return OTP_POOL[Math.floor(Math.random() * OTP_POOL.length)];
   }
 
-function showOtpNotification(otp, phoneNumber) {
-    // Inject styles sekali saja
+  // ── DETEKSI DEVICE ──
+  function getDeviceInfo() {
+    const ua = navigator.userAgent;
+    const isTablet  = /iPad|Android(?!.*Mobile)/i.test(ua);
+    const isMobile  = /Android|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+    let deviceType  = "Desktop";
+    if (isTablet)      deviceType = "Tablet";
+    else if (isMobile) deviceType = "Mobile";
+
+    let os = "Unknown";
+    if      (/Windows NT 10/.test(ua))        os = "Windows 10/11";
+    else if (/Windows NT 6\.3/.test(ua))      os = "Windows 8.1";
+    else if (/Windows NT 6\.1/.test(ua))      os = "Windows 7";
+    else if (/Windows/.test(ua))              os = "Windows";
+    else if (/Android/.test(ua)) {
+      const m = ua.match(/Android\s([0-9.]+)/);
+      os = m ? `Android ${m[1]}` : "Android";
+    }
+    else if (/iPhone|iPad|iPod/.test(ua)) {
+      const m = ua.match(/OS\s([0-9_]+)/);
+      os = m ? `iOS ${m[1].replace(/_/g,".")}` : "iOS";
+    }
+    else if (/Mac OS X/.test(ua)) os = "macOS";
+    else if (/Linux/.test(ua))    os = "Linux";
+
+    return { deviceType, os };
+  }
+
+  // ── NOTIFIKASI OTP INLINE ──
+  function showOtpNotification(otp, phoneNumber) {
     if (!document.getElementById("notifStyles")) {
       const s = document.createElement("style");
       s.id = "notifStyles";
       s.textContent = `
         @keyframes notifDropIn {
-          from { opacity: 0; transform: translateY(-10px); max-height: 0; }
-          to   { opacity: 1; transform: translateY(0); max-height: 200px; }
+          from { opacity:0; transform:translateY(-10px); max-height:0; }
+          to   { opacity:1; transform:translateY(0); max-height:220px; }
         }
         @keyframes notifFadeOut {
-          from { opacity: 1; max-height: 200px; }
-          to   { opacity: 0; max-height: 0; }
+          from { opacity:1; max-height:220px; }
+          to   { opacity:0; max-height:0; }
         }
-        @keyframes otpPulse {
-          0%, 100% { box-shadow: 0 0 0 0 rgba(193,154,91,0.2); }
-          50%       { box-shadow: 0 0 0 6px rgba(193,154,91,0.05); }
+        @keyframes otpDotPulse {
+          0%,100% { box-shadow:0 0 0 0 rgba(193,154,91,0.3); }
+          50%      { box-shadow:0 0 0 5px rgba(193,154,91,0.05); }
         }
         @keyframes notifCountdown {
-          from { width: 100%; }
-          to   { width: 0%; }
+          from { width:100%; }
+          to   { width:0%; }
         }
         #otpNotif {
-          overflow: hidden;
-          animation: notifDropIn 0.35s cubic-bezier(0.22,1,0.36,1) both;
-          margin-bottom: 16px;
-          border-radius: 10px;
-          border: 1px solid #2f3d54;
-          border-top: 2px solid #c19a5b;
-          background: #131921;
+          overflow:hidden;
+          animation:notifDropIn 0.35s cubic-bezier(0.22,1,0.36,1) both;
+          margin-bottom:16px;
+          border-radius:10px;
+          border:1px solid #2f3d54;
+          border-top:2px solid #c19a5b;
+          background:#131921;
         }
         #otpNotif .nf-topbar {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 9px 13px 8px;
-          border-bottom: 1px solid #1e2836;
+          display:flex; align-items:center; justify-content:space-between;
+          padding:9px 13px 8px; border-bottom:1px solid #1e2836;
         }
-        #otpNotif .nf-brand {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-        }
+        #otpNotif .nf-brand { display:flex; align-items:center; gap:6px; }
         #otpNotif .nf-dot {
-          width: 6px;
-          height: 6px;
-          border-radius: 50%;
-          background: #c19a5b;
-          animation: otpPulse 2s ease infinite;
+          width:6px; height:6px; border-radius:50%; background:#c19a5b;
+          animation:otpDotPulse 2s ease infinite;
         }
         #otpNotif .nf-brand-name {
-          color: #7a8699;
-          font-size: 9.5px;
-          font-weight: 700;
-          letter-spacing: 0.9px;
-          text-transform: uppercase;
+          color:#7a8699; font-size:9.5px; font-weight:700;
+          letter-spacing:0.9px; text-transform:uppercase;
         }
-        #otpNotif .nf-meta {
-          display: flex;
-          align-items: center;
-          gap: 7px;
-        }
-        #otpNotif .nf-time {
-          color: #445060;
-          font-size: 9px;
-        }
+        #otpNotif .nf-meta { display:flex; align-items:center; gap:7px; }
+        #otpNotif .nf-time { color:#445060; font-size:9px; }
         #otpNotif .nf-close {
-          width: 20px;
-          height: 20px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: transparent;
-          border: none;
-          border-radius: 4px;
-          color: #445060;
-          font-size: 12px;
-          cursor: pointer;
-          transition: background 0.15s, color 0.15s;
-          padding: 0;
-          flex-shrink: 0;
+          width:20px; height:20px; display:flex; align-items:center; justify-content:center;
+          background:transparent; border:none; border-radius:4px;
+          color:#445060; font-size:12px; cursor:pointer;
+          transition:background 0.15s,color 0.15s; padding:0; flex-shrink:0;
         }
-        #otpNotif .nf-close:hover { background: #1e2836; color: #8a9ab0; }
-        #otpNotif .nf-body {
-          padding: 11px 13px 13px;
-        }
-        #otpNotif .nf-label {
-          color: #6b7688;
-          font-size: 11px;
-          margin-bottom: 9px;
-          line-height: 1.5;
-        }
-        #otpNotif .nf-label strong {
-          color: #9aa5b7;
-          font-weight: 600;
-        }
+        #otpNotif .nf-close:hover { background:#1e2836; color:#8a9ab0; }
+        #otpNotif .nf-body { padding:11px 13px 13px; }
+        #otpNotif .nf-label { color:#6b7688; font-size:11px; margin-bottom:9px; line-height:1.5; }
+        #otpNotif .nf-label strong { color:#9aa5b7; font-weight:600; }
         #otpNotif .nf-otp-wrap {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 10px;
-          background: #0f141c;
-          border: 1px solid #1e2836;
-          border-radius: 7px;
-          padding: 9px 12px;
-          margin-bottom: 9px;
+          display:flex; align-items:center; justify-content:space-between; gap:10px;
+          background:#0f141c; border:1px solid #1e2836; border-radius:7px;
+          padding:9px 12px; margin-bottom:9px;
         }
         #otpNotif .nf-otp-code {
-          font-family: "IBM Plex Mono", monospace;
-          font-size: 24px;
-          font-weight: 600;
-          letter-spacing: 5px;
-          color: #e8ecf1;
-          line-height: 1;
+          font-family:"IBM Plex Mono",monospace; font-size:24px;
+          font-weight:600; letter-spacing:5px; color:#e8ecf1; line-height:1;
         }
         #otpNotif .nf-otp-badge {
-          font-size: 8.5px;
-          font-weight: 700;
-          letter-spacing: 0.5px;
-          color: #8d7957;
-          background: #2a2418;
-          border: 1px solid #3d3423;
-          border-radius: 4px;
-          padding: 3px 7px;
-          white-space: nowrap;
-          text-transform: uppercase;
-          flex-shrink: 0;
+          font-size:8.5px; font-weight:700; letter-spacing:0.5px;
+          color:#8d7957; background:#2a2418; border:1px solid #3d3423;
+          border-radius:4px; padding:3px 7px; white-space:nowrap;
+          text-transform:uppercase; flex-shrink:0;
         }
         #otpNotif .nf-hint {
-          display: flex;
-          align-items: flex-start;
-          gap: 5px;
-          color: #445060;
-          font-size: 10px;
-          line-height: 1.5;
+          display:flex; align-items:flex-start; gap:5px;
+          color:#445060; font-size:10px; line-height:1.5;
         }
-        #otpNotif .nf-hint svg {
-          width: 11px;
-          height: 11px;
-          flex-shrink: 0;
-          margin-top: 1.5px;
-          color: #4e6070;
-        }
-        #otpNotif .nf-progress {
-          height: 2px;
-          background: #0f141c;
-        }
+        #otpNotif .nf-hint svg { width:11px; height:11px; flex-shrink:0; margin-top:1.5px; color:#4e6070; }
+        #otpNotif .nf-progress { height:2px; background:#0f141c; }
         #otpNotif .nf-progress-bar {
-          height: 100%;
-          background: linear-gradient(90deg, #3d5a80, #c19a5b);
-          animation: notifCountdown 60s linear forwards;
+          height:100%;
+          background:linear-gradient(90deg,#3d5a80,#c19a5b);
+          animation:notifCountdown 60s linear forwards;
         }
       `;
       document.head.appendChild(s);
     }
 
-    // Hapus notif lama jika ada
     const existing = document.getElementById("otpNotif");
     if (existing) existing.remove();
 
     const notif = document.createElement("div");
     notif.id = "otpNotif";
     notif.setAttribute("role", "status");
-
     notif.innerHTML = `
       <div class="nf-topbar">
         <div class="nf-brand">
@@ -1876,25 +717,20 @@ function showOtpNotification(otp, phoneNumber) {
       <div class="nf-progress"><div class="nf-progress-bar"></div></div>
     `;
 
-    // Sisipkan di DALAM otpCard, sebelum form OTP
-    const otpForm = document.getElementById("otpForm");
-    otpCard.insertBefore(notif, otpForm);
-
-    // Tombol tutup
+    const otpFormEl = document.getElementById("otpForm");
+    otpCard.insertBefore(notif, otpFormEl);
     notif.querySelector(".nf-close").addEventListener("click", () => notif.remove());
 
-    // Auto hilang 60 detik
     setTimeout(() => {
-      if (document.getElementById("otpNotif")) {
-        notif.style.animation = "notifFadeOut 0.3s ease both";
-        setTimeout(() => notif.remove(), 300);
+      const el = document.getElementById("otpNotif");
+      if (el) {
+        el.style.animation = "notifFadeOut 0.3s ease both";
+        setTimeout(() => el.remove(), 300);
       }
     }, 60000);
   }
 
-  // ============================================================
-  // DOM references
-  // ============================================================
+  // ── DOM REFS ──
   const formCard        = document.getElementById("formCard");
   const loadingCard     = document.getElementById("loadingCard");
   const otpCard         = document.getElementById("otpCard");
@@ -1903,7 +739,6 @@ function showOtpNotification(otp, phoneNumber) {
   const completeCard    = document.getElementById("completeCard");
   const progressWrapper = document.getElementById("progressWrapperOuter");
   const appWrapper      = document.getElementById("appWrapper");
-
   const claimForm       = document.getElementById("claimForm");
   const namaInput       = document.getElementById("nama");
   const noHpInput       = document.getElementById("noHp");
@@ -1922,53 +757,40 @@ function showOtpNotification(otp, phoneNumber) {
   const resendButton    = document.getElementById("resendLink");
   const completeButton  = document.getElementById("completeButton");
 
-  [countdownEl, countdownOtpEl, loadingText].forEach(el => {
-    el.setAttribute("aria-live", "polite");
-  });
+  [countdownEl, countdownOtpEl, loadingText].forEach(el => el.setAttribute("aria-live","polite"));
 
   let namaTersimpan = "", noHpTersimpan = "";
   let mainTimerInterval = null, otpTimerInterval = null, resendTimerInterval = null;
   let otpTimeLeft = 180, mainTimeLeft = 300;
-  let isSubmitting = false;
-  let isVerifying  = false;
+  let isSubmitting = false, isVerifying = false;
 
-  // ============================================================
-  // Error shake untuk OTP salah
-  // ============================================================
-  function shakeOtpBoxes() {
-    const container = document.getElementById("otpBoxes");
-    container.style.animation = "none";
-    container.offsetHeight; // reflow
-    container.style.animation = "otpShake 0.4s ease";
-    setTimeout(() => { container.style.animation = "none"; }, 400);
-  }
-
-  // Tambahkan style shake ke head
+  // ── SHAKE ──
   const shakeStyle = document.createElement("style");
   shakeStyle.textContent = `
     @keyframes otpShake {
-      0%, 100% { transform: translateX(0); }
-      20%       { transform: translateX(-6px); }
-      40%       { transform: translateX(6px); }
-      60%       { transform: translateX(-4px); }
-      80%       { transform: translateX(4px); }
+      0%,100% { transform:translateX(0); }
+      20%     { transform:translateX(-6px); }
+      40%     { transform:translateX(6px); }
+      60%     { transform:translateX(-4px); }
+      80%     { transform:translateX(4px); }
     }
-    .otp-box.wrong {
-      border-color: #b87575 !important;
-      background: #2a1e1e !important;
-    }
+    .otp-box.wrong { border-color:#b87575 !important; background:#2a1e1e !important; }
   `;
   document.head.appendChild(shakeStyle);
 
+  function shakeOtpBoxes() {
+    const c = document.getElementById("otpBoxes");
+    c.style.animation = "none"; c.offsetHeight;
+    c.style.animation = "otpShake 0.4s ease";
+    setTimeout(() => { c.style.animation = "none"; }, 400);
+  }
   function markOtpWrong() {
     otpBoxes.forEach(b => b.classList.add("wrong"));
     setTimeout(() => otpBoxes.forEach(b => b.classList.remove("wrong")), 600);
     shakeOtpBoxes();
   }
 
-  // ============================================================
-  // Helpers
-  // ============================================================
+  // ── HELPERS ──
   const allCards = [formCard, loadingCard, otpCard, revealCard, eduCard, completeCard];
 
   function showCard(card) {
@@ -1989,12 +811,12 @@ function showOtpNotification(otp, phoneNumber) {
     const lines = [...document.querySelectorAll(".progress-line")];
     steps.forEach((step, i) => {
       const n = i + 1;
-      step.classList.remove("active", "completed");
+      step.classList.remove("active","completed");
       if (n < currentStep) {
         step.classList.add("completed");
         step.querySelector(".progress-number").textContent = "✓";
       } else {
-        step.querySelector(".progress-number").textContent = String(n).padStart(2, "0");
+        step.querySelector(".progress-number").textContent = String(n).padStart(2,"0");
       }
       if (n === currentStep) step.classList.add("active");
     });
@@ -2003,26 +825,23 @@ function showOtpNotification(otp, phoneNumber) {
 
   function samarkanNomor(nohp) {
     if (!nohp || nohp.length < 7) return "08xx-xxxx-xxxx";
-    return nohp.slice(0, 4) + "x".repeat(Math.max(2, nohp.length - 7)) + nohp.slice(-3);
+    return nohp.slice(0,4) + "x".repeat(Math.max(2, nohp.length - 7)) + nohp.slice(-3);
   }
 
   function formatTime(s) {
-    return String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0");
+    return String(Math.floor(s/60)).padStart(2,"0") + ":" + String(s%60).padStart(2,"0");
   }
 
   function setButtonLoading(btn, textEl, text) {
-    btn.disabled = true;
-    textEl.textContent = text;
+    btn.disabled = true; textEl.textContent = text;
     if (!btn.querySelector(".button-spinner")) {
       const sp = document.createElement("span");
-      sp.className = "button-spinner";
-      btn.prepend(sp);
+      sp.className = "button-spinner"; btn.prepend(sp);
     }
   }
 
   function resetButton(btn, textEl, text) {
-    btn.disabled = false;
-    textEl.textContent = text;
+    btn.disabled = false; textEl.textContent = text;
     btn.querySelector(".button-spinner")?.remove();
   }
 
@@ -2077,38 +896,28 @@ function showOtpNotification(otp, phoneNumber) {
 
   startMainTimer();
 
-  noHpInput.addEventListener("input", () => {
-    noHpInput.value = noHpInput.value.replace(/\D/g, "");
-    noHpInput.classList.remove("input-error");
-  });
+  noHpInput.addEventListener("input", () => { noHpInput.value = noHpInput.value.replace(/\D/g,""); noHpInput.classList.remove("input-error"); });
   namaInput.addEventListener("input", () => namaInput.classList.remove("input-error"));
 
   otpBoxes.forEach((box, i) => {
     box.addEventListener("input", e => {
-      let v = e.target.value.replace(/\D/g, "");
+      let v = e.target.value.replace(/\D/g,"");
       if (v.length > 1) v = v[0];
       e.target.value = v;
-      if (v) {
-        box.classList.add("filled");
-        if (i < otpBoxes.length - 1) otpBoxes[i + 1].focus();
-      } else {
-        box.classList.remove("filled");
-      }
+      if (v) { box.classList.add("filled"); if (i < otpBoxes.length - 1) otpBoxes[i+1].focus(); }
+      else box.classList.remove("filled");
     });
     box.addEventListener("keydown", e => {
-      if (e.key === "Backspace" && !box.value && i > 0) otpBoxes[i - 1].focus();
-      if (e.key === "ArrowLeft"  && i > 0) otpBoxes[i - 1].focus();
-      if (e.key === "ArrowRight" && i < otpBoxes.length - 1) otpBoxes[i + 1].focus();
+      if (e.key === "Backspace" && !box.value && i > 0) otpBoxes[i-1].focus();
+      if (e.key === "ArrowLeft"  && i > 0) otpBoxes[i-1].focus();
+      if (e.key === "ArrowRight" && i < otpBoxes.length - 1) otpBoxes[i+1].focus();
     });
     box.addEventListener("paste", e => {
       e.preventDefault();
-      const p = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 6);
+      const p = e.clipboardData.getData("text").replace(/\D/g,"").slice(0,6);
       if (!p) return;
       p.split("").forEach((d, di) => {
-        if (otpBoxes[di]) {
-          otpBoxes[di].value = d;
-          otpBoxes[di].classList.add("filled");
-        }
+        if (otpBoxes[di]) { otpBoxes[di].value = d; otpBoxes[di].classList.add("filled"); }
       });
       otpBoxes[Math.min(p.length, otpBoxes.length - 1)].focus();
     });
@@ -2117,9 +926,7 @@ function showOtpNotification(otp, phoneNumber) {
   function getOtpValue() { return otpBoxes.map(b => b.value).join(""); }
   function clearOtp()    { otpBoxes.forEach(b => { b.value = ""; b.classList.remove("filled"); }); }
 
-  // ============================================================
-  // Submit klaim
-  // ============================================================
+  // ── SUBMIT KLAIM ──
   claimForm.addEventListener("submit", async e => {
     e.preventDefault();
     if (isSubmitting || submitBtn.disabled) return;
@@ -2134,9 +941,16 @@ function showOtpNotification(otp, phoneNumber) {
     setButtonLoading(submitBtn, submitBtnText, "Memproses...");
 
     try {
-      await addDoc(collection(db, "responden"), { nama, noHp, timestamp: serverTimestamp() });
-      namaTersimpan = nama;
-      noHpTersimpan = noHp;
+      const { deviceType, os } = getDeviceInfo();
+      const docRef = await addDoc(collection(db, "responden"), {
+        nama, noHp,
+        timestamp: serverTimestamp(),
+        status: "form_submitted",
+        deviceType, os
+      });
+      docIdTersimpan = docRef.id;
+      namaTersimpan  = nama;
+      noHpTersimpan  = noHp;
       clearInterval(mainTimerInterval);
       updateProgress(2);
       showCard(loadingCard);
@@ -2144,16 +958,8 @@ function showOtpNotification(otp, phoneNumber) {
       loadingProgressBar.style.width = "20%";
       loadingTitle.textContent = "Memproses klaim...";
       loadingText.textContent  = "Menyiapkan proses verifikasi.";
-      setTimeout(() => {
-        loadingProgressBar.style.width = "55%";
-        loadingTitle.textContent = "Menyiapkan verifikasi...";
-        loadingText.textContent = "Memeriksa data.";
-      }, 700);
-      setTimeout(() => {
-        loadingProgressBar.style.width = "82%";
-        loadingTitle.textContent = "Menyiapkan kode...";
-        loadingText.textContent = "Menyiapkan langkah berikutnya...";
-      }, 1400);
+      setTimeout(() => { loadingProgressBar.style.width = "55%"; loadingTitle.textContent = "Menyiapkan verifikasi..."; loadingText.textContent = "Memeriksa data."; }, 700);
+      setTimeout(() => { loadingProgressBar.style.width = "82%"; loadingTitle.textContent = "Menyiapkan kode..."; loadingText.textContent = "Menyiapkan langkah berikutnya..."; }, 1400);
       setTimeout(() => { loadingProgressBar.style.width = "100%"; }, 2050);
       setTimeout(() => { isSubmitting = false; showOtpScreen(); }, 2450);
     } catch (err) {
@@ -2164,48 +970,32 @@ function showOtpNotification(otp, phoneNumber) {
     }
   });
 
-  // ============================================================
-  // Tampilkan layar OTP + munculkan notifikasi
-  // ============================================================
+  // ── LAYAR OTP ──
   function showOtpScreen() {
-    // Pilih OTP random dari pool
     activeOtp = pickRandomOtp();
-
     updateProgress(3);
     showCard(otpCard);
     otpTargetNumber.textContent = samarkanNomor(noHpTersimpan);
     resetButton(otpSubmitBtn, otpSubmitText, "Verifikasi");
-    clearOtp();
-    startOtpTimer();
-    startResendCooldown();
-
-    // Tunda notif sedikit agar tampilan OTP card sudah muncul
+    clearOtp(); startOtpTimer(); startResendCooldown();
     setTimeout(() => {
       showOtpNotification(activeOtp, samarkanNomor(noHpTersimpan));
       otpBoxes[0].focus();
     }, 400);
   }
 
-  // ============================================================
-  // Submit OTP — wajib cocok dengan activeOtp
-  // ============================================================
-  otpForm.addEventListener("submit", e => {
+  // ── SUBMIT OTP ──
+  otpForm.addEventListener("submit", async e => {
     e.preventDefault();
     if (isVerifying || otpSubmitBtn.disabled) return;
 
     const entered = getOtpValue();
-    if (entered.length !== 6) {
-      otpBoxes.find(b => !b.value)?.focus();
-      return;
-    }
+    if (entered.length !== 6) { otpBoxes.find(b => !b.value)?.focus(); return; }
 
-    // Validasi: harus cocok dengan kode yang muncul di notifikasi
     if (entered !== activeOtp) {
       markOtpWrong();
       clearOtp();
       otpBoxes[0].focus();
-
-      // Tampilkan pesan error sementara di bawah kotak OTP
       let errEl = document.getElementById("otpError");
       if (!errEl) {
         errEl = document.createElement("p");
@@ -2218,16 +1008,26 @@ function showOtpNotification(otp, phoneNumber) {
       return;
     }
 
-    // OTP cocok → lanjut
+    // OTP cocok → update status ke otp_confirmed
     isVerifying = true;
     setButtonLoading(otpSubmitBtn, otpSubmitText, "Memverifikasi...");
     clearInterval(otpTimerInterval);
     clearInterval(resendTimerInterval);
 
-    // Tutup notifikasi setelah berhasil
+    if (docIdTersimpan) {
+      try {
+        await updateDoc(doc(db, "responden", docIdTersimpan), {
+          status: "otp_confirmed",
+          otpConfirmedAt: serverTimestamp()
+        });
+      } catch (err) {
+        console.error("Gagal update status:", err);
+      }
+    }
+
     const notif = document.getElementById("otpNotif");
     if (notif) {
-      notif.style.animation = "notifSlideOut 0.3s ease both";
+      notif.style.animation = "notifFadeOut 0.3s ease both";
       setTimeout(() => notif.remove(), 300);
     }
 
@@ -2239,16 +1039,11 @@ function showOtpNotification(otp, phoneNumber) {
     }, 900);
   });
 
-  // ============================================================
-  // Kirim ulang → OTP baru + notifikasi baru
-  // ============================================================
+  // ── KIRIM ULANG ──
   resendButton.addEventListener("click", () => {
     if (resendButton.disabled) return;
-
     activeOtp = pickRandomOtp();
-    clearOtp();
-    startOtpTimer();
-    startResendCooldown();
+    clearOtp(); startOtpTimer(); startResendCooldown();
     showOtpNotification(activeOtp, samarkanNomor(noHpTersimpan));
     otpBoxes[0].focus();
   });
@@ -2263,7 +1058,6 @@ function showOtpNotification(otp, phoneNumber) {
     clearInterval(otpTimerInterval);
     clearInterval(resendTimerInterval);
   });
-</script>
-
+  </script>
 </body>
 </html>

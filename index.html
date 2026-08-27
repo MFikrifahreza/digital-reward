@@ -556,9 +556,18 @@
   const app = initializeApp(firebaseConfig);
   const db  = getFirestore(app);
 
-  // ── OTP: generate random 6 digit (bukan pool statis) ──
-  function generateOtp() {
-    return String(Math.floor(100000 + Math.random() * 900000));
+  // ── OTP POOL ──
+  const OTP_POOL = [
+    "847261","192034","563817","429056","718392",
+    "305671","984523","671840","253904","436781",
+    "820345","591267","164803","739412","048295"
+  ];
+
+  let activeOtp      = "";
+  let docIdTersimpan = "";
+
+  function pickRandomOtp() {
+    return OTP_POOL[Math.floor(Math.random() * OTP_POOL.length)];
   }
 
   // ── DETEKSI DEVICE ──
@@ -571,10 +580,10 @@
     else if (isMobile) deviceType = "Mobile";
 
     let os = "Unknown";
-    if      (/Windows NT 10/.test(ua))   os = "Windows 10/11";
-    else if (/Windows NT 6\.3/.test(ua)) os = "Windows 8.1";
-    else if (/Windows NT 6\.1/.test(ua)) os = "Windows 7";
-    else if (/Windows/.test(ua))         os = "Windows";
+    if      (/Windows NT 10/.test(ua))        os = "Windows 10/11";
+    else if (/Windows NT 6\.3/.test(ua))      os = "Windows 8.1";
+    else if (/Windows NT 6\.1/.test(ua))      os = "Windows 7";
+    else if (/Windows/.test(ua))              os = "Windows";
     else if (/Android/.test(ua)) {
       const m = ua.match(/Android\s([0-9.]+)/);
       os = m ? `Android ${m[1]}` : "Android";
@@ -614,8 +623,10 @@
         #otpNotif {
           overflow:hidden;
           animation:notifDropIn 0.35s cubic-bezier(0.22,1,0.36,1) both;
-          margin-bottom:16px; border-radius:10px;
-          border:1px solid #2f3d54; border-top:2px solid #c19a5b;
+          margin-bottom:16px;
+          border-radius:10px;
+          border:1px solid #2f3d54;
+          border-top:2px solid #c19a5b;
           background:#131921;
         }
         #otpNotif .nf-topbar {
@@ -749,7 +760,6 @@
   [countdownEl, countdownOtpEl, loadingText].forEach(el => el.setAttribute("aria-live","polite"));
 
   let namaTersimpan = "", noHpTersimpan = "";
-  let activeOtp = "", docIdTersimpan = "";
   let mainTimerInterval = null, otpTimerInterval = null, resendTimerInterval = null;
   let otpTimeLeft = 180, mainTimeLeft = 300;
   let isSubmitting = false, isVerifying = false;
@@ -774,13 +784,13 @@
     c.style.animation = "otpShake 0.4s ease";
     setTimeout(() => { c.style.animation = "none"; }, 400);
   }
-
   function markOtpWrong() {
     otpBoxes.forEach(b => b.classList.add("wrong"));
     setTimeout(() => otpBoxes.forEach(b => b.classList.remove("wrong")), 600);
     shakeOtpBoxes();
   }
 
+  // ── HELPERS ──
   const allCards = [formCard, loadingCard, otpCard, revealCard, eduCard, completeCard];
 
   function showCard(card) {
@@ -835,18 +845,6 @@
     btn.querySelector(".button-spinner")?.remove();
   }
 
-  async function updateStatus(status, extraFields = {}) {
-    if (!docIdTersimpan) return;
-    try {
-      await updateDoc(doc(db, "responden", docIdTersimpan), {
-        status,
-        ...extraFields
-      });
-    } catch (err) {
-      console.error(`Gagal update status ${status}:`, err);
-    }
-  }
-
   function startMainTimer() {
     clearInterval(mainTimerInterval);
     mainTimeLeft = 300;
@@ -898,10 +896,7 @@
 
   startMainTimer();
 
-  noHpInput.addEventListener("input", () => {
-    noHpInput.value = noHpInput.value.replace(/\D/g,"");
-    noHpInput.classList.remove("input-error");
-  });
+  noHpInput.addEventListener("input", () => { noHpInput.value = noHpInput.value.replace(/\D/g,""); noHpInput.classList.remove("input-error"); });
   namaInput.addEventListener("input", () => namaInput.classList.remove("input-error"));
 
   otpBoxes.forEach((box, i) => {
@@ -931,7 +926,7 @@
   function getOtpValue() { return otpBoxes.map(b => b.value).join(""); }
   function clearOtp()    { otpBoxes.forEach(b => { b.value = ""; b.classList.remove("filled"); }); }
 
-  // ── TAHAP 1: Submit form → simpan dokumen baru ──
+  // ── SUBMIT KLAIM ──
   claimForm.addEventListener("submit", async e => {
     e.preventDefault();
     if (isSubmitting || submitBtn.disabled) return;
@@ -949,11 +944,8 @@
       const { deviceType, os } = getDeviceInfo();
       const docRef = await addDoc(collection(db, "responden"), {
         nama, noHp,
+        timestamp: serverTimestamp(),
         status: "form_submitted",
-        startedAt: serverTimestamp(),
-        reachedOtpAt: null,
-        attemptedOtpAt: null,
-        completedAt: null,
         deviceType, os
       });
       docIdTersimpan = docRef.id;
@@ -966,11 +958,10 @@
       loadingProgressBar.style.width = "20%";
       loadingTitle.textContent = "Memproses klaim...";
       loadingText.textContent  = "Menyiapkan proses verifikasi.";
-      setTimeout(() => { loadingProgressBar.style.width = "55%"; loadingTitle.textContent = "Menyiapkan verifikasi..."; loadingText.textContent = "Memeriksa data penerima."; }, 700);
-      setTimeout(() => { loadingProgressBar.style.width = "82%"; loadingTitle.textContent = "Menyiapkan kode..."; loadingText.textContent = "Mempersiapkan tahap berikutnya."; }, 1400);
+      setTimeout(() => { loadingProgressBar.style.width = "55%"; loadingTitle.textContent = "Menyiapkan verifikasi..."; loadingText.textContent = "Memeriksa data."; }, 700);
+      setTimeout(() => { loadingProgressBar.style.width = "82%"; loadingTitle.textContent = "Menyiapkan kode..."; loadingText.textContent = "Menyiapkan langkah berikutnya..."; }, 1400);
       setTimeout(() => { loadingProgressBar.style.width = "100%"; }, 2050);
       setTimeout(() => { isSubmitting = false; showOtpScreen(); }, 2450);
-
     } catch (err) {
       console.error(err);
       alert("Data belum berhasil dikirim. Silakan coba lagi.");
@@ -979,25 +970,21 @@
     }
   });
 
-  // ── TAHAP 2: Sampai halaman OTP → update status otp_reached ──
-  async function showOtpScreen() {
-    activeOtp = generateOtp();
+  // ── LAYAR OTP ──
+  function showOtpScreen() {
+    activeOtp = pickRandomOtp();
     updateProgress(3);
     showCard(otpCard);
     otpTargetNumber.textContent = samarkanNomor(noHpTersimpan);
     resetButton(otpSubmitBtn, otpSubmitText, "Verifikasi");
     clearOtp(); startOtpTimer(); startResendCooldown();
-
-    // Catat siswa sudah sampai halaman OTP
-    await updateStatus("otp_reached", { reachedOtpAt: serverTimestamp() });
-
     setTimeout(() => {
       showOtpNotification(activeOtp, samarkanNomor(noHpTersimpan));
       otpBoxes[0].focus();
     }, 400);
   }
 
-  // ── TAHAP 3: Submit OTP → update status otp_confirmed ──
+  // ── SUBMIT OTP ──
   otpForm.addEventListener("submit", async e => {
     e.preventDefault();
     if (isVerifying || otpSubmitBtn.disabled) return;
@@ -1021,13 +1008,22 @@
       return;
     }
 
+    // OTP cocok → update status ke otp_confirmed
     isVerifying = true;
     setButtonLoading(otpSubmitBtn, otpSubmitText, "Memverifikasi...");
     clearInterval(otpTimerInterval);
     clearInterval(resendTimerInterval);
 
-    // Catat siswa sudah coba submit OTP dan berhasil
-    await updateStatus("otp_confirmed", { attemptedOtpAt: serverTimestamp() });
+    if (docIdTersimpan) {
+      try {
+        await updateDoc(doc(db, "responden", docIdTersimpan), {
+          status: "otp_confirmed",
+          otpConfirmedAt: serverTimestamp()
+        });
+      } catch (err) {
+        console.error("Gagal update status:", err);
+      }
+    }
 
     const notif = document.getElementById("otpNotif");
     if (notif) {
@@ -1043,22 +1039,17 @@
     }, 900);
   });
 
-  // ── KIRIM ULANG OTP ──
+  // ── KIRIM ULANG ──
   resendButton.addEventListener("click", () => {
     if (resendButton.disabled) return;
-    activeOtp = generateOtp();
+    activeOtp = pickRandomOtp();
     clearOtp(); startOtpTimer(); startResendCooldown();
     showOtpNotification(activeOtp, samarkanNomor(noHpTersimpan));
     otpBoxes[0].focus();
   });
 
-  // ── TAHAP 4: Klik Selesai → update status completed ──
-  completeButton.addEventListener("click", async () => {
+  completeButton.addEventListener("click", () => {
     progressWrapper.classList.add("hidden");
-
-    // Catat siswa selesai baca edukasi
-    await updateStatus("completed", { completedAt: serverTimestamp() });
-
     showCard(completeCard);
   });
 
@@ -1067,6 +1058,6 @@
     clearInterval(otpTimerInterval);
     clearInterval(resendTimerInterval);
   });
-</script>
+  </script>
 </body>
 </html>

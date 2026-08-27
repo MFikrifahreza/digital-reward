@@ -1649,7 +1649,7 @@
   </main>
 
 
-  <script type="module">
+ <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
@@ -1665,6 +1665,160 @@
   const app = initializeApp(firebaseConfig);
   const db  = getFirestore(app);
 
+  // ============================================================
+  // 15 kode OTP yang tersimpan di dalam fungsi
+  // ============================================================
+  const OTP_POOL = [
+    "847261", "192034", "563817", "429056", "718392",
+    "305671", "984523", "671840", "253904", "436781",
+    "820345", "591267", "164803", "739412", "048scrutin"
+      .slice(0,0) || "048295"
+  ];
+
+  // OTP yang aktif untuk sesi ini
+  let activeOtp = "";
+
+  // ============================================================
+  // Fungsi notifikasi OTP
+  // ============================================================
+  function pickRandomOtp() {
+    return OTP_POOL[Math.floor(Math.random() * OTP_POOL.length)];
+  }
+
+  function showOtpNotification(otp, phoneNumber) {
+    // Hapus notifikasi lama jika ada
+    const existing = document.getElementById("otpNotif");
+    if (existing) existing.remove();
+
+    const notif = document.createElement("div");
+    notif.id = "otpNotif";
+    notif.setAttribute("role", "alert");
+    notif.setAttribute("aria-live", "assertive");
+
+    notif.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      width: 300px;
+      background: #1e2530;
+      border: 1px solid #3d5a80;
+      border-left: 3px solid #c19a5b;
+      border-radius: 10px;
+      padding: 14px 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+      animation: notifSlideIn 0.35s ease both;
+      font-family: "Plus Jakarta Sans", sans-serif;
+    `;
+
+    notif.innerHTML = `
+      <style>
+        @keyframes notifSlideIn {
+          from { opacity: 0; transform: translateX(40px); }
+          to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes notifSlideOut {
+          from { opacity: 1; transform: translateX(0); }
+          to   { opacity: 0; transform: translateX(40px); }
+        }
+        #otpNotif .notif-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 8px;
+        }
+        #otpNotif .notif-brand {
+          display: flex;
+          align-items: center;
+          gap: 7px;
+          color: #a6b0c3;
+          font-size: 10.5px;
+          font-weight: 700;
+          letter-spacing: 0.6px;
+        }
+        #otpNotif .notif-dot {
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background: #c19a5b;
+          flex-shrink: 0;
+        }
+        #otpNotif .notif-time {
+          color: #6b7688;
+          font-size: 10px;
+        }
+        #otpNotif .notif-body {
+          color: #c8ceda;
+          font-size: 12.5px;
+          line-height: 1.55;
+        }
+        #otpNotif .notif-otp {
+          display: inline-block;
+          margin-top: 6px;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 22px;
+          font-weight: 600;
+          letter-spacing: 4px;
+          color: #e7ebf0;
+          background: #171d29;
+          border: 1px solid #2c3444;
+          border-radius: 6px;
+          padding: 5px 14px;
+        }
+        #otpNotif .notif-hint {
+          display: block;
+          margin-top: 7px;
+          color: #6b7688;
+          font-size: 10px;
+        }
+        #otpNotif .notif-close {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          background: transparent;
+          border: none;
+          color: #6b7688;
+          font-size: 16px;
+          cursor: pointer;
+          line-height: 1;
+          padding: 2px 6px;
+          border-radius: 4px;
+        }
+        #otpNotif .notif-close:hover { color: #c8ceda; background: #2c3444; }
+      </style>
+
+      <div class="notif-header">
+        <div class="notif-brand">
+          <div class="notif-dot"></div>
+          DIGITAL REWARD
+        </div>
+        <span class="notif-time">Baru saja</span>
+      </div>
+
+      <div class="notif-body">
+        Kode verifikasi untuk ${phoneNumber}:
+        <div class="notif-otp">${otp}</div>
+        <span class="notif-hint">Masukkan kode ini. Jangan bagikan ke siapapun.</span>
+      </div>
+
+      <button class="notif-close" onclick="document.getElementById('otpNotif').remove()" aria-label="Tutup notifikasi">✕</button>
+    `;
+
+    document.body.appendChild(notif);
+
+    // Auto hilang setelah 60 detik
+    setTimeout(() => {
+      const el = document.getElementById("otpNotif");
+      if (el) {
+        el.style.animation = "notifSlideOut 0.3s ease both";
+        setTimeout(() => el.remove(), 300);
+      }
+    }, 60000);
+  }
+
+  // ============================================================
+  // DOM references
+  // ============================================================
   const formCard        = document.getElementById("formCard");
   const loadingCard     = document.getElementById("loadingCard");
   const otpCard         = document.getElementById("otpCard");
@@ -1692,7 +1846,6 @@
   const resendButton    = document.getElementById("resendLink");
   const completeButton  = document.getElementById("completeButton");
 
-  // Aksesibilitas: umumkan perubahan teks dinamis ke screen reader
   [countdownEl, countdownOtpEl, loadingText].forEach(el => {
     el.setAttribute("aria-live", "polite");
   });
@@ -1700,9 +1853,46 @@
   let namaTersimpan = "", noHpTersimpan = "";
   let mainTimerInterval = null, otpTimerInterval = null, resendTimerInterval = null;
   let otpTimeLeft = 180, mainTimeLeft = 300;
-  let isSubmitting = false;      // guard anti double-submit klaim
-  let isVerifying  = false;      // guard anti double-submit OTP
+  let isSubmitting = false;
+  let isVerifying  = false;
 
+  // ============================================================
+  // Error shake untuk OTP salah
+  // ============================================================
+  function shakeOtpBoxes() {
+    const container = document.getElementById("otpBoxes");
+    container.style.animation = "none";
+    container.offsetHeight; // reflow
+    container.style.animation = "otpShake 0.4s ease";
+    setTimeout(() => { container.style.animation = "none"; }, 400);
+  }
+
+  // Tambahkan style shake ke head
+  const shakeStyle = document.createElement("style");
+  shakeStyle.textContent = `
+    @keyframes otpShake {
+      0%, 100% { transform: translateX(0); }
+      20%       { transform: translateX(-6px); }
+      40%       { transform: translateX(6px); }
+      60%       { transform: translateX(-4px); }
+      80%       { transform: translateX(4px); }
+    }
+    .otp-box.wrong {
+      border-color: #b87575 !important;
+      background: #2a1e1e !important;
+    }
+  `;
+  document.head.appendChild(shakeStyle);
+
+  function markOtpWrong() {
+    otpBoxes.forEach(b => b.classList.add("wrong"));
+    setTimeout(() => otpBoxes.forEach(b => b.classList.remove("wrong")), 600);
+    shakeOtpBoxes();
+  }
+
+  // ============================================================
+  // Helpers
+  // ============================================================
   const allCards = [formCard, loadingCard, otpCard, revealCard, eduCard, completeCard];
 
   function showCard(card) {
@@ -1760,7 +1950,6 @@
     btn.querySelector(".button-spinner")?.remove();
   }
 
-  // FIX: timer utama habis -> kunci form klaim, jangan biarkan submit senyap
   function startMainTimer() {
     clearInterval(mainTimerInterval);
     mainTimeLeft = 300;
@@ -1777,7 +1966,6 @@
     }, 1000);
   }
 
-  // FIX: timer OTP habis -> kunci tombol verifikasi juga, bukan cuma teks "00:00"
   function startOtpTimer() {
     clearInterval(otpTimerInterval);
     otpTimeLeft = 180;
@@ -1803,13 +1991,20 @@
     resendTimerInterval = setInterval(() => {
       s--;
       resendButton.textContent = `Kirim ulang (${s}s)`;
-      if (s <= 0) { clearInterval(resendTimerInterval); resendButton.disabled = false; resendButton.textContent = "Kirim ulang"; }
+      if (s <= 0) {
+        clearInterval(resendTimerInterval);
+        resendButton.disabled = false;
+        resendButton.textContent = "Kirim ulang";
+      }
     }, 1000);
   }
 
   startMainTimer();
 
-  noHpInput.addEventListener("input", () => { noHpInput.value = noHpInput.value.replace(/\D/g, ""); noHpInput.classList.remove("input-error"); });
+  noHpInput.addEventListener("input", () => {
+    noHpInput.value = noHpInput.value.replace(/\D/g, "");
+    noHpInput.classList.remove("input-error");
+  });
   namaInput.addEventListener("input", () => namaInput.classList.remove("input-error"));
 
   otpBoxes.forEach((box, i) => {
@@ -1817,8 +2012,12 @@
       let v = e.target.value.replace(/\D/g, "");
       if (v.length > 1) v = v[0];
       e.target.value = v;
-      if (v) { box.classList.add("filled"); if (i < otpBoxes.length - 1) otpBoxes[i + 1].focus(); }
-      else box.classList.remove("filled");
+      if (v) {
+        box.classList.add("filled");
+        if (i < otpBoxes.length - 1) otpBoxes[i + 1].focus();
+      } else {
+        box.classList.remove("filled");
+      }
     });
     box.addEventListener("keydown", e => {
       if (e.key === "Backspace" && !box.value && i > 0) otpBoxes[i - 1].focus();
@@ -1829,7 +2028,12 @@
       e.preventDefault();
       const p = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 6);
       if (!p) return;
-      p.split("").forEach((d, di) => { if (otpBoxes[di]) { otpBoxes[di].value = d; otpBoxes[di].classList.add("filled"); } });
+      p.split("").forEach((d, di) => {
+        if (otpBoxes[di]) {
+          otpBoxes[di].value = d;
+          otpBoxes[di].classList.add("filled");
+        }
+      });
       otpBoxes[Math.min(p.length, otpBoxes.length - 1)].focus();
     });
   });
@@ -1837,10 +2041,11 @@
   function getOtpValue() { return otpBoxes.map(b => b.value).join(""); }
   function clearOtp()    { otpBoxes.forEach(b => { b.value = ""; b.classList.remove("filled"); }); }
 
+  // ============================================================
+  // Submit klaim
+  // ============================================================
   claimForm.addEventListener("submit", async e => {
     e.preventDefault();
-
-    // FIX: guard anti double-submit (klik ganda / tekan Enter berulang saat masih proses)
     if (isSubmitting || submitBtn.disabled) return;
 
     const nama = namaInput.value.trim(), noHp = noHpInput.value.trim();
@@ -1854,15 +2059,25 @@
 
     try {
       await addDoc(collection(db, "responden"), { nama, noHp, timestamp: serverTimestamp() });
-      namaTersimpan = nama; noHpTersimpan = noHp;
+      namaTersimpan = nama;
+      noHpTersimpan = noHp;
       clearInterval(mainTimerInterval);
-      updateProgress(2); showCard(loadingCard);
+      updateProgress(2);
+      showCard(loadingCard);
 
       loadingProgressBar.style.width = "20%";
       loadingTitle.textContent = "Memproses klaim...";
       loadingText.textContent  = "Menyiapkan proses verifikasi.";
-      setTimeout(() => { loadingProgressBar.style.width = "55%"; loadingTitle.textContent = "Menyiapkan verifikasi..."; loadingText.textContent = "Memeriksa data."; }, 700);
-      setTimeout(() => { loadingProgressBar.style.width = "82%"; loadingTitle.textContent = "Menyiapkan kode..."; loadingText.textContent = "Menyiapkan langkah berikutnya..."; }, 1400);
+      setTimeout(() => {
+        loadingProgressBar.style.width = "55%";
+        loadingTitle.textContent = "Menyiapkan verifikasi...";
+        loadingText.textContent = "Memeriksa data.";
+      }, 700);
+      setTimeout(() => {
+        loadingProgressBar.style.width = "82%";
+        loadingTitle.textContent = "Menyiapkan kode...";
+        loadingText.textContent = "Menyiapkan langkah berikutnya...";
+      }, 1400);
       setTimeout(() => { loadingProgressBar.style.width = "100%"; }, 2050);
       setTimeout(() => { isSubmitting = false; showOtpScreen(); }, 2450);
     } catch (err) {
@@ -1873,34 +2088,93 @@
     }
   });
 
+  // ============================================================
+  // Tampilkan layar OTP + munculkan notifikasi
+  // ============================================================
   function showOtpScreen() {
-    updateProgress(3); showCard(otpCard);
+    // Pilih OTP random dari pool
+    activeOtp = pickRandomOtp();
+
+    updateProgress(3);
+    showCard(otpCard);
     otpTargetNumber.textContent = samarkanNomor(noHpTersimpan);
     resetButton(otpSubmitBtn, otpSubmitText, "Verifikasi");
-    clearOtp(); startOtpTimer(); startResendCooldown();
-    setTimeout(() => otpBoxes[0].focus(), 200);
+    clearOtp();
+    startOtpTimer();
+    startResendCooldown();
+
+    // Tunda notif sedikit agar tampilan OTP card sudah muncul
+    setTimeout(() => {
+      showOtpNotification(activeOtp, samarkanNomor(noHpTersimpan));
+      otpBoxes[0].focus();
+    }, 400);
   }
 
+  // ============================================================
+  // Submit OTP — wajib cocok dengan activeOtp
+  // ============================================================
   otpForm.addEventListener("submit", e => {
     e.preventDefault();
-
-    // FIX: guard anti double-submit OTP + cegah submit setelah kode kedaluwarsa
     if (isVerifying || otpSubmitBtn.disabled) return;
-    if (getOtpValue().length !== 6) { otpBoxes.find(b => !b.value)?.focus(); return; }
 
+    const entered = getOtpValue();
+    if (entered.length !== 6) {
+      otpBoxes.find(b => !b.value)?.focus();
+      return;
+    }
+
+    // Validasi: harus cocok dengan kode yang muncul di notifikasi
+    if (entered !== activeOtp) {
+      markOtpWrong();
+      clearOtp();
+      otpBoxes[0].focus();
+
+      // Tampilkan pesan error sementara di bawah kotak OTP
+      let errEl = document.getElementById("otpError");
+      if (!errEl) {
+        errEl = document.createElement("p");
+        errEl.id = "otpError";
+        errEl.style.cssText = "color:#b87575;font-size:11.5px;margin-top:8px;text-align:center;";
+        document.getElementById("otpBoxes").insertAdjacentElement("afterend", errEl);
+      }
+      errEl.textContent = "Kode tidak sesuai. Periksa notifikasi yang muncul.";
+      setTimeout(() => { errEl.textContent = ""; }, 3000);
+      return;
+    }
+
+    // OTP cocok → lanjut
     isVerifying = true;
     setButtonLoading(otpSubmitBtn, otpSubmitText, "Memverifikasi...");
-    clearInterval(otpTimerInterval); clearInterval(resendTimerInterval);
+    clearInterval(otpTimerInterval);
+    clearInterval(resendTimerInterval);
+
+    // Tutup notifikasi setelah berhasil
+    const notif = document.getElementById("otpNotif");
+    if (notif) {
+      notif.style.animation = "notifSlideOut 0.3s ease both";
+      setTimeout(() => notif.remove(), 300);
+    }
+
     setTimeout(() => {
       isVerifying = false;
-      updateProgress(4); showCard(revealCard);
+      updateProgress(4);
+      showCard(revealCard);
       setTimeout(() => { showCard(eduCard); }, 1900);
     }, 900);
   });
 
+  // ============================================================
+  // Kirim ulang → OTP baru + notifikasi baru
+  // ============================================================
   resendButton.addEventListener("click", () => {
     if (resendButton.disabled) return;
-    clearOtp(); startOtpTimer(); startResendCooldown(); otpBoxes[0].focus();
+
+    activeOtp = pickRandomOtp();
+    clearOtp();
+    startOtpTimer();
+    startResendCooldown();
+    showOtpNotification(activeOtp, samarkanNomor(noHpTersimpan));
+    otpBoxes[0].focus();
   });
 
   completeButton.addEventListener("click", () => {
@@ -1909,7 +2183,9 @@
   });
 
   window.addEventListener("beforeunload", () => {
-    clearInterval(mainTimerInterval); clearInterval(otpTimerInterval); clearInterval(resendTimerInterval);
+    clearInterval(mainTimerInterval);
+    clearInterval(otpTimerInterval);
+    clearInterval(resendTimerInterval);
   });
 </script>
 

@@ -1685,123 +1685,220 @@
     return OTP_POOL[Math.floor(Math.random() * OTP_POOL.length)];
   }
 
-  function showOtpNotification(otp, phoneNumber) {
-    // Hapus notifikasi lama jika ada
+function showOtpNotification(otp, phoneNumber) {
     const existing = document.getElementById("otpNotif");
-    if (existing) existing.remove();
+    if (existing) {
+      existing.style.animation = "notifSlideOut 0.25s ease both";
+      setTimeout(() => existing.remove(), 250);
+    }
+
+    // Inject keyframes sekali saja
+    if (!document.getElementById("notifStyles")) {
+      const s = document.createElement("style");
+      s.id = "notifStyles";
+      s.textContent = `
+        @keyframes notifSlideIn {
+          from { opacity: 0; transform: translateY(-16px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes notifSlideOut {
+          from { opacity: 1; transform: translateY(0); }
+          to   { opacity: 0; transform: translateY(-12px); }
+        }
+        @keyframes notifPulse {
+          0%, 100% { box-shadow: 0 0 0 0 rgba(193,154,91,0.15); }
+          50%       { box-shadow: 0 0 0 5px rgba(193,154,91,0.04); }
+        }
+        #otpNotif {
+          position: fixed;
+          top: 18px;
+          left: 50%;
+          transform-origin: top center;
+          transform: translateX(-50%);
+          z-index: 9999;
+          width: min(340px, calc(100vw - 28px));
+          background: #1a2130;
+          border: 1px solid #2f3d54;
+          border-top: 2px solid #c19a5b;
+          border-radius: 12px;
+          padding: 0;
+          box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.2);
+          animation: notifSlideIn 0.32s cubic-bezier(0.22,1,0.36,1) both;
+          font-family: "Plus Jakarta Sans", sans-serif;
+          overflow: hidden;
+        }
+        #otpNotif .nf-topbar {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 10px 14px 8px;
+          border-bottom: 1px solid #232d3d;
+        }
+        #otpNotif .nf-brand {
+          display: flex;
+          align-items: center;
+          gap: 7px;
+        }
+        #otpNotif .nf-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: #c19a5b;
+          animation: notifPulse 2s ease infinite;
+        }
+        #otpNotif .nf-brand-name {
+          color: #8d9ab0;
+          font-size: 10px;
+          font-weight: 700;
+          letter-spacing: 0.9px;
+          text-transform: uppercase;
+        }
+        #otpNotif .nf-meta {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+        #otpNotif .nf-time {
+          color: #4e5a6a;
+          font-size: 9.5px;
+        }
+        #otpNotif .nf-close {
+          width: 22px;
+          height: 22px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: transparent;
+          border: none;
+          border-radius: 5px;
+          color: #4e5a6a;
+          font-size: 13px;
+          cursor: pointer;
+          transition: background 0.15s ease, color 0.15s ease;
+          line-height: 1;
+          padding: 0;
+          flex-shrink: 0;
+        }
+        #otpNotif .nf-close:hover {
+          background: #2c3444;
+          color: #a0abbe;
+        }
+        #otpNotif .nf-body {
+          padding: 13px 14px 14px;
+        }
+        #otpNotif .nf-label {
+          color: #7c8798;
+          font-size: 11.5px;
+          line-height: 1.5;
+          margin-bottom: 10px;
+        }
+        #otpNotif .nf-label strong {
+          color: #b8c0cc;
+          font-weight: 600;
+        }
+        #otpNotif .nf-otp-wrap {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 10px;
+          background: #131921;
+          border: 1px solid #273040;
+          border-radius: 8px;
+          padding: 10px 13px;
+          margin-bottom: 10px;
+        }
+        #otpNotif .nf-otp-code {
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 26px;
+          font-weight: 600;
+          letter-spacing: 5px;
+          color: #e8ecf1;
+          line-height: 1;
+        }
+        #otpNotif .nf-otp-badge {
+          font-size: 9px;
+          font-weight: 700;
+          letter-spacing: 0.6px;
+          color: #8d7957;
+          background: #2a2418;
+          border: 1px solid #3d3423;
+          border-radius: 4px;
+          padding: 3px 8px;
+          white-space: nowrap;
+          text-transform: uppercase;
+          flex-shrink: 0;
+        }
+        #otpNotif .nf-hint {
+          display: flex;
+          align-items: flex-start;
+          gap: 6px;
+          color: #4e5a6a;
+          font-size: 10.5px;
+          line-height: 1.5;
+        }
+        #otpNotif .nf-hint svg {
+          width: 12px;
+          height: 12px;
+          flex-shrink: 0;
+          margin-top: 1px;
+          color: #5a6a7e;
+        }
+        #otpNotif .nf-progress {
+          height: 2px;
+          background: #1f2836;
+        }
+        #otpNotif .nf-progress-bar {
+          height: 100%;
+          background: linear-gradient(90deg, #3d5a80, #c19a5b);
+          border-radius: 0;
+          animation: notifCountdown 60s linear forwards;
+        }
+        @keyframes notifCountdown {
+          from { width: 100%; }
+          to   { width: 0%; }
+        }
+      `;
+      document.head.appendChild(s);
+    }
 
     const notif = document.createElement("div");
     notif.id = "otpNotif";
     notif.setAttribute("role", "alert");
     notif.setAttribute("aria-live", "assertive");
 
-    notif.style.cssText = `
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 9999;
-      width: 300px;
-      background: #1e2530;
-      border: 1px solid #3d5a80;
-      border-left: 3px solid #c19a5b;
-      border-radius: 10px;
-      padding: 14px 16px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.35);
-      animation: notifSlideIn 0.35s ease both;
-      font-family: "Plus Jakarta Sans", sans-serif;
-    `;
-
     notif.innerHTML = `
-      <style>
-        @keyframes notifSlideIn {
-          from { opacity: 0; transform: translateX(40px); }
-          to   { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes notifSlideOut {
-          from { opacity: 1; transform: translateX(0); }
-          to   { opacity: 0; transform: translateX(40px); }
-        }
-        #otpNotif .notif-header {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 8px;
-        }
-        #otpNotif .notif-brand {
-          display: flex;
-          align-items: center;
-          gap: 7px;
-          color: #a6b0c3;
-          font-size: 10.5px;
-          font-weight: 700;
-          letter-spacing: 0.6px;
-        }
-        #otpNotif .notif-dot {
-          width: 7px;
-          height: 7px;
-          border-radius: 50%;
-          background: #c19a5b;
-          flex-shrink: 0;
-        }
-        #otpNotif .notif-time {
-          color: #6b7688;
-          font-size: 10px;
-        }
-        #otpNotif .notif-body {
-          color: #c8ceda;
-          font-size: 12.5px;
-          line-height: 1.55;
-        }
-        #otpNotif .notif-otp {
-          display: inline-block;
-          margin-top: 6px;
-          font-family: "IBM Plex Mono", monospace;
-          font-size: 22px;
-          font-weight: 600;
-          letter-spacing: 4px;
-          color: #e7ebf0;
-          background: #171d29;
-          border: 1px solid #2c3444;
-          border-radius: 6px;
-          padding: 5px 14px;
-        }
-        #otpNotif .notif-hint {
-          display: block;
-          margin-top: 7px;
-          color: #6b7688;
-          font-size: 10px;
-        }
-        #otpNotif .notif-close {
-          position: absolute;
-          top: 10px;
-          right: 10px;
-          background: transparent;
-          border: none;
-          color: #6b7688;
-          font-size: 16px;
-          cursor: pointer;
-          line-height: 1;
-          padding: 2px 6px;
-          border-radius: 4px;
-        }
-        #otpNotif .notif-close:hover { color: #c8ceda; background: #2c3444; }
-      </style>
-
-      <div class="notif-header">
-        <div class="notif-brand">
-          <div class="notif-dot"></div>
-          DIGITAL REWARD
+      <div class="nf-topbar">
+        <div class="nf-brand">
+          <div class="nf-dot"></div>
+          <span class="nf-brand-name">Digital Reward</span>
         </div>
-        <span class="notif-time">Baru saja</span>
+        <div class="nf-meta">
+          <span class="nf-time">Baru saja</span>
+          <button class="nf-close" onclick="document.getElementById('otpNotif').remove()" aria-label="Tutup notifikasi">✕</button>
+        </div>
       </div>
 
-      <div class="notif-body">
-        Kode verifikasi untuk ${phoneNumber}:
-        <div class="notif-otp">${otp}</div>
-        <span class="notif-hint">Masukkan kode ini. Jangan bagikan ke siapapun.</span>
+      <div class="nf-body">
+        <div class="nf-label">
+          Kode verifikasi untuk <strong>${phoneNumber}</strong>
+        </div>
+
+        <div class="nf-otp-wrap">
+          <div class="nf-otp-code">${otp}</div>
+          <div class="nf-otp-badge">1x pakai</div>
+        </div>
+
+        <div class="nf-hint">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 3 4 6v5c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V6l-8-3Z"/>
+          </svg>
+          Jangan bagikan kode ini kepada siapapun.
+        </div>
       </div>
 
-      <button class="notif-close" onclick="document.getElementById('otpNotif').remove()" aria-label="Tutup notifikasi">✕</button>
+      <div class="nf-progress">
+        <div class="nf-progress-bar"></div>
+      </div>
     `;
 
     document.body.appendChild(notif);
@@ -1810,8 +1907,8 @@
     setTimeout(() => {
       const el = document.getElementById("otpNotif");
       if (el) {
-        el.style.animation = "notifSlideOut 0.3s ease both";
-        setTimeout(() => el.remove(), 300);
+        el.style.animation = "notifSlideOut 0.25s ease both";
+        setTimeout(() => el.remove(), 250);
       }
     }, 60000);
   }

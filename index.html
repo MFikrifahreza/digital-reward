@@ -1295,17 +1295,6 @@ function resetOrbitUI() {
   fadeInEl(otpLabel); fadeInEl(otpNote); fadeInEl(otpTimerRow); fadeInEl(otpSubmitBtn);
   resetButton(otpSubmitBtn, otpSubmitText, "Verifikasi");
 
-  // Error message
-  let errEl = document.getElementById("otpError");
-  if (!errEl) {
-    errEl = document.createElement("p");
-    errEl.id = "otpError";
-    errEl.style.cssText = "color:#b87575;font-size:11.5px;margin-top:8px;text-align:center;";
-    document.getElementById("otpRow").insertAdjacentElement("afterend", errEl);
-  }
-  errEl.textContent = "Kode tidak sesuai. Periksa notifikasi yang muncul.";
-  setTimeout(() => { errEl.style.opacity="0"; errEl.style.transition="opacity 0.3s"; setTimeout(()=>{errEl.textContent="";errEl.style.opacity="1";},300); }, 3200);
-
   clearOtp();
   setTimeout(() => otpBoxes[0].focus(), 120);
 }

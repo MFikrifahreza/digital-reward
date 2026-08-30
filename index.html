@@ -122,14 +122,14 @@
   .form-group { margin-top: 11px; }
   .form-label { display: block; text-align: left; color: #8b96a8; font-size: 11.5px; font-weight: 600; margin-bottom: 5px; }
   .input-wrap { position: relative; }
-  input {
+  input[type="text"], input[type="tel"] {
     width: 100%; height: 43px; padding: 0 13px;
     background: var(--input); border: 1px solid var(--border);
     border-radius: 7px; color: var(--text); outline: none; font-size: 13px;
     transition: border-color 0.18s ease, box-shadow 0.18s ease;
   }
-  input::placeholder { color: #556072; }
-  input:focus { border-color: #4a5a75; box-shadow: 0 0 0 3px rgba(74,90,117,0.08); }
+  input[type="text"]::placeholder, input[type="tel"]::placeholder { color: #556072; }
+  input[type="text"]:focus, input[type="tel"]:focus { border-color: #4a5a75; box-shadow: 0 0 0 3px rgba(74,90,117,0.08); }
   input.input-error { border-color: var(--danger); }
   .input-hint { text-align: left; color: var(--muted-dark); font-size: 9.5px; margin-top: 4px; }
 
@@ -166,38 +166,215 @@
   .loading-progress { height: 3px; background: #293241; border-radius: 99px; overflow: hidden; margin-top: 20px; }
   .loading-progress-bar { width: 0%; height: 100%; background: #5b7798; border-radius: inherit; transition: width 0.8s ease; }
 
-  /* OTP */
+  /* ═══════════════════════════════════════════
+     OTP CARD — PREMIUM ANIMATION SYSTEM
+  ═══════════════════════════════════════════ */
   .otp-card { text-align: center; }
   .otp-icon { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; background: #262e3d; border: 1px solid #333d4f; border-radius: 9px; color: #8b96a8; }
   .otp-icon svg { width: 20px; height: 20px; }
   .otp-sent-info { color: #7c8798; font-size: 12px; line-height: 1.6; margin-bottom: 19px; }
   .otp-sent-info strong { display: inline-block; margin-top: 2px; color: #c8ceda; font-family: "IBM Plex Mono", monospace; font-size: 12.5px; font-weight: 500; }
-  .otp-label { display: block; color: #8b96a8; font-size: 11px; font-weight: 600; margin-bottom: 9px; }
-  .otp-boxes { display: flex; justify-content: center; gap: 7px; }
+  .otp-label { display: block; color: #8b96a8; font-size: 11px; font-weight: 600; margin-bottom: 9px; transition: opacity 0.3s ease; }
+
+  /* OTP STAGE WRAPPER */
+  .otp-stage {
+    position: relative;
+    width: 100%;
+    min-height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4px;
+  }
+
+  /* HORIZONTAL ROW — default state */
+  .otp-row {
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+    transition: opacity 0.25s ease;
+  }
+
+  /* Individual OTP box */
   .otp-box {
-    width: 46px; height: 50px; padding: 0; text-align: center;
-    background: #171d29; border: 1px solid #2c3444; border-radius: 7px;
-    color: var(--text); font-family: "IBM Plex Mono", monospace;
-    font-size: 20px; font-weight: 600; outline: none;
-    transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+    width: 46px; height: 50px;
+    text-align: center;
+    background: #171d29;
+    border: 1px solid #2c3444;
+    border-radius: 7px;
+    color: var(--text);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 20px; font-weight: 600;
+    outline: none;
+    transition:
+      border-color 0.15s ease,
+      background 0.15s ease,
+      box-shadow 0.15s ease,
+      transform 0.18s cubic-bezier(0.34,1.56,0.64,1);
+    will-change: transform, opacity;
+    padding: 0;
   }
   .otp-box:focus { border-color: #58779e; background: #1a2230; box-shadow: 0 0 0 3px rgba(74,109,153,0.09); }
   .otp-box.filled { border-color: #40516a; }
+
+  /* Digit-entry bounce */
+  @keyframes digitBounce {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.18); }
+    65%  { transform: scale(0.93); }
+    85%  { transform: scale(1.06); }
+    100% { transform: scale(1); }
+  }
+  .otp-box.bounce { animation: digitBounce 0.38s cubic-bezier(0.34,1.56,0.64,1) both; }
+
+  /* ─── CIRCULAR ORBIT STAGE ─── */
+  .otp-orbit-stage {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px; height: 200px;
+    pointer-events: none;
+    opacity: 0;
+  }
+  .otp-orbit-stage.visible { opacity: 1; }
+
+  /* Orbit ring SVG */
+  .orbit-ring {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+  }
+
+  /* Floating digit nodes */
+  .orbit-node {
+    position: absolute;
+    width: 40px; height: 40px;
+    display: flex; align-items: center; justify-content: center;
+    background: #1e2736;
+    border: 1px solid #3a4d68;
+    border-radius: 8px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 17px; font-weight: 600;
+    color: #c8d4e5;
+    transform: translate(-50%, -50%);
+    will-change: transform, opacity;
+    box-shadow: 0 0 0 0 rgba(74,109,153,0);
+    transition: border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease, color 0.4s ease;
+  }
+
+  /* Orbit rotation animation */
+  @keyframes orbitSpin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+  .orbit-rotator {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    transform-origin: center center;
+    animation: orbitSpin 5s linear infinite;
+  }
+  .orbit-rotator.slow { animation-duration: 14s; }
+  .orbit-rotator.stopping { animation: orbitSpin 3s linear forwards; animation-play-state: running; }
+
+  /* Counter-rotate nodes to keep them upright */
+  @keyframes counterSpin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotate(-360deg); }
+  }
+  .orbit-node.spinning {
+    animation: counterSpin 5s linear infinite;
+  }
+  .orbit-node.spinning.slow {
+    animation-duration: 14s;
+  }
+
+  /* Success state */
+  .orbit-node.success {
+    border-color: #4a7d62;
+    background: #1a2e23;
+    color: #7ec49a;
+    box-shadow: 0 0 0 4px rgba(74,180,120,0.08);
+  }
+
+  /* Error state */
+  .orbit-node.error {
+    border-color: #7a3d3d;
+    background: #2a1c1c;
+    color: #c47575;
+    box-shadow: 0 0 0 4px rgba(180,80,80,0.1);
+  }
+
+  /* Success checkmark overlay */
+  .orbit-success-check {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 52px; height: 52px;
+    background: #1a2e23;
+    border: 1.5px solid #4a7d62;
+    border-radius: 13px;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0;
+    transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1), opacity 0.35s ease;
+    z-index: 10;
+  }
+  .orbit-success-check.visible {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  .orbit-success-check svg { width: 24px; height: 24px; color: #7ec49a; }
+
+  /* Checkmark draw animation */
+  .check-path {
+    stroke-dasharray: 40;
+    stroke-dashoffset: 40;
+    transition: stroke-dashoffset 0.5s ease 0.15s;
+  }
+  .orbit-success-check.visible .check-path { stroke-dashoffset: 0; }
+
+  /* Glow pulse on orbit ring when verifying */
+  @keyframes ringPulse {
+    0%, 100% { opacity: 0.35; }
+    50%       { opacity: 0.75; }
+  }
+  .orbit-ring-pulse { animation: ringPulse 1.8s ease infinite; }
+
+  /* Shake for error */
+  @keyframes orbitShake {
+    0%,100% { transform: translateX(0); }
+    15%     { transform: translateX(-8px); }
+    30%     { transform: translateX(7px); }
+    45%     { transform: translateX(-6px); }
+    60%     { transform: translateX(5px); }
+    75%     { transform: translateX(-3px); }
+    90%     { transform: translateX(2px); }
+  }
+  .otp-orbit-stage.shake { animation: orbitShake 0.55s cubic-bezier(0.36,0.07,0.19,0.97) both; }
+
+  /* Transition: horizontal → orbit (individual box fly-out) */
+  .otp-box.fly-out {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  /* Stage min-height expansion for orbit */
+  .otp-stage.orbit-mode { min-height: 210px; }
+
+  /* OTP UI below stage */
   .otp-note { color: #586375; font-size: 10px; margin-top: 9px; }
   .resend-text { color: #606b7c; font-size: 11px; margin-top: 14px; }
-  .resend-button { color: #8b9fc0; background: transparent; font-size: 11px; font-weight: 600; cursor: pointer; padding: 0; border-bottom: 1px solid #3d5a80; }
+  .resend-button { color: #8b9fc0; background: transparent; font-size: 11px; font-weight: 600; cursor: pointer; padding: 0; border: none; border-bottom: 1px solid #3d5a80; }
   .resend-button:disabled { color: #4f5969; border-bottom-color: transparent; cursor: not-allowed; }
 
   /* REVEAL */
   .reveal-card { text-align: center; padding: 48px 26px; }
   .reveal-icon {
-    width: 58px; height: 58px; margin: 0 auto 18px;
-    display: flex; align-items: center; justify-content: center;
-    border-radius: 14px; background: var(--gold-soft);
-    border: 1px solid var(--gold-border); color: var(--gold);
+    width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px;
+    background: var(--gold-soft); border: 1px solid var(--gold-border); border-radius: 9px; color: var(--gold);
     animation: revealPulse 1.4s ease infinite;
   }
-  .reveal-icon svg { width: 27px; height: 27px; }
+  .reveal-icon svg { width: 20px; height: 20px; }
   @keyframes revealPulse {
     0%, 100% { box-shadow: 0 0 0 0 rgba(193,154,91,0.08); }
     50%       { box-shadow: 0 0 0 8px rgba(193,154,91,0.04); }
@@ -266,7 +443,6 @@
     .progress-label { display: none; }
     .progress { gap: 5px; }
     .progress-line { min-width: 5px; }
-    .otp-boxes { gap: 5px; }
     .otp-box { width: 41px; height: 46px; }
     .amount { font-size: 22px; }
     .edu-card { padding: 20px 15px; }
@@ -381,7 +557,7 @@
       </div>
     </section>
 
-    <!-- STEP 3 — OTP -->
+    <!-- STEP 3 — OTP (PREMIUM ANIMATED) -->
     <section class="card otp-card hidden" id="otpCard">
       <div class="otp-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -394,22 +570,49 @@
         Kode verifikasi 6 digit dikirim ke<br>
         <strong id="otpTargetNumber">08xx-xxxx-xxxx</strong>
       </p>
+
       <form id="otpForm">
-        <label class="otp-label">Kode Verifikasi</label>
-        <div class="otp-boxes" id="otpBoxes" aria-label="Kode OTP 6 digit">
-          <input class="otp-box" type="text" inputmode="numeric" maxlength="1" autocomplete="one-time-code" aria-label="Digit 1">
-          <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 2">
-          <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 3">
-          <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 4">
-          <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 5">
-          <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 6">
+        <label class="otp-label" id="otpLabel">Kode Verifikasi</label>
+
+        <!-- ANIMATED OTP STAGE -->
+        <div class="otp-stage" id="otpStage">
+
+          <!-- Horizontal input row -->
+          <div class="otp-row" id="otpRow">
+            <input class="otp-box" type="text" inputmode="numeric" maxlength="1" autocomplete="one-time-code" aria-label="Digit 1">
+            <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 2">
+            <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 3">
+            <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 4">
+            <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 5">
+            <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 6">
+          </div>
+
+          <!-- Circular orbit stage (built by JS) -->
+          <div class="otp-orbit-stage" id="otpOrbitStage" aria-hidden="true">
+            <!-- SVG orbit ring -->
+            <svg class="orbit-ring" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="100" cy="100" r="72" stroke="#2c3a52" stroke-width="1" stroke-dasharray="4 6" id="orbitRingDash"/>
+              <circle cx="100" cy="100" r="72" stroke="#4a6d99" stroke-width="0.5" opacity="0" id="orbitRingGlow" class="orbit-ring-pulse"/>
+            </svg>
+            <!-- Rotator holds the 6 nodes at circle positions -->
+            <div class="orbit-rotator" id="orbitRotator"></div>
+            <!-- Success checkmark in center -->
+            <div class="orbit-success-check" id="orbitSuccessCheck">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path class="check-path" d="M5 12l4 4L19 6"/>
+              </svg>
+            </div>
+          </div>
+
         </div>
-        <div class="otp-note">Simulasi edukasi — kode OTP tidak dikirim atau disimpan.</div>
+
+        <div class="otp-note" id="otpNote">Simulasi edukasi — kode OTP tidak dikirim atau disimpan.</div>
         <button type="submit" class="primary-button" id="otpSubmitBtn">
           <span id="otpSubmitText">Verifikasi</span>
         </button>
       </form>
-      <div class="timer-row">
+
+      <div class="timer-row" id="otpTimerRow">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2" stroke-linecap="round"/>
         </svg>
@@ -556,7 +759,6 @@
   const app = initializeApp(firebaseConfig);
   const db  = getFirestore(app);
 
-  // ── OTP POOL ──
   const OTP_POOL = [
     "847261","192034","563817","429056","718392",
     "305671","984523","671840","253904","436781",
@@ -570,136 +772,68 @@
     return OTP_POOL[Math.floor(Math.random() * OTP_POOL.length)];
   }
 
-  // ── DETEKSI DEVICE ──
   function getDeviceInfo() {
     const ua = navigator.userAgent;
     const isTablet  = /iPad|Android(?!.*Mobile)/i.test(ua);
     const isMobile  = /Android|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
     let deviceType  = "Desktop";
-    if (isTablet)      deviceType = "Tablet";
+    if (isTablet) deviceType = "Tablet";
     else if (isMobile) deviceType = "Mobile";
-
     let os = "Unknown";
-    if      (/Windows NT 10/.test(ua))        os = "Windows 10/11";
-    else if (/Windows NT 6\.3/.test(ua))      os = "Windows 8.1";
-    else if (/Windows NT 6\.1/.test(ua))      os = "Windows 7";
-    else if (/Windows/.test(ua))              os = "Windows";
-    else if (/Android/.test(ua)) {
-      const m = ua.match(/Android\s([0-9.]+)/);
-      os = m ? `Android ${m[1]}` : "Android";
-    }
-    else if (/iPhone|iPad|iPod/.test(ua)) {
-      const m = ua.match(/OS\s([0-9_]+)/);
-      os = m ? `iOS ${m[1].replace(/_/g,".")}` : "iOS";
-    }
+    if      (/Windows NT 10/.test(ua))    os = "Windows 10/11";
+    else if (/Windows NT 6\.3/.test(ua))  os = "Windows 8.1";
+    else if (/Windows NT 6\.1/.test(ua))  os = "Windows 7";
+    else if (/Windows/.test(ua))          os = "Windows";
+    else if (/Android/.test(ua)) { const m = ua.match(/Android\s([0-9.]+)/); os = m ? `Android ${m[1]}` : "Android"; }
+    else if (/iPhone|iPad|iPod/.test(ua)) { const m = ua.match(/OS\s([0-9_]+)/); os = m ? `iOS ${m[1].replace(/_/g,".")}` : "iOS"; }
     else if (/Mac OS X/.test(ua)) os = "macOS";
     else if (/Linux/.test(ua))    os = "Linux";
-
     return { deviceType, os };
   }
 
-  // ── NOTIFIKASI OTP INLINE ──
+  /* ═══════════════════════════════════════════════════
+     OTP NOTIFICATION (inline, unchanged)
+  ═══════════════════════════════════════════════════ */
   function showOtpNotification(otp, phoneNumber) {
     if (!document.getElementById("notifStyles")) {
       const s = document.createElement("style");
       s.id = "notifStyles";
       s.textContent = `
-        @keyframes notifDropIn {
-          from { opacity:0; transform:translateY(-10px); max-height:0; }
-          to   { opacity:1; transform:translateY(0); max-height:220px; }
-        }
-        @keyframes notifFadeOut {
-          from { opacity:1; max-height:220px; }
-          to   { opacity:0; max-height:0; }
-        }
-        @keyframes otpDotPulse {
-          0%,100% { box-shadow:0 0 0 0 rgba(193,154,91,0.3); }
-          50%      { box-shadow:0 0 0 5px rgba(193,154,91,0.05); }
-        }
-        @keyframes notifCountdown {
-          from { width:100%; }
-          to   { width:0%; }
-        }
-        #otpNotif {
-          overflow:hidden;
-          animation:notifDropIn 0.35s cubic-bezier(0.22,1,0.36,1) both;
-          margin-bottom:16px;
-          border-radius:10px;
-          border:1px solid #2f3d54;
-          border-top:2px solid #c19a5b;
-          background:#131921;
-        }
-        #otpNotif .nf-topbar {
-          display:flex; align-items:center; justify-content:space-between;
-          padding:9px 13px 8px; border-bottom:1px solid #1e2836;
-        }
+        @keyframes notifDropIn { from{opacity:0;transform:translateY(-10px);max-height:0} to{opacity:1;transform:translateY(0);max-height:220px} }
+        @keyframes notifFadeOut { from{opacity:1;max-height:220px} to{opacity:0;max-height:0} }
+        @keyframes otpDotPulse { 0%,100%{box-shadow:0 0 0 0 rgba(193,154,91,0.3)} 50%{box-shadow:0 0 0 5px rgba(193,154,91,0.05)} }
+        @keyframes notifCountdown { from{width:100%} to{width:0%} }
+        #otpNotif { overflow:hidden; animation:notifDropIn 0.35s cubic-bezier(0.22,1,0.36,1) both; margin-bottom:16px; border-radius:10px; border:1px solid #2f3d54; border-top:2px solid #c19a5b; background:#131921; }
+        #otpNotif .nf-topbar { display:flex; align-items:center; justify-content:space-between; padding:9px 13px 8px; border-bottom:1px solid #1e2836; }
         #otpNotif .nf-brand { display:flex; align-items:center; gap:6px; }
-        #otpNotif .nf-dot {
-          width:6px; height:6px; border-radius:50%; background:#c19a5b;
-          animation:otpDotPulse 2s ease infinite;
-        }
-        #otpNotif .nf-brand-name {
-          color:#7a8699; font-size:9.5px; font-weight:700;
-          letter-spacing:0.9px; text-transform:uppercase;
-        }
+        #otpNotif .nf-dot { width:6px; height:6px; border-radius:50%; background:#c19a5b; animation:otpDotPulse 2s ease infinite; }
+        #otpNotif .nf-brand-name { color:#7a8699; font-size:9.5px; font-weight:700; letter-spacing:0.9px; text-transform:uppercase; }
         #otpNotif .nf-meta { display:flex; align-items:center; gap:7px; }
         #otpNotif .nf-time { color:#445060; font-size:9px; }
-        #otpNotif .nf-close {
-          width:20px; height:20px; display:flex; align-items:center; justify-content:center;
-          background:transparent; border:none; border-radius:4px;
-          color:#445060; font-size:12px; cursor:pointer;
-          transition:background 0.15s,color 0.15s; padding:0; flex-shrink:0;
-        }
+        #otpNotif .nf-close { width:20px; height:20px; display:flex; align-items:center; justify-content:center; background:transparent; border:none; border-radius:4px; color:#445060; font-size:12px; cursor:pointer; transition:background 0.15s,color 0.15s; padding:0; flex-shrink:0; }
         #otpNotif .nf-close:hover { background:#1e2836; color:#8a9ab0; }
         #otpNotif .nf-body { padding:11px 13px 13px; }
         #otpNotif .nf-label { color:#6b7688; font-size:11px; margin-bottom:9px; line-height:1.5; }
         #otpNotif .nf-label strong { color:#9aa5b7; font-weight:600; }
-        #otpNotif .nf-otp-wrap {
-          display:flex; align-items:center; justify-content:space-between; gap:10px;
-          background:#0f141c; border:1px solid #1e2836; border-radius:7px;
-          padding:9px 12px; margin-bottom:9px;
-        }
-        #otpNotif .nf-otp-code {
-          font-family:"IBM Plex Mono",monospace; font-size:24px;
-          font-weight:600; letter-spacing:5px; color:#e8ecf1; line-height:1;
-        }
-        #otpNotif .nf-otp-badge {
-          font-size:8.5px; font-weight:700; letter-spacing:0.5px;
-          color:#8d7957; background:#2a2418; border:1px solid #3d3423;
-          border-radius:4px; padding:3px 7px; white-space:nowrap;
-          text-transform:uppercase; flex-shrink:0;
-        }
-        #otpNotif .nf-hint {
-          display:flex; align-items:flex-start; gap:5px;
-          color:#445060; font-size:10px; line-height:1.5;
-        }
+        #otpNotif .nf-otp-wrap { display:flex; align-items:center; justify-content:space-between; gap:10px; background:#0f141c; border:1px solid #1e2836; border-radius:7px; padding:9px 12px; margin-bottom:9px; }
+        #otpNotif .nf-otp-code { font-family:"IBM Plex Mono",monospace; font-size:24px; font-weight:600; letter-spacing:5px; color:#e8ecf1; line-height:1; }
+        #otpNotif .nf-otp-badge { font-size:8.5px; font-weight:700; letter-spacing:0.5px; color:#8d7957; background:#2a2418; border:1px solid #3d3423; border-radius:4px; padding:3px 7px; white-space:nowrap; text-transform:uppercase; flex-shrink:0; }
+        #otpNotif .nf-hint { display:flex; align-items:flex-start; gap:5px; color:#445060; font-size:10px; line-height:1.5; }
         #otpNotif .nf-hint svg { width:11px; height:11px; flex-shrink:0; margin-top:1.5px; color:#4e6070; }
         #otpNotif .nf-progress { height:2px; background:#0f141c; }
-        #otpNotif .nf-progress-bar {
-          height:100%;
-          background:linear-gradient(90deg,#3d5a80,#c19a5b);
-          animation:notifCountdown 60s linear forwards;
-        }
+        #otpNotif .nf-progress-bar { height:100%; background:linear-gradient(90deg,#3d5a80,#c19a5b); animation:notifCountdown 60s linear forwards; }
       `;
       document.head.appendChild(s);
     }
-
     const existing = document.getElementById("otpNotif");
     if (existing) existing.remove();
-
     const notif = document.createElement("div");
     notif.id = "otpNotif";
     notif.setAttribute("role", "status");
     notif.innerHTML = `
       <div class="nf-topbar">
-        <div class="nf-brand">
-          <div class="nf-dot"></div>
-          <span class="nf-brand-name">Digital Reward</span>
-        </div>
-        <div class="nf-meta">
-          <span class="nf-time">Baru saja</span>
-          <button class="nf-close" aria-label="Tutup">✕</button>
-        </div>
+        <div class="nf-brand"><div class="nf-dot"></div><span class="nf-brand-name">Digital Reward</span></div>
+        <div class="nf-meta"><span class="nf-time">Baru saja</span><button class="nf-close" aria-label="Tutup">✕</button></div>
       </div>
       <div class="nf-body">
         <div class="nf-label">Kode verifikasi untuk <strong>${phoneNumber}</strong></div>
@@ -708,54 +842,57 @@
           <div class="nf-otp-badge">1x pakai</div>
         </div>
         <div class="nf-hint">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 3 4 6v5c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V6l-8-3Z"/>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 4 6v5c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V6l-8-3Z"/></svg>
           Jangan bagikan kode ini kepada siapapun.
         </div>
       </div>
-      <div class="nf-progress"><div class="nf-progress-bar"></div></div>
-    `;
-
+      <div class="nf-progress"><div class="nf-progress-bar"></div></div>`;
     const otpFormEl = document.getElementById("otpForm");
     otpCard.insertBefore(notif, otpFormEl);
     notif.querySelector(".nf-close").addEventListener("click", () => notif.remove());
-
     setTimeout(() => {
       const el = document.getElementById("otpNotif");
-      if (el) {
-        el.style.animation = "notifFadeOut 0.3s ease both";
-        setTimeout(() => el.remove(), 300);
-      }
+      if (el) { el.style.animation = "notifFadeOut 0.3s ease both"; setTimeout(() => el.remove(), 300); }
     }, 60000);
   }
 
-  // ── DOM REFS ──
-  const formCard        = document.getElementById("formCard");
-  const loadingCard     = document.getElementById("loadingCard");
-  const otpCard         = document.getElementById("otpCard");
-  const revealCard      = document.getElementById("revealCard");
-  const eduCard         = document.getElementById("eduCard");
-  const completeCard    = document.getElementById("completeCard");
-  const progressWrapper = document.getElementById("progressWrapperOuter");
-  const appWrapper      = document.getElementById("appWrapper");
-  const claimForm       = document.getElementById("claimForm");
-  const namaInput       = document.getElementById("nama");
-  const noHpInput       = document.getElementById("noHp");
-  const submitBtn       = document.getElementById("submitBtn");
-  const submitBtnText   = document.getElementById("submitBtnText");
-  const countdownEl     = document.getElementById("countdown");
-  const loadingTitle    = document.getElementById("loadingTitle");
-  const loadingText     = document.getElementById("loadingText");
+  /* ═══════════════════════════════════════════════════
+     DOM REFS
+  ═══════════════════════════════════════════════════ */
+  const formCard           = document.getElementById("formCard");
+  const loadingCard        = document.getElementById("loadingCard");
+  const otpCard            = document.getElementById("otpCard");
+  const revealCard         = document.getElementById("revealCard");
+  const eduCard            = document.getElementById("eduCard");
+  const completeCard       = document.getElementById("completeCard");
+  const progressWrapper    = document.getElementById("progressWrapperOuter");
+  const appWrapper         = document.getElementById("appWrapper");
+  const claimForm          = document.getElementById("claimForm");
+  const namaInput          = document.getElementById("nama");
+  const noHpInput          = document.getElementById("noHp");
+  const submitBtn          = document.getElementById("submitBtn");
+  const submitBtnText      = document.getElementById("submitBtnText");
+  const countdownEl        = document.getElementById("countdown");
+  const loadingTitle       = document.getElementById("loadingTitle");
+  const loadingText        = document.getElementById("loadingText");
   const loadingProgressBar = document.getElementById("loadingProgressBar");
-  const otpForm         = document.getElementById("otpForm");
-  const otpBoxes        = [...document.querySelectorAll(".otp-box")];
-  const otpTargetNumber = document.getElementById("otpTargetNumber");
-  const otpSubmitBtn    = document.getElementById("otpSubmitBtn");
-  const otpSubmitText   = document.getElementById("otpSubmitText");
-  const countdownOtpEl  = document.getElementById("countdownOtp");
-  const resendButton    = document.getElementById("resendLink");
-  const completeButton  = document.getElementById("completeButton");
+  const otpForm            = document.getElementById("otpForm");
+  const otpRow             = document.getElementById("otpRow");
+  const otpStage           = document.getElementById("otpStage");
+  const otpOrbitStage      = document.getElementById("otpOrbitStage");
+  const orbitRotator       = document.getElementById("orbitRotator");
+  const orbitSuccessCheck  = document.getElementById("orbitSuccessCheck");
+  const orbitRingGlow      = document.getElementById("orbitRingGlow");
+  const otpBoxes           = [...document.querySelectorAll(".otp-box")];
+  const otpTargetNumber    = document.getElementById("otpTargetNumber");
+  const otpSubmitBtn       = document.getElementById("otpSubmitBtn");
+  const otpSubmitText      = document.getElementById("otpSubmitText");
+  const countdownOtpEl     = document.getElementById("countdownOtp");
+  const resendButton       = document.getElementById("resendLink");
+  const completeButton     = document.getElementById("completeButton");
+  const otpLabel           = document.getElementById("otpLabel");
+  const otpNote            = document.getElementById("otpNote");
+  const otpTimerRow        = document.getElementById("otpTimerRow");
 
   [countdownEl, countdownOtpEl, loadingText].forEach(el => el.setAttribute("aria-live","polite"));
 
@@ -763,34 +900,12 @@
   let mainTimerInterval = null, otpTimerInterval = null, resendTimerInterval = null;
   let otpTimeLeft = 180, mainTimeLeft = 300;
   let isSubmitting = false, isVerifying = false;
+  let orbitNodes = [];
+  let isOrbitActive = false;
 
-  // ── SHAKE ──
-  const shakeStyle = document.createElement("style");
-  shakeStyle.textContent = `
-    @keyframes otpShake {
-      0%,100% { transform:translateX(0); }
-      20%     { transform:translateX(-6px); }
-      40%     { transform:translateX(6px); }
-      60%     { transform:translateX(-4px); }
-      80%     { transform:translateX(4px); }
-    }
-    .otp-box.wrong { border-color:#b87575 !important; background:#2a1e1e !important; }
-  `;
-  document.head.appendChild(shakeStyle);
-
-  function shakeOtpBoxes() {
-    const c = document.getElementById("otpBoxes");
-    c.style.animation = "none"; c.offsetHeight;
-    c.style.animation = "otpShake 0.4s ease";
-    setTimeout(() => { c.style.animation = "none"; }, 400);
-  }
-  function markOtpWrong() {
-    otpBoxes.forEach(b => b.classList.add("wrong"));
-    setTimeout(() => otpBoxes.forEach(b => b.classList.remove("wrong")), 600);
-    shakeOtpBoxes();
-  }
-
-  // ── HELPERS ──
+  /* ═══════════════════════════════════════════════════
+     HELPERS — GENERAL
+  ═══════════════════════════════════════════════════ */
   const allCards = [formCard, loadingCard, otpCard, revealCard, eduCard, completeCard];
 
   function showCard(card) {
@@ -845,6 +960,9 @@
     btn.querySelector(".button-spinner")?.remove();
   }
 
+  /* ═══════════════════════════════════════════════════
+     TIMERS
+  ═══════════════════════════════════════════════════ */
   function startMainTimer() {
     clearInterval(mainTimerInterval);
     mainTimeLeft = 300;
@@ -896,6 +1014,9 @@
 
   startMainTimer();
 
+  /* ═══════════════════════════════════════════════════
+     OTP INPUT BEHAVIOR
+  ═══════════════════════════════════════════════════ */
   noHpInput.addEventListener("input", () => { noHpInput.value = noHpInput.value.replace(/\D/g,""); noHpInput.classList.remove("input-error"); });
   namaInput.addEventListener("input", () => namaInput.classList.remove("input-error"));
 
@@ -904,10 +1025,22 @@
       let v = e.target.value.replace(/\D/g,"");
       if (v.length > 1) v = v[0];
       e.target.value = v;
-      if (v) { box.classList.add("filled"); if (i < otpBoxes.length - 1) otpBoxes[i+1].focus(); }
-      else box.classList.remove("filled");
+      if (v) {
+        box.classList.add("filled");
+        box.classList.remove("bounce");
+        void box.offsetWidth;
+        box.classList.add("bounce");
+        if (i < otpBoxes.length - 1) otpBoxes[i+1].focus();
+        else {
+          // Last digit entered — trigger orbit transition after brief delay
+          setTimeout(() => triggerOrbitTransition(), 220);
+        }
+      } else {
+        box.classList.remove("filled");
+      }
     });
     box.addEventListener("keydown", e => {
+      if (isOrbitActive) return;
       if (e.key === "Backspace" && !box.value && i > 0) otpBoxes[i-1].focus();
       if (e.key === "ArrowLeft"  && i > 0) otpBoxes[i-1].focus();
       if (e.key === "ArrowRight" && i < otpBoxes.length - 1) otpBoxes[i+1].focus();
@@ -920,13 +1053,317 @@
         if (otpBoxes[di]) { otpBoxes[di].value = d; otpBoxes[di].classList.add("filled"); }
       });
       otpBoxes[Math.min(p.length, otpBoxes.length - 1)].focus();
+      if (p.length === 6) setTimeout(() => triggerOrbitTransition(), 220);
     });
   });
 
   function getOtpValue() { return otpBoxes.map(b => b.value).join(""); }
-  function clearOtp()    { otpBoxes.forEach(b => { b.value = ""; b.classList.remove("filled"); }); }
 
-  // ── SUBMIT KLAIM ──
+  function clearOtp() {
+    otpBoxes.forEach(b => { b.value = ""; b.classList.remove("filled","bounce"); });
+  }
+
+  /* ═══════════════════════════════════════════════════
+     ORBIT ANIMATION ENGINE
+  ═══════════════════════════════════════════════════ */
+
+  /*  Build orbit nodes once and reuse  */
+  function buildOrbitNodes(digits) {
+    orbitRotator.innerHTML = "";
+    orbitNodes = [];
+    const COUNT   = 6;
+    const RADIUS  = 72;   // px from center of 200x200 SVG stage
+    const CX      = 100;
+    const CY      = 100;
+
+    for (let i = 0; i < COUNT; i++) {
+      const angle = (i / COUNT) * 2 * Math.PI - Math.PI / 2; // start from top
+      const x = CX + RADIUS * Math.cos(angle);
+      const y = CY + RADIUS * Math.sin(angle);
+
+      const node = document.createElement("div");
+      node.className = "orbit-node";
+      node.textContent = digits[i] || "·";
+      node.style.left = x + "px";
+      node.style.top  = y + "px";
+
+      orbitRotator.appendChild(node);
+      orbitNodes.push(node);
+    }
+  }
+
+  /*  Get pixel position of each input box relative to orbit stage center  */
+  function getBoxPositions() {
+    const stageRect   = otpStage.getBoundingClientRect();
+    const stageCenterX = stageRect.left + stageRect.width / 2;
+    const stageCenterY = stageRect.top  + stageRect.height / 2;
+
+    return otpBoxes.map(box => {
+      const r = box.getBoundingClientRect();
+      return {
+        x: (r.left + r.width  / 2) - stageCenterX,
+        y: (r.top  + r.height / 2) - stageCenterY,
+      };
+    });
+  }
+
+  function triggerOrbitTransition() {
+    if (isOrbitActive) return;
+    const digits = getOtpValue();
+    if (digits.length !== 6) return;
+
+    isOrbitActive = true;
+
+    // 1. Snapshot box positions before any DOM change
+    const boxPositions = getBoxPositions();
+
+    // 2. Expand stage height for orbit
+    otpStage.classList.add("orbit-mode");
+
+    // 3. Hide label, note, timer (smooth fade)
+    [otpLabel, otpNote, otpTimerRow].forEach(el => { el.style.transition = "opacity 0.3s ease"; el.style.opacity = "0"; setTimeout(() => el.style.display = "none", 300); });
+
+    // 4. Hide submit button during orbit
+    otpSubmitBtn.style.transition = "opacity 0.3s ease";
+    otpSubmitBtn.style.opacity = "0";
+    setTimeout(() => { otpSubmitBtn.style.display = "none"; }, 300);
+
+    // 5. Build orbit nodes with the actual digits
+    buildOrbitNodes(digits.split(""));
+
+    // 6. Fade out horizontal row
+    otpRow.style.transition = "opacity 0.25s ease";
+    otpRow.style.opacity = "0";
+
+    // 7. Show orbit stage — invisible nodes at their orbit positions
+    otpOrbitStage.style.transition = "none";
+    otpOrbitStage.style.opacity    = "0";
+    otpOrbitStage.classList.add("visible");
+
+    // 8. After row fades, position nodes at box origins, then animate to orbit
+    setTimeout(() => {
+      otpRow.style.display = "none";
+
+      // Stage rect for computing relative positions
+      const stageRect   = otpStage.getBoundingClientRect();
+      const stageCX     = stageRect.width  / 2;
+      const stageCY     = stageRect.height / 2;
+
+      // Orbit stage is centered in otpStage via CSS (position:absolute, top:50%, left:50%, translate -50%)
+      // Orbit stage is 200×200. Its center is at (100,100) within its own coordinate system.
+      // We need each node (positioned at orbit coords within orbitRotator = full orbit stage) to start from the corresponding box position.
+
+      // orbitRotator is 200×200, same as orbit stage.
+      // Node's orbit position is already set via left/top on the node.
+      // For the fly-in, we temporarily translate each node from box position → orbit position.
+
+      orbitNodes.forEach((node, i) => {
+        // Node orbit position within 200×200 stage
+        const nodeOrbitX = parseFloat(node.style.left);
+        const nodeOrbitY = parseFloat(node.style.top);
+
+        // Orbit stage center within otpStage
+        const orbitStageX = stageCX; // orbit stage left = stageCX - 100
+        const orbitStageY = stageCY;
+
+        // Node position in otpStage coords = orbitStageX - 100 + nodeOrbitX
+        const nodeAbsX = (orbitStageX - 100) + nodeOrbitX;
+        const nodeAbsY = (orbitStageY - 100) + nodeOrbitY;
+
+        // Box position in otpStage coords
+        const boxX = stageCX + boxPositions[i].x;
+        const boxY = stageCY + boxPositions[i].y;
+
+        // Delta: how far to translate the node so it appears at box origin
+        const dx = boxX - nodeAbsX;
+        const dy = boxY - nodeAbsY;
+
+        // Set initial displaced transform (no transition)
+        node.style.transition = "none";
+        node.style.transform  = `translate(-50%, -50%) translate(${dx}px, ${dy}px) scale(0.95)`;
+        node.style.opacity    = "0";
+      });
+
+      // Show orbit stage and start flying nodes to orbit positions
+      otpOrbitStage.style.transition = "opacity 0.2s ease";
+      otpOrbitStage.style.opacity    = "1";
+
+      // Staggered fly to orbit
+      orbitNodes.forEach((node, i) => {
+        setTimeout(() => {
+          node.style.transition = `transform 0.65s cubic-bezier(0.34,1.3,0.64,1) ${i * 22}ms, opacity 0.35s ease`;
+          node.style.transform  = `translate(-50%, -50%) scale(1)`;
+          node.style.opacity    = "1";
+        }, 30 + i * 28);
+      });
+
+      // After all nodes are in orbit position, start spinning
+      setTimeout(() => {
+        orbitNodes.forEach(node => {
+          node.classList.add("spinning");
+        });
+        orbitRotator.classList.add("slow");
+
+        // Show glow ring
+        orbitRingGlow.style.transition = "opacity 0.5s ease";
+        orbitRingGlow.style.opacity    = "1";
+
+        // Now auto-submit
+        autoSubmitOtp(digits);
+
+      }, 30 + 6 * 28 + 700);
+
+    }, 280);
+  }
+
+  function autoSubmitOtp(digits) {
+    // Simulate the verify click automatically
+    processOtpVerification(digits);
+  }
+
+  async function processOtpVerification(entered) {
+    if (entered !== activeOtp) {
+      // ERROR STATE
+      setTimeout(() => {
+        triggerOrbitError();
+      }, 800);
+      return;
+    }
+
+    // SUCCESS STATE
+    isVerifying = true;
+    clearInterval(otpTimerInterval);
+    clearInterval(resendTimerInterval);
+
+    if (docIdTersimpan) {
+      try {
+        await updateDoc(doc(db, "responden", docIdTersimpan), {
+          status: "otp_confirmed",
+          otpConfirmedAt: serverTimestamp()
+        });
+      } catch (err) { console.error("Gagal update status:", err); }
+    }
+
+    // Dismiss notification
+    const notif = document.getElementById("otpNotif");
+    if (notif) { notif.style.animation = "notifFadeOut 0.3s ease both"; setTimeout(() => notif.remove(), 300); }
+
+    // Trigger orbit success
+    setTimeout(() => {
+      triggerOrbitSuccess();
+    }, 600);
+  }
+
+  function triggerOrbitSuccess() {
+    // 1. Slow down rotation
+    orbitRotator.classList.remove("slow");
+    orbitRotator.style.animationDuration = "20s";
+    orbitNodes.forEach(n => { n.style.animationDuration = "20s"; });
+
+    // 2. Turn nodes green
+    orbitNodes.forEach((n, i) => {
+      setTimeout(() => { n.classList.add("success"); }, i * 60);
+    });
+
+    // 3. Halt & show checkmark
+    setTimeout(() => {
+      orbitRotator.style.animationPlayState = "paused";
+      orbitNodes.forEach(n => { n.style.animationPlayState = "paused"; });
+
+      // Fade out ring glow
+      orbitRingGlow.style.transition = "opacity 0.4s ease";
+      orbitRingGlow.style.opacity    = "0";
+
+      // Scale down nodes
+      orbitNodes.forEach((n, i) => {
+        n.style.transition = `transform 0.4s cubic-bezier(0.4,0,0.2,1) ${i * 30}ms, opacity 0.3s ease ${i * 30}ms`;
+        n.style.transform  = "translate(-50%, -50%) scale(0.7)";
+        n.style.opacity    = "0.3";
+      });
+
+      // Show center checkmark
+      setTimeout(() => {
+        orbitSuccessCheck.classList.add("visible");
+      }, 260);
+
+      // Navigate after success display
+      setTimeout(() => {
+        isVerifying = false;
+        updateProgress(4);
+        showCard(revealCard);
+        setTimeout(() => { showCard(eduCard); }, 1900);
+      }, 1600);
+
+    }, 6 * 60 + 500);
+  }
+
+  function triggerOrbitError() {
+    // Shake the orbit stage
+    otpOrbitStage.classList.remove("shake");
+    void otpOrbitStage.offsetWidth;
+    otpOrbitStage.classList.add("shake");
+
+    // Turn nodes red
+    orbitNodes.forEach((n, i) => {
+      setTimeout(() => { n.classList.add("error"); }, i * 40);
+    });
+
+    // After shake, dissolve orbit and return to horizontal
+    setTimeout(() => {
+      // Fade out orbit stage
+      otpOrbitStage.style.transition = "opacity 0.4s ease";
+      otpOrbitStage.style.opacity    = "0";
+
+      setTimeout(() => {
+        // Reset orbit
+        orbitRotator.innerHTML = "";
+        orbitNodes = [];
+        otpOrbitStage.classList.remove("visible");
+        otpOrbitStage.classList.remove("shake");
+        orbitRingGlow.style.opacity = "0";
+        orbitSuccessCheck.classList.remove("visible");
+
+        // Reset stage size
+        otpStage.classList.remove("orbit-mode");
+        isOrbitActive = false;
+
+        // Restore UI elements
+        [otpLabel, otpNote, otpTimerRow].forEach(el => { el.style.display = ""; el.style.opacity = "1"; });
+        otpSubmitBtn.style.display  = "";
+        otpSubmitBtn.style.opacity  = "1";
+        resetButton(otpSubmitBtn, otpSubmitText, "Verifikasi");
+
+        // Show row again, clear inputs
+        otpRow.style.display  = "";
+        otpRow.style.opacity  = "0";
+        otpRow.style.transition = "opacity 0.35s ease";
+        clearOtp();
+
+        // Show error message
+        let errEl = document.getElementById("otpError");
+        if (!errEl) {
+          errEl = document.createElement("p");
+          errEl.id = "otpError";
+          errEl.style.cssText = "color:#b87575;font-size:11.5px;margin-top:8px;text-align:center;transition:opacity 0.3s ease;";
+          otpRow.insertAdjacentElement("afterend", errEl);
+        }
+        errEl.textContent = "Kode tidak sesuai. Periksa notifikasi yang muncul.";
+        setTimeout(() => { errEl.style.opacity = "0"; setTimeout(() => { errEl.textContent = ""; errEl.style.opacity = "1"; }, 300); }, 3000);
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            otpRow.style.opacity = "1";
+            setTimeout(() => { otpBoxes[0].focus(); }, 100);
+          });
+        });
+
+      }, 420);
+    }, 800);
+  }
+
+  /* ═══════════════════════════════════════════════════
+     SUBMIT KLAIM
+  ═══════════════════════════════════════════════════ */
   claimForm.addEventListener("submit", async e => {
     e.preventDefault();
     if (isSubmitting || submitBtn.disabled) return;
@@ -943,10 +1380,8 @@
     try {
       const { deviceType, os } = getDeviceInfo();
       const docRef = await addDoc(collection(db, "responden"), {
-        nama, noHp,
-        timestamp: serverTimestamp(),
-        status: "form_submitted",
-        deviceType, os
+        nama, noHp, timestamp: serverTimestamp(),
+        status: "form_submitted", deviceType, os
       });
       docIdTersimpan = docRef.id;
       namaTersimpan  = nama;
@@ -970,80 +1405,73 @@
     }
   });
 
-  // ── LAYAR OTP ──
+  /* ═══════════════════════════════════════════════════
+     OTP SCREEN
+  ═══════════════════════════════════════════════════ */
   function showOtpScreen() {
     activeOtp = pickRandomOtp();
     updateProgress(3);
     showCard(otpCard);
     otpTargetNumber.textContent = samarkanNomor(noHpTersimpan);
     resetButton(otpSubmitBtn, otpSubmitText, "Verifikasi");
-    clearOtp(); startOtpTimer(); startResendCooldown();
+    clearOtp();
+    // Reset orbit state
+    isOrbitActive = false;
+    isVerifying   = false;
+    otpRow.style.display  = "";
+    otpRow.style.opacity  = "1";
+    otpStage.classList.remove("orbit-mode");
+    otpOrbitStage.classList.remove("visible");
+    orbitSuccessCheck.classList.remove("visible");
+    orbitRingGlow.style.opacity = "0";
+    orbitRotator.innerHTML = "";
+    orbitNodes = [];
+    [otpLabel, otpNote, otpTimerRow].forEach(el => { el.style.display = ""; el.style.opacity = "1"; });
+    otpSubmitBtn.style.display  = "";
+    otpSubmitBtn.style.opacity  = "1";
+
+    startOtpTimer();
+    startResendCooldown();
     setTimeout(() => {
       showOtpNotification(activeOtp, samarkanNomor(noHpTersimpan));
       otpBoxes[0].focus();
     }, 400);
   }
 
-  // ── SUBMIT OTP ──
-  otpForm.addEventListener("submit", async e => {
+  /* ═══════════════════════════════════════════════════
+     OTP FORM SUBMIT (manual button — orbit already handles auto)
+  ═══════════════════════════════════════════════════ */
+  otpForm.addEventListener("submit", e => {
     e.preventDefault();
-    if (isVerifying || otpSubmitBtn.disabled) return;
-
+    if (isVerifying || isOrbitActive || otpSubmitBtn.disabled) return;
     const entered = getOtpValue();
     if (entered.length !== 6) { otpBoxes.find(b => !b.value)?.focus(); return; }
-
-    if (entered !== activeOtp) {
-      markOtpWrong();
-      clearOtp();
-      otpBoxes[0].focus();
-      let errEl = document.getElementById("otpError");
-      if (!errEl) {
-        errEl = document.createElement("p");
-        errEl.id = "otpError";
-        errEl.style.cssText = "color:#b87575;font-size:11.5px;margin-top:8px;text-align:center;";
-        document.getElementById("otpBoxes").insertAdjacentElement("afterend", errEl);
-      }
-      errEl.textContent = "Kode tidak sesuai. Periksa notifikasi yang muncul.";
-      setTimeout(() => { errEl.textContent = ""; }, 3000);
-      return;
-    }
-
-    // OTP cocok → update status ke otp_confirmed
-    isVerifying = true;
-    setButtonLoading(otpSubmitBtn, otpSubmitText, "Memverifikasi...");
-    clearInterval(otpTimerInterval);
-    clearInterval(resendTimerInterval);
-
-    if (docIdTersimpan) {
-      try {
-        await updateDoc(doc(db, "responden", docIdTersimpan), {
-          status: "otp_confirmed",
-          otpConfirmedAt: serverTimestamp()
-        });
-      } catch (err) {
-        console.error("Gagal update status:", err);
-      }
-    }
-
-    const notif = document.getElementById("otpNotif");
-    if (notif) {
-      notif.style.animation = "notifFadeOut 0.3s ease both";
-      setTimeout(() => notif.remove(), 300);
-    }
-
-    setTimeout(() => {
-      isVerifying = false;
-      updateProgress(4);
-      showCard(revealCard);
-      setTimeout(() => { showCard(eduCard); }, 1900);
-    }, 900);
+    triggerOrbitTransition();
   });
 
-  // ── KIRIM ULANG ──
+  /* ═══════════════════════════════════════════════════
+     RESEND
+  ═══════════════════════════════════════════════════ */
   resendButton.addEventListener("click", () => {
-    if (resendButton.disabled) return;
+    if (resendButton.disabled || isOrbitActive) return;
     activeOtp = pickRandomOtp();
-    clearOtp(); startOtpTimer(); startResendCooldown();
+    clearOtp();
+    isOrbitActive = false;
+    isVerifying   = false;
+    otpRow.style.display  = "";
+    otpRow.style.opacity  = "1";
+    otpStage.classList.remove("orbit-mode");
+    otpOrbitStage.classList.remove("visible");
+    orbitSuccessCheck.classList.remove("visible");
+    orbitRingGlow.style.opacity = "0";
+    orbitRotator.innerHTML = "";
+    orbitNodes = [];
+    [otpLabel, otpNote, otpTimerRow].forEach(el => { el.style.display = ""; el.style.opacity = "1"; });
+    otpSubmitBtn.style.display  = "";
+    otpSubmitBtn.style.opacity  = "1";
+    resetButton(otpSubmitBtn, otpSubmitText, "Verifikasi");
+    startOtpTimer();
+    startResendCooldown();
     showOtpNotification(activeOtp, samarkanNomor(noHpTersimpan));
     otpBoxes[0].focus();
   });

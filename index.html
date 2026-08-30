@@ -143,7 +143,7 @@
   .otp-card { text-align: center; }
   .otp-icon { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; background: #262e3d; border: 1px solid #333d4f; border-radius: 9px; color: #8b96a8; }
   .otp-icon svg { width: 20px; height: 20px; }
-  .otp-sent-info { color: #7c8798; font-size: 12px; line-height: 1.6; margin-bottom: 19px; }
+  .otp-sent-info { color: #7c8798; font-size: 12px; line-height: 1.55; margin-bottom: 15px; }
   .otp-sent-info strong { display: inline-block; margin-top: 2px; color: #c8ceda; font-family: "IBM Plex Mono", monospace; font-size: 12.5px; font-weight: 500; }
   .otp-label { display: block; color: #8b96a8; font-size: 11px; font-weight: 600; margin-bottom: 9px; }
 
@@ -171,6 +171,25 @@
     opacity: 0;
     transform: translateY(6px);
     pointer-events: none;
+  }
+
+  /* OTP error — hidden until verification really fails */
+  .otp-error {
+    display: none;
+    max-width: 320px;
+    margin: 7px auto 0;
+    color: var(--danger);
+    font-size: 11.5px;
+    line-height: 1.45;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(-2px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .otp-error.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
   }
 
   /* OTP input box */
@@ -372,17 +391,53 @@
   /* Fly-in keyframe for each tile (from box position to orbit) */
   /* Generated dynamically via JS inline style */
 
-  .otp-note { color: #586375; font-size: 10px; margin-top: 9px; }
-  .resend-text { color: #606b7c; font-size: 11px; margin-top: 14px; }
+  .otp-note { color: #586375; font-size: 10px; line-height: 1.45; margin-top: 8px; }
+  .resend-text { color: #606b7c; font-size: 11px; line-height: 1.45; margin-top: 12px; }
   .resend-button { color: #8b9fc0; background: transparent; font-size: 11px; font-weight: 600; cursor: pointer; padding: 0; border: none; border-bottom: 1px solid #3d5a80; }
   .resend-button:disabled { color: #4f5969; border-bottom-color: transparent; cursor: not-allowed; }
 
-  .reveal-card { text-align: center; padding: 48px 26px; }
-  .reveal-icon { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; background: var(--gold-soft); border: 1px solid var(--gold-border); border-radius: 9px; color: var(--gold); animation: revealPulse 1.4s ease infinite; }
-  .reveal-icon svg { width: 20px; height: 20px; }
+  .reveal-card {
+    text-align: center;
+    padding: 42px 26px;
+    min-height: 190px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .reveal-icon {
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 14px;
+    background: var(--gold-soft);
+    border: 1px solid var(--gold-border);
+    border-radius: 10px;
+    color: var(--gold);
+    animation: revealPulse 1.4s ease infinite;
+    flex: 0 0 auto;
+  }
+  .reveal-icon svg { width: 21px; height: 21px; }
+  .reveal-icon.done { animation: revealDone 0.5s ease both; }
   @keyframes revealPulse { 0%,100%{box-shadow:0 0 0 0 rgba(193,154,91,0.08)} 50%{box-shadow:0 0 0 8px rgba(193,154,91,0.04)} }
-  .reveal-card h2 { color: var(--text); font-size: 20px; line-height: 1.35; margin-bottom: 8px; }
-  .reveal-card p { color: var(--muted); font-size: 12px; line-height: 1.6; }
+  @keyframes revealDone { 0%{transform:scale(.82);opacity:.4} 70%{transform:scale(1.08)} 100%{transform:scale(1);opacity:1} }
+  .reveal-card h2 { color: var(--text); font-size: 20px; line-height: 1.35; margin: 0 0 7px; }
+  .reveal-card p { color: var(--muted); font-size: 12px; line-height: 1.6; margin: 0; max-width: 420px; }
+  .reveal-card.checking .reveal-icon { color: var(--gold); }
+  .reveal-card.done .reveal-icon {
+  color: #39ff88;
+  background: rgba(57, 255, 136, 0.10);
+  border-color: rgba(57, 255, 136, 0.35);
+  box-shadow: 0 0 18px rgba(57, 255, 136, 0.18);
+}
+.reveal-card.done .reveal-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: #39ff88;
+  filter: drop-shadow(0 0 6px rgba(57, 255, 136, 0.75));
+}
 
   .edu-card { width: 100%; background: rgba(30,37,48,0.98); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px 36px; box-shadow: 0 18px 50px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.08); animation: cardIn 0.35s ease both; }
   .edu-header { text-align: center; margin-bottom: 28px; }
@@ -432,6 +487,9 @@
     .timeline-content span, .indicator-text, .safety-list li, .tip-box { font-size: 13.5px; }
   }
   @media (max-width: 390px) {
+    .reveal-card { padding: 34px 20px; min-height: 170px; }
+    .reveal-card h2 { font-size: 18px; }
+    .reveal-card p { font-size: 11.5px; }
     .card { padding: 18px 15px; }
     .progress-label { display: none; }
     .progress { gap: 5px; }
@@ -610,6 +668,7 @@
         </div>
       </div>
 
+      <div class="otp-error" id="otpError" role="alert" aria-live="polite"></div>
       <div class="otp-note" id="otpNote">Simulasi edukasi — kode OTP tidak dikirim atau disimpan.</div>
       <button type="submit" class="primary-button" id="otpSubmitBtn">
         <span id="otpSubmitText">Verifikasi</span>
@@ -628,17 +687,28 @@
     </div>
   </section>
 
-  <!-- REVEAL -->
-  <section class="card reveal-card hidden" id="revealCard">
+  <!-- REVEAL — MEMERIKSA -->
+  <section class="card reveal-card checking hidden" id="revealCheckingCard">
     <div class="reveal-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
         <path d="M12 3 4 6v5c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V6l-8-3Z"/>
         <path d="M12 8v4" stroke-linecap="round"/>
         <circle cx="12" cy="15.5" r=".7" fill="currentColor" stroke="none"/>
       </svg>
     </div>
     <h2>Memeriksa Verifikasi...</h2>
-    <p>Verifikasi selesai. Menyiapkan halaman berikutnya...</p>
+    <p>Memastikan proses verifikasi selesai.</p>
+  </section>
+
+  <!-- REVEAL — SELESAI -->
+  <section class="card reveal-card done hidden" id="revealDoneCard">
+    <div class="reveal-icon done">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M5 12.5 9.2 17 19 7" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h2>Verifikasi Selesai</h2>
+    <p>Verifikasi berhasil. Menyiapkan halaman edukasi...</p>
   </section>
 
   <!-- STEP 4 — EDUKASI -->
@@ -772,8 +842,13 @@ const OTP_POOL = [
 let activeOtp      = "";
 let docIdTersimpan = "";
 
-function pickRandomOtp() {
-  return OTP_POOL[Math.floor(Math.random() * OTP_POOL.length)];
+function pickRandomOtp(previous = "") {
+  if (OTP_POOL.length <= 1) return OTP_POOL[0] || "";
+  let otp = OTP_POOL[Math.floor(Math.random() * OTP_POOL.length)];
+  while (otp === previous) {
+    otp = OTP_POOL[Math.floor(Math.random() * OTP_POOL.length)];
+  }
+  return otp;
 }
 
 function getDeviceInfo() {
@@ -828,6 +903,7 @@ function showOtpNotification(otp, phoneNumber) {
   }
   const existing = document.getElementById("otpNotif");
   if (existing) existing.remove();
+  clearTimeout(notifRemoveTimeout);
   const notif = document.createElement("div");
   notif.id = "otpNotif";
   notif.setAttribute("role","status");
@@ -850,9 +926,12 @@ function showOtpNotification(otp, phoneNumber) {
     <div class="nf-progress"><div class="nf-progress-bar"></div></div>`;
   otpCard.insertBefore(notif, document.getElementById("otpForm"));
   notif.querySelector(".nf-close").addEventListener("click", () => notif.remove());
-  setTimeout(() => {
+  notifRemoveTimeout = setTimeout(() => {
     const el = document.getElementById("otpNotif");
-    if (el) { el.style.animation = "notifFadeOut 0.3s ease both"; setTimeout(() => el.remove(), 300); }
+    if (el) {
+      el.style.animation = "notifFadeOut 0.3s ease both";
+      setTimeout(() => el.remove(), 300);
+    }
   }, 60000);
 }
 
@@ -860,7 +939,8 @@ function showOtpNotification(otp, phoneNumber) {
 const formCard           = document.getElementById("formCard");
 const loadingCard        = document.getElementById("loadingCard");
 const otpCard            = document.getElementById("otpCard");
-const revealCard         = document.getElementById("revealCard");
+const revealCheckingCard = document.getElementById("revealCheckingCard");
+const revealDoneCard    = document.getElementById("revealDoneCard");
 const eduCard            = document.getElementById("eduCard");
 const completeCard       = document.getElementById("completeCard");
 const progressWrapper    = document.getElementById("progressWrapperOuter");
@@ -900,9 +980,11 @@ let mainTimerInterval = null, otpTimerInterval = null, resendTimerInterval = nul
 let otpTimeLeft = 180, mainTimeLeft = 300;
 let isSubmitting = false, isVerifying = false, isOrbitActive = false;
 let orbitTiles = [];
+let otpErrorTimeout = null;
+let notifRemoveTimeout = null;
 
 /* ─── HELPERS ─── */
-const allCards = [formCard, loadingCard, otpCard, revealCard, eduCard, completeCard];
+const allCards = [formCard, loadingCard, otpCard, revealCheckingCard, revealDoneCard, eduCard, completeCard];
 
 function showCard(card) {
   allCards.forEach(c => c.classList.add("hidden"));
@@ -967,10 +1049,19 @@ function startOtpTimer() {
   otpTimeLeft = 180;
   countdownOtpEl.textContent = formatTime(otpTimeLeft);
   otpSubmitBtn.disabled = false;
+  otpSubmitText.textContent = "Verifikasi";
+
   otpTimerInterval = setInterval(() => {
     otpTimeLeft--;
     countdownOtpEl.textContent = formatTime(Math.max(otpTimeLeft, 0));
-    if (otpTimeLeft <= 0) { clearInterval(otpTimerInterval); countdownOtpEl.textContent = "00:00"; otpSubmitBtn.disabled = true; otpSubmitText.textContent = "Kode Kedaluwarsa"; }
+
+    if (otpTimeLeft <= 0) {
+      clearInterval(otpTimerInterval);
+      otpTimeLeft = 0;
+      activeOtp = "";
+      otpSubmitBtn.disabled = true;
+      otpSubmitText.textContent = "Kode Kedaluwarsa";
+    }
   }, 1000);
 }
 
@@ -991,7 +1082,8 @@ namaInput.addEventListener("input", () => namaInput.classList.remove("input-erro
 
 otpBoxes.forEach((box, i) => {
   box.addEventListener("input", e => {
-    if (isOrbitActive) { e.target.value = ""; return; }
+    if (isOrbitActive || otpTimeLeft <= 0 || otpSubmitBtn.disabled) { e.target.value = ""; return; }
+    hideOtpError();
     let v = e.target.value.replace(/\D/g,"");
     if (v.length > 1) v = v[0];
     e.target.value = v;
@@ -1011,7 +1103,8 @@ otpBoxes.forEach((box, i) => {
     if (e.key === "ArrowRight" && i < otpBoxes.length - 1) otpBoxes[i+1].focus();
   });
   box.addEventListener("paste", e => {
-    if (isOrbitActive) { e.preventDefault(); return; }
+    if (isOrbitActive || otpTimeLeft <= 0 || otpSubmitBtn.disabled) { e.preventDefault(); return; }
+    hideOtpError();
     e.preventDefault();
     const p = e.clipboardData.getData("text").replace(/\D/g,"").slice(0,6);
     if (!p) return;
@@ -1162,8 +1255,9 @@ async function launchOrbit() {
 }
 
 async function processOtp(entered) {
-  if (entered !== activeOtp) {
+  if (otpTimeLeft <= 0 || !activeOtp || entered !== activeOtp) {
     await animateOrbitError();
+    showOtpError(otpTimeLeft <= 0 ? "Kode sudah kedaluwarsa. Silakan kirim ulang." : "Kode tidak sesuai. Periksa notifikasi yang muncul.");
     return;
   }
 
@@ -1231,11 +1325,21 @@ async function animateOrbitSuccess() {
 
   await delay(1800);
 
-  // Navigate
+  // Navigate: pisahkan tahap "memeriksa" dan "verifikasi selesai"
   isVerifying = false;
   updateProgress(4);
-  showCard(revealCard);
-  setTimeout(() => showCard(eduCard), 1900);
+
+  showCard(revealCheckingCard);
+
+  // Setelah proses pemeriksaan selesai, tampilkan status berhasil
+  setTimeout(() => {
+    showCard(revealDoneCard);
+  }, 1200);
+
+  // Lanjut ke halaman edukasi setelah status berhasil sempat terlihat
+  setTimeout(() => {
+    showCard(eduCard);
+  }, 2800);
 }
 
 async function animateOrbitError() {
@@ -1295,8 +1399,26 @@ function resetOrbitUI() {
   fadeInEl(otpLabel); fadeInEl(otpNote); fadeInEl(otpTimerRow); fadeInEl(otpSubmitBtn);
   resetButton(otpSubmitBtn, otpSubmitText, "Verifikasi");
 
+  // Error message is controlled only by showOtpError()
+  hideOtpError();
+
   clearOtp();
   setTimeout(() => otpBoxes[0].focus(), 120);
+}
+
+function showOtpError(message) {
+  if (!otpError) return;
+  clearTimeout(otpErrorTimeout);
+  otpError.textContent = message;
+  otpError.classList.add("show");
+  otpErrorTimeout = setTimeout(() => hideOtpError(), 4200);
+}
+
+function hideOtpError() {
+  if (!otpError) return;
+  clearTimeout(otpErrorTimeout);
+  otpError.classList.remove("show");
+  otpError.textContent = "";
 }
 
 /* ─── FADE HELPERS ─── */
@@ -1345,6 +1467,7 @@ claimForm.addEventListener("submit", async e => {
 /* ─── OTP SCREEN ─── */
 function showOtpScreen() {
   activeOtp = pickRandomOtp();
+  hideOtpError();
   updateProgress(3); showCard(otpCard);
   otpTargetNumber.textContent = samarkanNomor(noHpTersimpan);
   resetButton(otpSubmitBtn, otpSubmitText, "Verifikasi");
@@ -1360,7 +1483,8 @@ function showOtpScreen() {
 /* ─── MANUAL SUBMIT (fallback) ─── */
 otpForm.addEventListener("submit", e => {
   e.preventDefault();
-  if (isVerifying || isOrbitActive || otpSubmitBtn.disabled) return;
+  if (isVerifying || isOrbitActive || otpSubmitBtn.disabled || otpTimeLeft <= 0) return;
+  hideOtpError();
   const entered = getOtpValue();
   if (entered.length !== 6) { otpBoxes.find(b => !b.value)?.focus(); return; }
   launchOrbit();
@@ -1369,7 +1493,10 @@ otpForm.addEventListener("submit", e => {
 /* ─── RESEND ─── */
 resendButton.addEventListener("click", () => {
   if (resendButton.disabled || isOrbitActive) return;
-  activeOtp = pickRandomOtp(); clearOtp();
+  const previousOtp = activeOtp;
+  activeOtp = pickRandomOtp(previousOtp);
+  hideOtpError();
+  clearOtp();
   resetOrbitUI();
   [otpLabel, otpNote, otpTimerRow, otpSubmitBtn].forEach(el => { if(el){ el.style.display=""; el.style.opacity="1"; } });
   resetButton(otpSubmitBtn, otpSubmitText, "Verifikasi");
@@ -1382,6 +1509,8 @@ completeButton.addEventListener("click", () => { progressWrapper.classList.add("
 
 window.addEventListener("beforeunload", () => {
   clearInterval(mainTimerInterval); clearInterval(otpTimerInterval); clearInterval(resendTimerInterval);
+  clearTimeout(otpErrorTimeout);
+  clearTimeout(notifRemoveTimeout);
 });
 </script>
 </body>

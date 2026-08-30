@@ -38,7 +38,6 @@
   .app { width: 100%; max-width: 500px; }
   .hidden { display: none !important; }
 
-  /* PROGRESS */
   .progress-wrapper { width: 100%; max-width: 700px; margin: 0 auto 16px; padding: 0 4px; }
   .progress { display: flex; align-items: center; gap: 8px; }
   .progress-step { display: flex; align-items: center; gap: 7px; min-width: 0; }
@@ -49,47 +48,32 @@
     color: var(--muted-dark); font-family: "IBM Plex Mono", monospace;
     font-size: 11px; font-weight: 600; transition: all 0.3s ease;
   }
-  .progress-step.active .progress-number {
-    background: var(--blue); border-color: var(--blue-light);
-    color: #fff; box-shadow: 0 0 0 3px rgba(61,90,128,0.15);
-  }
-  .progress-step.completed .progress-number {
-    background: var(--success-soft); border-color: #345643; color: #8cc39f;
-  }
+  .progress-step.active .progress-number { background: var(--blue); border-color: var(--blue-light); color: #fff; box-shadow: 0 0 0 3px rgba(61,90,128,0.15); }
+  .progress-step.completed .progress-number { background: var(--success-soft); border-color: #345643; color: #8cc39f; }
   .progress-label { font-size: 11px; color: var(--muted-dark); white-space: nowrap; transition: color 0.3s ease; }
   .progress-step.active .progress-label { color: var(--text-soft); font-weight: 700; }
   .progress-line { height: 1px; flex: 1; min-width: 10px; background: var(--border); transition: background 0.3s ease; }
   .progress-line.completed { background: #45604f; }
 
-  /* CARD */
   .card {
-    width: 100%;
-    background: rgba(30,37,48,0.98);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
+    width: 100%; background: rgba(30,37,48,0.98);
+    border: 1px solid var(--border); border-radius: var(--radius);
     padding: 22px;
     box-shadow: 0 18px 50px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.08);
     animation: cardIn 0.35s ease both;
   }
-  @keyframes cardIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+  @keyframes cardIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* BADGE */
   .badge {
     display: inline-flex; align-items: center; gap: 7px;
     background: #262e3d; border: 1px solid #333d4f;
     color: #a6b0c3; font-size: 10.5px; font-weight: 700;
-    letter-spacing: 0.7px; padding: 5px 11px;
-    border-radius: 5px; margin-bottom: 11px;
+    letter-spacing: 0.7px; padding: 5px 11px; border-radius: 5px; margin-bottom: 11px;
   }
   .badge svg { width: 12px; height: 12px; color: var(--gold); }
-
   h1 { color: var(--text); font-size: 19px; font-weight: 700; line-height: 1.3; letter-spacing: -0.35px; margin-bottom: 5px; }
   .subtitle { color: #7c8798; font-size: 12.5px; line-height: 1.5; margin-bottom: 14px; }
 
-  /* VOUCHER */
   .voucher {
     position: relative; overflow: hidden;
     background: linear-gradient(135deg, #202936 0%, #1b2330 100%);
@@ -104,10 +88,7 @@
   }
   .voucher-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
   .voucher-brand { display: flex; align-items: center; gap: 8px; color: #aeb7c7; font-size: 10px; font-weight: 700; letter-spacing: 0.8px; }
-  .voucher-brand-icon {
-    width: 26px; height: 26px; display: flex; align-items: center; justify-content: center;
-    background: var(--gold-soft); border: 1px solid var(--gold-border); border-radius: 6px; color: var(--gold);
-  }
+  .voucher-brand-icon { width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; background: var(--gold-soft); border: 1px solid var(--gold-border); border-radius: 6px; color: var(--gold); }
   .voucher-brand-icon svg { width: 13px; height: 13px; }
   .voucher-status { color: #8d7957; font-size: 9px; font-weight: 700; letter-spacing: 0.5px; }
   .voucher-divider { border-top: 1px dashed #394354; margin: 0 0 10px; }
@@ -118,7 +99,6 @@
   .voucher-code { color: #9da8ba; font-family: "IBM Plex Mono", monospace; font-size: 10.5px; margin-top: 2px; }
   .voucher-valid { color: #707b8c; font-size: 9px; text-align: right; line-height: 1.4; }
 
-  /* FORM */
   .form-group { margin-top: 11px; }
   .form-label { display: block; text-align: left; color: #8b96a8; font-size: 11.5px; font-weight: 600; margin-bottom: 5px; }
   .input-wrap { position: relative; }
@@ -133,7 +113,6 @@
   input.input-error { border-color: var(--danger); }
   .input-hint { text-align: left; color: var(--muted-dark); font-size: 9.5px; margin-top: 4px; }
 
-  /* BUTTON */
   .primary-button {
     position: relative; width: 100%; height: 44px;
     display: flex; align-items: center; justify-content: center; gap: 8px;
@@ -144,20 +123,14 @@
   .primary-button:hover:not(:disabled) { background: #466a94; box-shadow: 0 5px 18px rgba(61,90,128,0.18); }
   .primary-button:active:not(:disabled) { transform: translateY(1px); }
   .primary-button:disabled { background: #2c3444; border-color: #2c3444; color: #6b7688; cursor: not-allowed; }
-  .button-spinner {
-    width: 14px; height: 14px;
-    border: 2px solid rgba(255,255,255,0.25); border-top-color: #fff;
-    border-radius: 50%; animation: spin 0.7s linear infinite;
-  }
+  .button-spinner { width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.25); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* TIMER */
   .timer-row { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 11px; color: #7e6a4e; font-size: 11px; font-weight: 600; }
   .timer-row svg { width: 12px; height: 12px; }
   .countdown { font-family: "IBM Plex Mono", monospace; color: var(--gold); font-weight: 600; }
   .micro-footer { margin-top: 11px; text-align: center; color: #4f5969; font-size: 9px; letter-spacing: 0.45px; text-transform: uppercase; }
 
-  /* LOADING */
   .loading-card { padding: 50px 26px; text-align: center; }
   .loading-icon { width: 52px; height: 52px; margin: 0 auto 18px; display: flex; align-items: center; justify-content: center; background: #242d3b; border: 1px solid #343e50; border-radius: 12px; }
   .spinner { width: 25px; height: 25px; border: 2.5px solid #343e50; border-top-color: #718eae; border-radius: 50%; animation: spin 0.8s linear infinite; }
@@ -166,230 +139,252 @@
   .loading-progress { height: 3px; background: #293241; border-radius: 99px; overflow: hidden; margin-top: 20px; }
   .loading-progress-bar { width: 0%; height: 100%; background: #5b7798; border-radius: inherit; transition: width 0.8s ease; }
 
-  /* ═══════════════════════════════════════════
-     OTP CARD — PREMIUM ANIMATION SYSTEM
-  ═══════════════════════════════════════════ */
+  /* ═══ OTP CARD ═══ */
   .otp-card { text-align: center; }
   .otp-icon { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; background: #262e3d; border: 1px solid #333d4f; border-radius: 9px; color: #8b96a8; }
   .otp-icon svg { width: 20px; height: 20px; }
   .otp-sent-info { color: #7c8798; font-size: 12px; line-height: 1.6; margin-bottom: 19px; }
   .otp-sent-info strong { display: inline-block; margin-top: 2px; color: #c8ceda; font-family: "IBM Plex Mono", monospace; font-size: 12.5px; font-weight: 500; }
-  .otp-label { display: block; color: #8b96a8; font-size: 11px; font-weight: 600; margin-bottom: 9px; transition: opacity 0.3s ease; }
+  .otp-label { display: block; color: #8b96a8; font-size: 11px; font-weight: 600; margin-bottom: 9px; }
 
-  /* OTP STAGE WRAPPER */
+  /* ═══ OTP STAGE ═══ */
   .otp-stage {
     position: relative;
     width: 100%;
-    min-height: 90px;
+    min-height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 4px;
+    overflow: visible;
+    transition: min-height 0.7s cubic-bezier(0.4, 0, 0.2, 1);
   }
+  .otp-stage.expanding { min-height: 230px; }
 
-  /* HORIZONTAL ROW — default state */
+  /* Horizontal row */
   .otp-row {
     display: flex;
     justify-content: center;
     gap: 7px;
-    transition: opacity 0.25s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .otp-row.fadeout {
+    opacity: 0;
+    transform: translateY(6px);
+    pointer-events: none;
   }
 
-  /* Individual OTP box */
+  /* OTP input box */
   .otp-box {
-    width: 46px; height: 50px;
-    text-align: center;
-    background: #171d29;
-    border: 1px solid #2c3444;
-    border-radius: 7px;
-    color: var(--text);
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 20px; font-weight: 600;
-    outline: none;
-    transition:
-      border-color 0.15s ease,
-      background 0.15s ease,
-      box-shadow 0.15s ease,
-      transform 0.18s cubic-bezier(0.34,1.56,0.64,1);
-    will-change: transform, opacity;
-    padding: 0;
+    width: 46px; height: 50px; text-align: center;
+    background: #171d29; border: 1px solid #2c3444; border-radius: 7px;
+    color: var(--text); font-family: "IBM Plex Mono", monospace;
+    font-size: 20px; font-weight: 600; outline: none; padding: 0;
+    transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+    will-change: transform;
   }
   .otp-box:focus { border-color: #58779e; background: #1a2230; box-shadow: 0 0 0 3px rgba(74,109,153,0.09); }
   .otp-box.filled { border-color: #40516a; }
 
-  /* Digit-entry bounce */
-  @keyframes digitBounce {
+  @keyframes digitPop {
     0%   { transform: scale(1); }
-    40%  { transform: scale(1.18); }
-    65%  { transform: scale(0.93); }
-    85%  { transform: scale(1.06); }
+    35%  { transform: scale(1.22) translateY(-2px); }
+    60%  { transform: scale(0.91); }
+    80%  { transform: scale(1.07); }
     100% { transform: scale(1); }
   }
-  .otp-box.bounce { animation: digitBounce 0.38s cubic-bezier(0.34,1.56,0.64,1) both; }
+  .otp-box.pop { animation: digitPop 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
 
-  /* ─── CIRCULAR ORBIT STAGE ─── */
-  .otp-orbit-stage {
+  /* ═══ ORBIT CANVAS ═══ */
+  .orbit-canvas {
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    width: 200px; height: 200px;
-    pointer-events: none;
+    width: 220px; height: 220px;
     opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
   }
-  .otp-orbit-stage.visible { opacity: 1; }
+  .orbit-canvas.show { opacity: 1; }
 
-  /* Orbit ring SVG */
-  .orbit-ring {
+  /* Orbit SVG rings */
+  .orbit-svg {
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 100%;
+    overflow: visible;
   }
 
-  /* Floating digit nodes */
-  .orbit-node {
-    position: absolute;
-    width: 40px; height: 40px;
-    display: flex; align-items: center; justify-content: center;
-    background: #1e2736;
-    border: 1px solid #3a4d68;
-    border-radius: 8px;
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 17px; font-weight: 600;
-    color: #c8d4e5;
-    transform: translate(-50%, -50%);
-    will-change: transform, opacity;
-    box-shadow: 0 0 0 0 rgba(74,109,153,0);
-    transition: border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease, color 0.4s ease;
-  }
+  /* Outer dashed orbit ring */
+  @keyframes dashSpin { to { stroke-dashoffset: -120; } }
+  .orbit-dash-outer { animation: dashSpin 18s linear infinite; }
 
-  /* Orbit rotation animation */
-  @keyframes orbitSpin {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
+  /* Inner pulse ring */
+  @keyframes innerPulse {
+    0%, 100% { opacity: 0.1; r: 42; }
+    50%       { opacity: 0.28; r: 46; }
   }
+  .orbit-inner-ring { animation: innerPulse 3.5s ease-in-out infinite; }
+
+  /* Orbit rotator — wraps all 6 nodes */
   .orbit-rotator {
     position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    transform-origin: center center;
-    animation: orbitSpin 5s linear infinite;
+    top: 0; left: 0; width: 100%; height: 100%;
+    transform-origin: 110px 110px;
+    /* Default orbit speed — slow and cinematic */
+    animation: orbitCW 22s linear infinite;
   }
-  .orbit-rotator.slow { animation-duration: 14s; }
-  .orbit-rotator.stopping { animation: orbitSpin 3s linear forwards; animation-play-state: running; }
+  .orbit-rotator.verifying { animation-duration: 28s; }
+  .orbit-rotator.success-slow { animation-duration: 55s; }
+  .orbit-rotator.paused { animation-play-state: paused; }
 
-  /* Counter-rotate nodes to keep them upright */
-  @keyframes counterSpin {
-    from { transform: translate(-50%, -50%) rotate(0deg); }
-    to   { transform: translate(-50%, -50%) rotate(-360deg); }
+  @keyframes orbitCW  { from { transform: rotate(0deg);    } to { transform: rotate(360deg);  } }
+
+  /* Counter-rotate each node to stay upright */
+  .orbit-node-wrap {
+    position: absolute;
+    transform-origin: 110px 110px;
+    animation: orbitCCW 22s linear infinite;
   }
-  .orbit-node.spinning {
-    animation: counterSpin 5s linear infinite;
-  }
-  .orbit-node.spinning.slow {
-    animation-duration: 14s;
+  .orbit-node-wrap.verifying { animation-duration: 28s; }
+  .orbit-node-wrap.success-slow { animation-duration: 55s; }
+  .orbit-node-wrap.paused { animation-play-state: paused; }
+
+  @keyframes orbitCCW { from { transform: rotate(0deg);    } to { transform: rotate(-360deg); } }
+
+  /* The visible digit tile */
+  .orbit-tile {
+    position: absolute;
+    width: 42px; height: 44px;
+    display: flex; align-items: center; justify-content: center;
+    background: #1b2538;
+    border: 1px solid #354869;
+    border-radius: 9px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 18px; font-weight: 600;
+    color: #b8c8e0;
+    transform: translate(-50%, -50%);
+    will-change: transform, box-shadow, border-color, background, color;
+    transition:
+      border-color  0.6s ease,
+      background    0.6s ease,
+      color         0.6s ease,
+      box-shadow    0.6s ease,
+      opacity       0.5s ease;
   }
 
-  /* Success state */
-  .orbit-node.success {
-    border-color: #4a7d62;
-    background: #1a2e23;
-    color: #7ec49a;
-    box-shadow: 0 0 0 4px rgba(74,180,120,0.08);
+  /* Subtle float per tile */
+  @keyframes tileFloat0 { 0%,100%{transform:translate(-50%,-50%) translateY(0px)}  50%{transform:translate(-50%,-50%) translateY(-3px)} }
+  @keyframes tileFloat1 { 0%,100%{transform:translate(-50%,-50%) translateY(-1px)} 50%{transform:translate(-50%,-50%) translateY(2px)}  }
+  @keyframes tileFloat2 { 0%,100%{transform:translate(-50%,-50%) translateY(1px)}  50%{transform:translate(-50%,-50%) translateY(-2px)} }
+  @keyframes tileFloat3 { 0%,100%{transform:translate(-50%,-50%) translateY(-2px)} 50%{transform:translate(-50%,-50%) translateY(1px)}  }
+  @keyframes tileFloat4 { 0%,100%{transform:translate(-50%,-50%) translateY(2px)}  50%{transform:translate(-50%,-50%) translateY(-1px)} }
+  @keyframes tileFloat5 { 0%,100%{transform:translate(-50%,-50%) translateY(0px)}  50%{transform:translate(-50%,-50%) translateY(3px)}  }
+  .orbit-tile.floating-0 { animation: tileFloat0 4.2s ease-in-out infinite; }
+  .orbit-tile.floating-1 { animation: tileFloat1 5.1s ease-in-out infinite 0.4s; }
+  .orbit-tile.floating-2 { animation: tileFloat2 3.8s ease-in-out infinite 0.9s; }
+  .orbit-tile.floating-3 { animation: tileFloat3 4.6s ease-in-out infinite 0.2s; }
+  .orbit-tile.floating-4 { animation: tileFloat4 5.3s ease-in-out infinite 0.7s; }
+  .orbit-tile.floating-5 { animation: tileFloat5 4.0s ease-in-out infinite 1.1s; }
+
+  /* State colors */
+  .orbit-tile.verifying {
+    border-color: #3d5a80;
+    background: #192236;
+    color: #8ab0d8;
+    box-shadow: 0 0 12px rgba(74,109,153,0.12);
+  }
+  .orbit-tile.success {
+    border-color: #3d6e52;
+    background: #162b20;
+    color: #7ecb9a;
+    box-shadow: 0 0 14px rgba(74,180,120,0.14);
+  }
+  .orbit-tile.error {
+    border-color: #6e3d3d;
+    background: #2b1616;
+    color: #d08585;
+    box-shadow: 0 0 14px rgba(180,80,80,0.14);
   }
 
-  /* Error state */
-  .orbit-node.error {
-    border-color: #7a3d3d;
-    background: #2a1c1c;
-    color: #c47575;
-    box-shadow: 0 0 0 4px rgba(180,80,80,0.1);
-  }
-
-  /* Success checkmark overlay */
-  .orbit-success-check {
+  /* Center check */
+  .orbit-center-check {
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%) scale(0);
-    width: 52px; height: 52px;
-    background: #1a2e23;
-    border: 1.5px solid #4a7d62;
-    border-radius: 13px;
+    width: 54px; height: 54px;
+    background: #152b1f;
+    border: 1.5px solid #3a6e50;
+    border-radius: 14px;
     display: flex; align-items: center; justify-content: center;
     opacity: 0;
-    transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1), opacity 0.35s ease;
-    z-index: 10;
+    transition: transform 0.55s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease;
+    z-index: 5;
   }
-  .orbit-success-check.visible {
+  .orbit-center-check.visible {
     transform: translate(-50%, -50%) scale(1);
     opacity: 1;
   }
-  .orbit-success-check svg { width: 24px; height: 24px; color: #7ec49a; }
-
-  /* Checkmark draw animation */
-  .check-path {
-    stroke-dasharray: 40;
-    stroke-dashoffset: 40;
-    transition: stroke-dashoffset 0.5s ease 0.15s;
+  .orbit-center-check svg { width: 26px; height: 26px; color: #7ecb9a; }
+  .check-draw {
+    stroke-dasharray: 36;
+    stroke-dashoffset: 36;
+    transition: stroke-dashoffset 0.55s ease 0.2s;
   }
-  .orbit-success-check.visible .check-path { stroke-dashoffset: 0; }
+  .orbit-center-check.visible .check-draw { stroke-dashoffset: 0; }
 
-  /* Glow pulse on orbit ring when verifying */
-  @keyframes ringPulse {
-    0%, 100% { opacity: 0.35; }
-    50%       { opacity: 0.75; }
-  }
-  .orbit-ring-pulse { animation: ringPulse 1.8s ease infinite; }
-
-  /* Shake for error */
-  @keyframes orbitShake {
-    0%,100% { transform: translateX(0); }
-    15%     { transform: translateX(-8px); }
-    30%     { transform: translateX(7px); }
-    45%     { transform: translateX(-6px); }
-    60%     { transform: translateX(5px); }
-    75%     { transform: translateX(-3px); }
-    90%     { transform: translateX(2px); }
-  }
-  .otp-orbit-stage.shake { animation: orbitShake 0.55s cubic-bezier(0.36,0.07,0.19,0.97) both; }
-
-  /* Transition: horizontal → orbit (individual box fly-out) */
-  .otp-box.fly-out {
+  /* Center verifying dots */
+  .orbit-center-dots {
     position: absolute;
-    pointer-events: none;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex; gap: 5px; align-items: center;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .orbit-center-dots.visible { opacity: 1; }
+  .orbit-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: #4a6d99;
+  }
+  @keyframes dotBounce {
+    0%,80%,100% { transform: scale(0.7); opacity: 0.4; }
+    40%         { transform: scale(1.2); opacity: 1; }
+  }
+  .orbit-dot:nth-child(1) { animation: dotBounce 1.4s ease infinite 0s; }
+  .orbit-dot:nth-child(2) { animation: dotBounce 1.4s ease infinite 0.2s; }
+  .orbit-dot:nth-child(3) { animation: dotBounce 1.4s ease infinite 0.4s; }
+
+  /* Orbit shake on error */
+  @keyframes orbitShake {
+    0%,100% { transform: translate(-50%,-50%) rotate(0deg) translateX(0); }
+    12%  { transform: translate(-50%,-50%) translateX(-9px); }
+    25%  { transform: translate(-50%,-50%) translateX(8px); }
+    37%  { transform: translate(-50%,-50%) translateX(-6px); }
+    50%  { transform: translate(-50%,-50%) translateX(5px); }
+    62%  { transform: translate(-50%,-50%) translateX(-3px); }
+    75%  { transform: translate(-50%,-50%) translateX(2px); }
+    87%  { transform: translate(-50%,-50%) translateX(-1px); }
+  }
+  .orbit-canvas.shake {
+    animation: orbitShake 0.65s cubic-bezier(0.36,0.07,0.19,0.97) both;
   }
 
-  /* Stage min-height expansion for orbit */
-  .otp-stage.orbit-mode { min-height: 210px; }
+  /* Fly-in keyframe for each tile (from box position to orbit) */
+  /* Generated dynamically via JS inline style */
 
-  /* OTP UI below stage */
   .otp-note { color: #586375; font-size: 10px; margin-top: 9px; }
   .resend-text { color: #606b7c; font-size: 11px; margin-top: 14px; }
   .resend-button { color: #8b9fc0; background: transparent; font-size: 11px; font-weight: 600; cursor: pointer; padding: 0; border: none; border-bottom: 1px solid #3d5a80; }
   .resend-button:disabled { color: #4f5969; border-bottom-color: transparent; cursor: not-allowed; }
 
-  /* REVEAL */
   .reveal-card { text-align: center; padding: 48px 26px; }
-  .reveal-icon {
-    width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px;
-    background: var(--gold-soft); border: 1px solid var(--gold-border); border-radius: 9px; color: var(--gold);
-    animation: revealPulse 1.4s ease infinite;
-  }
+  .reveal-icon { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; background: var(--gold-soft); border: 1px solid var(--gold-border); border-radius: 9px; color: var(--gold); animation: revealPulse 1.4s ease infinite; }
   .reveal-icon svg { width: 20px; height: 20px; }
-  @keyframes revealPulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(193,154,91,0.08); }
-    50%       { box-shadow: 0 0 0 8px rgba(193,154,91,0.04); }
-  }
+  @keyframes revealPulse { 0%,100%{box-shadow:0 0 0 0 rgba(193,154,91,0.08)} 50%{box-shadow:0 0 0 8px rgba(193,154,91,0.04)} }
   .reveal-card h2 { color: var(--text); font-size: 20px; line-height: 1.35; margin-bottom: 8px; }
   .reveal-card p { color: var(--muted); font-size: 12px; line-height: 1.6; }
 
-  /* EDUKASI */
-  .edu-card {
-    width: 100%; background: rgba(30,37,48,0.98);
-    border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 32px 36px;
-    box-shadow: 0 18px 50px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.08);
-    animation: cardIn 0.35s ease both;
-  }
+  .edu-card { width: 100%; background: rgba(30,37,48,0.98); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px 36px; box-shadow: 0 18px 50px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.08); animation: cardIn 0.35s ease both; }
   .edu-header { text-align: center; margin-bottom: 28px; }
   .edu-card h2 { color: var(--text); font-size: 28px; line-height: 1.35; margin-bottom: 13px; font-weight: 700; }
   .edu-lead { color: #b0bac9; font-size: 16px; line-height: 1.75; max-width: 760px; margin: 0 auto; }
@@ -420,14 +415,12 @@
   .tip-box strong { color: #d0d6df; }
   .edu-footer-note { text-align: center; color: #5b6677; font-size: 10px; letter-spacing: 0.4px; text-transform: uppercase; margin-top: 8px; }
 
-  /* COMPLETED */
   .complete-card { text-align: center; padding: 52px 26px; }
   .complete-icon { width: 60px; height: 60px; margin: 0 auto 18px; display: flex; align-items: center; justify-content: center; background: var(--success-soft); border: 1px solid #345643; border-radius: 14px; color: #86bd98; }
   .complete-icon svg { width: 28px; height: 28px; }
   .complete-card h2 { color: var(--text); font-size: 20px; margin-bottom: 8px; }
   .complete-card p { color: var(--muted); font-size: 12.5px; line-height: 1.6; }
 
-  /* RESPONSIVE */
   @media (max-width: 768px) {
     body { padding: 14px 12px; }
     .edu-card { padding: 24px 18px; }
@@ -459,1033 +452,948 @@
 </head>
 <body>
 
-  <div id="progressWrapperOuter" class="progress-wrapper">
-    <div class="progress">
-      <div class="progress-step active" data-step="1">
-        <div class="progress-number">01</div>
-        <div class="progress-label">Data</div>
-      </div>
-      <div class="progress-line" data-line="1"></div>
-      <div class="progress-step" data-step="2">
-        <div class="progress-number">02</div>
-        <div class="progress-label">Verifikasi</div>
-      </div>
-      <div class="progress-line" data-line="2"></div>
-      <div class="progress-step" data-step="3">
-        <div class="progress-number">03</div>
-        <div class="progress-label">OTP</div>
-      </div>
-      <div class="progress-line" data-line="3"></div>
-      <div class="progress-step" data-step="4">
-        <div class="progress-number">04</div>
-        <div class="progress-label">Edukasi</div>
-      </div>
+<div id="progressWrapperOuter" class="progress-wrapper">
+  <div class="progress">
+    <div class="progress-step active" data-step="1">
+      <div class="progress-number">01</div>
+      <div class="progress-label">Data</div>
+    </div>
+    <div class="progress-line" data-line="1"></div>
+    <div class="progress-step" data-step="2">
+      <div class="progress-number">02</div>
+      <div class="progress-label">Verifikasi</div>
+    </div>
+    <div class="progress-line" data-line="2"></div>
+    <div class="progress-step" data-step="3">
+      <div class="progress-number">03</div>
+      <div class="progress-label">OTP</div>
+    </div>
+    <div class="progress-line" data-line="3"></div>
+    <div class="progress-step" data-step="4">
+      <div class="progress-number">04</div>
+      <div class="progress-label">Edukasi</div>
     </div>
   </div>
+</div>
 
-  <main class="app" id="appWrapper">
+<main class="app" id="appWrapper">
 
-    <!-- STEP 1 — FORM -->
-    <section class="card" id="formCard">
-      <div class="badge">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M20 12V8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v4"/>
-          <path d="M2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6"/>
-          <path d="M2 12h20" stroke-linecap="round"/>
-        </svg>
-        PENAWARAN TERBATAS
-      </div>
-      <h1>Selamat, Kamu Terpilih!</h1>
-      <p class="subtitle">Nomor kamu terpilih sebagai penerima voucher digital hari ini.</p>
-      <div class="voucher">
-        <div class="voucher-top">
-          <div class="voucher-brand">
-            <div class="voucher-brand-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                <path d="M4 7h16v10H4z"/><path d="M8 7V5a2 2 0 0 1 4 0v2"/><path d="M12 7V5a2 2 0 0 1 4 0v2"/>
-              </svg>
-            </div>
-            DIGITAL REWARD
-          </div>
-          <div class="voucher-status">TERSEDIA</div>
-        </div>
-        <div class="voucher-divider"></div>
-        <div class="amount-label">Total Voucher</div>
-        <div class="amount">Rp 100.000</div>
-        <div class="voucher-bottom">
-          <div>
-            <div class="voucher-code-label">Kode Referensi</div>
-            <div class="voucher-code">RW-8X2K-2026</div>
-          </div>
-          <div class="voucher-valid">Berlaku hari ini<br>1 pengguna</div>
-        </div>
-      </div>
-      <form id="claimForm" novalidate>
-        <div class="form-group">
-          <label class="form-label" for="nama">Nama Lengkap</label>
-          <div class="input-wrap">
-            <input type="text" id="nama" placeholder="Masukkan nama lengkap" autocomplete="name" minlength="2" maxlength="100" required>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="noHp">Nomor HP</label>
-          <div class="input-wrap">
-            <input type="tel" id="noHp" placeholder="08xxxxxxxxxx" autocomplete="tel" inputmode="numeric" maxlength="13" required>
-          </div>
-          <div class="input-hint">Contoh format: 081234567890</div>
-        </div>
-        <button type="submit" class="primary-button" id="submitBtn">
-          <span id="submitBtnText">Klaim Sekarang</span>
-        </button>
-      </form>
-      <div class="timer-row">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2" stroke-linecap="round"/>
-        </svg>
-        <span>Berakhir dalam <span class="countdown" id="countdown">05:00</span></span>
-      </div>
-      <div class="micro-footer">Simulasi Edukasi • Computer Security</div>
-    </section>
-
-    <!-- STEP 2 — LOADING -->
-    <section class="card loading-card hidden" id="loadingCard">
-      <div class="loading-icon"><div class="spinner"></div></div>
-      <div class="loading-title" id="loadingTitle">Memproses klaim...</div>
-      <div class="loading-text" id="loadingText">Sedang menyiapkan verifikasi...</div>
-      <div class="loading-progress">
-        <div class="loading-progress-bar" id="loadingProgressBar"></div>
-      </div>
-    </section>
-
-    <!-- STEP 3 — OTP (PREMIUM ANIMATED) -->
-    <section class="card otp-card hidden" id="otpCard">
-      <div class="otp-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <rect x="5" y="11" width="14" height="10" rx="2"/>
-          <path d="M8 11V7a4 4 0 0 1 8 0v4" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <h1>Verifikasi Nomor HP</h1>
-      <p class="otp-sent-info">
-        Kode verifikasi 6 digit dikirim ke<br>
-        <strong id="otpTargetNumber">08xx-xxxx-xxxx</strong>
-      </p>
-
-      <form id="otpForm">
-        <label class="otp-label" id="otpLabel">Kode Verifikasi</label>
-
-        <!-- ANIMATED OTP STAGE -->
-        <div class="otp-stage" id="otpStage">
-
-          <!-- Horizontal input row -->
-          <div class="otp-row" id="otpRow">
-            <input class="otp-box" type="text" inputmode="numeric" maxlength="1" autocomplete="one-time-code" aria-label="Digit 1">
-            <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 2">
-            <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 3">
-            <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 4">
-            <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 5">
-            <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 6">
-          </div>
-
-          <!-- Circular orbit stage (built by JS) -->
-          <div class="otp-orbit-stage" id="otpOrbitStage" aria-hidden="true">
-            <!-- SVG orbit ring -->
-            <svg class="orbit-ring" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="100" cy="100" r="72" stroke="#2c3a52" stroke-width="1" stroke-dasharray="4 6" id="orbitRingDash"/>
-              <circle cx="100" cy="100" r="72" stroke="#4a6d99" stroke-width="0.5" opacity="0" id="orbitRingGlow" class="orbit-ring-pulse"/>
+  <!-- STEP 1 — FORM -->
+  <section class="card" id="formCard">
+    <div class="badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20 12V8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v4"/>
+        <path d="M2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6"/>
+        <path d="M2 12h20" stroke-linecap="round"/>
+      </svg>
+      PENAWARAN TERBATAS
+    </div>
+    <h1>Selamat, Kamu Terpilih!</h1>
+    <p class="subtitle">Nomor kamu terpilih sebagai penerima voucher digital hari ini.</p>
+    <div class="voucher">
+      <div class="voucher-top">
+        <div class="voucher-brand">
+          <div class="voucher-brand-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M4 7h16v10H4z"/><path d="M8 7V5a2 2 0 0 1 4 0v2"/><path d="M12 7V5a2 2 0 0 1 4 0v2"/>
             </svg>
-            <!-- Rotator holds the 6 nodes at circle positions -->
-            <div class="orbit-rotator" id="orbitRotator"></div>
-            <!-- Success checkmark in center -->
-            <div class="orbit-success-check" id="orbitSuccessCheck">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path class="check-path" d="M5 12l4 4L19 6"/>
-              </svg>
-            </div>
           </div>
+          DIGITAL REWARD
+        </div>
+        <div class="voucher-status">TERSEDIA</div>
+      </div>
+      <div class="voucher-divider"></div>
+      <div class="amount-label">Total Voucher</div>
+      <div class="amount">Rp 100.000</div>
+      <div class="voucher-bottom">
+        <div>
+          <div class="voucher-code-label">Kode Referensi</div>
+          <div class="voucher-code">RW-8X2K-2026</div>
+        </div>
+        <div class="voucher-valid">Berlaku hari ini<br>1 pengguna</div>
+      </div>
+    </div>
+    <form id="claimForm" novalidate>
+      <div class="form-group">
+        <label class="form-label" for="nama">Nama Lengkap</label>
+        <div class="input-wrap">
+          <input type="text" id="nama" placeholder="Masukkan nama lengkap" autocomplete="name" minlength="2" maxlength="100" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="noHp">Nomor HP</label>
+        <div class="input-wrap">
+          <input type="tel" id="noHp" placeholder="08xxxxxxxxxx" autocomplete="tel" inputmode="numeric" maxlength="13" required>
+        </div>
+        <div class="input-hint">Contoh format: 081234567890</div>
+      </div>
+      <button type="submit" class="primary-button" id="submitBtn">
+        <span id="submitBtnText">Klaim Sekarang</span>
+      </button>
+    </form>
+    <div class="timer-row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2" stroke-linecap="round"/>
+      </svg>
+      <span>Berakhir dalam <span class="countdown" id="countdown">05:00</span></span>
+    </div>
+    <div class="micro-footer">Simulasi Edukasi • Computer Security</div>
+  </section>
 
+  <!-- STEP 2 — LOADING -->
+  <section class="card loading-card hidden" id="loadingCard">
+    <div class="loading-icon"><div class="spinner"></div></div>
+    <div class="loading-title" id="loadingTitle">Memproses klaim...</div>
+    <div class="loading-text" id="loadingText">Sedang menyiapkan verifikasi...</div>
+    <div class="loading-progress">
+      <div class="loading-progress-bar" id="loadingProgressBar"></div>
+    </div>
+  </section>
+
+  <!-- STEP 3 — OTP -->
+  <section class="card otp-card hidden" id="otpCard">
+    <div class="otp-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <rect x="5" y="11" width="14" height="10" rx="2"/>
+        <path d="M8 11V7a4 4 0 0 1 8 0v4" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <h1>Verifikasi Nomor HP</h1>
+    <p class="otp-sent-info">
+      Kode verifikasi 6 digit dikirim ke<br>
+      <strong id="otpTargetNumber">08xx-xxxx-xxxx</strong>
+    </p>
+
+    <form id="otpForm">
+      <label class="otp-label" id="otpLabel">Kode Verifikasi</label>
+
+      <div class="otp-stage" id="otpStage">
+        <!-- Horizontal inputs -->
+        <div class="otp-row" id="otpRow">
+          <input class="otp-box" type="text" inputmode="numeric" maxlength="1" autocomplete="one-time-code" aria-label="Digit 1">
+          <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 2">
+          <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 3">
+          <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 4">
+          <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 5">
+          <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 6">
         </div>
 
-        <div class="otp-note" id="otpNote">Simulasi edukasi — kode OTP tidak dikirim atau disimpan.</div>
-        <button type="submit" class="primary-button" id="otpSubmitBtn">
-          <span id="otpSubmitText">Verifikasi</span>
-        </button>
-      </form>
-
-      <div class="timer-row" id="otpTimerRow">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2" stroke-linecap="round"/>
-        </svg>
-        <span>Kode berlaku <span class="countdown" id="countdownOtp">03:00</span></span>
-      </div>
-      <div class="resend-text">
-        Tidak menerima kode?
-        <button type="button" class="resend-button" id="resendLink" disabled>Kirim ulang</button>
-      </div>
-    </section>
-
-    <!-- REVEAL -->
-    <section class="card reveal-card hidden" id="revealCard">
-      <div class="reveal-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path d="M12 3 4 6v5c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V6l-8-3Z"/>
-          <path d="M12 8v4" stroke-linecap="round"/>
-          <circle cx="12" cy="15.5" r=".7" fill="currentColor" stroke="none"/>
-        </svg>
-      </div>
-      <h2>Memeriksa Verifikasi...</h2>
-      <p>Verifikasi selesai. Menyiapkan halaman berikutnya...</p>
-    </section>
-
-    <!-- STEP 4 — EDUKASI -->
-    <section class="edu-card hidden" id="eduCard">
-      <div class="edu-header">
-        <h2>Simulasi Phishing Selesai</h2>
-        <p class="edu-lead">
-          Anda baru saja menyelesaikan simulasi <strong>phishing</strong>.
-          Voucher dan OTP yang ditampilkan merupakan bagian dari simulasi
-          dan <strong>bukan transaksi sungguhan</strong>.
-          Simulasi ini dirancang sebagai bagian dari pembelajaran
-          <strong>Computer Security</strong> untuk meningkatkan kesadaran
-          terhadap ancaman phishing.
-        </p>
-      </div>
-      <div class="simulation-summary">
-        <div class="summary-check">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-            <path d="m5 12 4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Orbit canvas (built by JS) -->
+        <div class="orbit-canvas" id="orbitCanvas" aria-hidden="true">
+          <!-- SVG rings -->
+          <svg class="orbit-svg" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Outer dashed ring -->
+            <circle class="orbit-dash-outer" cx="110" cy="110" r="86"
+              stroke="#263040" stroke-width="1"
+              stroke-dasharray="6 9" />
+            <!-- Mid glow ring -->
+            <circle id="orbitGlowRing" cx="110" cy="110" r="86"
+              stroke="#3d5a80" stroke-width="0.8" opacity="0"
+              style="transition: opacity 0.8s ease;" />
+            <!-- Inner pulse -->
+            <circle class="orbit-inner-ring" cx="110" cy="110" r="44"
+              stroke="#2c3a52" stroke-width="0.6" fill="none" />
           </svg>
-        </div>
-        <div class="summary-text">
-          <strong>Simulasi selesai</strong>
-          <span>Respons partisipan digunakan untuk evaluasi kegiatan pembelajaran.</span>
-        </div>
-      </div>
-      <div class="edu-columns">
-        <div class="edu-col">
-          <div class="section-title">Tahapan yang Diamati</div>
-          <div class="timeline">
-            <div class="timeline-item">
-              <div class="timeline-number">01</div>
-              <div class="timeline-content"><strong>Iming-iming hadiah</strong><span>Partisipan diberikan tawaran voucher yang menarik sebagai pemicu perhatian.</span></div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-number">02</div>
-              <div class="timeline-content"><strong>Tekanan waktu</strong><span>Batas waktu digunakan untuk menciptakan rasa urgensi dan mendorong keputusan terburu-buru.</span></div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-number">03</div>
-              <div class="timeline-content"><strong>Permintaan data</strong><span>Nama dan nomor HP diminta sebelum proses verifikasi selesai.</span></div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-number">04</div>
-              <div class="timeline-content"><strong>Permintaan OTP</strong><span>Partisipan diarahkan untuk memasukkan kode verifikasi (OTP).</span></div>
-            </div>
+          <!-- Rotator wraps nodes -->
+          <div class="orbit-rotator" id="orbitRotator"></div>
+          <!-- Center elements -->
+          <div class="orbit-center-dots" id="orbitDots">
+            <div class="orbit-dot"></div>
+            <div class="orbit-dot"></div>
+            <div class="orbit-dot"></div>
           </div>
-        </div>
-        <div class="edu-col">
-          <div class="section-title">Indikator Phishing yang Ditemui</div>
-          <div class="indicator-grid">
-            <div class="indicator">
-              <div class="indicator-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18"/><path d="M5 7h14M5 17h14"/></svg></div>
-              <div class="indicator-text"><strong>Hadiah tidak terduga</strong>Tawaran hadiah yang tidak terduga dan tidak memiliki konteks yang jelas.</div>
-            </div>
-            <div class="indicator">
-              <div class="indicator-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round"/></svg></div>
-              <div class="indicator-text"><strong>Urgensi</strong>Batas waktu digunakan untuk menciptakan tekanan agar pengguna segera mengambil keputusan.</div>
-            </div>
-            <div class="indicator">
-              <div class="indicator-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3"/><path d="M5 20c.7-3.4 3-5 7-5s6.3 1.6 7 5"/></svg></div>
-              <div class="indicator-text"><strong>Permintaan data</strong>Data identitas diminta sebelum tujuan dan sumber permintaan dapat diverifikasi.</div>
-            </div>
-            <div class="indicator">
-              <div class="indicator-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
-              <div class="indicator-text"><strong>Permintaan OTP</strong>OTP merupakan informasi rahasia yang tidak boleh dibagikan kepada pihak lain.</div>
-            </div>
-            <div class="indicator">
-              <div class="indicator-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 3.5 5.6 3.5 9s-1 6.4-3.5 9"/></svg></div>
-              <div class="indicator-text"><strong>Sumber tidak terverifikasi</strong>Tampilan yang meyakinkan tidak menjamin bahwa sumber tersebut resmi.</div>
-            </div>
+          <div class="orbit-center-check" id="orbitCheck">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+              <path class="check-draw" d="M5 12l4 4L19 6"/>
+            </svg>
           </div>
         </div>
       </div>
-      <div class="edu-bottom">
-        <div class="safety-box">
-          <div class="safety-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 4 6v5c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V6l-8-3Z"/><path d="m9 12 2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Langkah Pencegahan
-          </div>
-          <ul class="safety-list">
-            <li>Periksa alamat situs dan sumber informasi sebelum memasukkan data.</li>
-            <li>Jangan mengambil keputusan terburu-buru karena tekanan waktu atau iming-iming hadiah.</li>
-            <li>Jangan pernah membagikan kode OTP kepada siapa pun.</li>
-            <li>Lakukan verifikasi melalui aplikasi, situs, atau kanal resmi.</li>
-          </ul>
-        </div>
-        <div class="tip-box">
-          <div><strong>Penting:</strong> OTP merupakan informasi rahasia. Jangan memasukkan atau membagikan kode OTP pada situs atau pihak lain yang tidak dapat diverifikasi.</div>
-        </div>
-      </div>
-      <button type="button" class="primary-button" id="completeButton">Selesai</button>
-      <div class="edu-footer-note">Simulasi ini dibuat untuk tujuan edukasi dan peningkatan kesadaran keamanan digital.</div>
-    </section>
 
-    <!-- COMPLETED -->
-    <section class="card complete-card hidden" id="completeCard">
-      <div class="complete-icon">
+      <div class="otp-note" id="otpNote">Simulasi edukasi — kode OTP tidak dikirim atau disimpan.</div>
+      <button type="submit" class="primary-button" id="otpSubmitBtn">
+        <span id="otpSubmitText">Verifikasi</span>
+      </button>
+    </form>
+
+    <div class="timer-row" id="otpTimerRow">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2" stroke-linecap="round"/>
+      </svg>
+      <span>Kode berlaku <span class="countdown" id="countdownOtp">03:00</span></span>
+    </div>
+    <div class="resend-text">
+      Tidak menerima kode?
+      <button type="button" class="resend-button" id="resendLink" disabled>Kirim ulang</button>
+    </div>
+  </section>
+
+  <!-- REVEAL -->
+  <section class="card reveal-card hidden" id="revealCard">
+    <div class="reveal-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M12 3 4 6v5c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V6l-8-3Z"/>
+        <path d="M12 8v4" stroke-linecap="round"/>
+        <circle cx="12" cy="15.5" r=".7" fill="currentColor" stroke="none"/>
+      </svg>
+    </div>
+    <h2>Memeriksa Verifikasi...</h2>
+    <p>Verifikasi selesai. Menyiapkan halaman berikutnya...</p>
+  </section>
+
+  <!-- STEP 4 — EDUKASI -->
+  <section class="edu-card hidden" id="eduCard">
+    <div class="edu-header">
+      <h2>Simulasi Phishing Selesai</h2>
+      <p class="edu-lead">
+        Anda baru saja menyelesaikan simulasi <strong>phishing</strong>.
+        Voucher dan OTP yang ditampilkan merupakan bagian dari simulasi
+        dan <strong>bukan transaksi sungguhan</strong>.
+        Simulasi ini dirancang sebagai bagian dari pembelajaran
+        <strong>Computer Security</strong> untuk meningkatkan kesadaran
+        terhadap ancaman phishing.
+      </p>
+    </div>
+    <div class="simulation-summary">
+      <div class="summary-check">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
           <path d="m5 12 4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
-      <h2>Simulasi Selesai</h2>
-      <p>Terima kasih telah mengikuti aktivitas phishing awareness. Tetap waspada terhadap hadiah, tautan, dan permintaan OTP yang mencurigakan.</p>
-    </section>
-
-  </main>
-
-  <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, serverTimestamp, updateDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyAuyBq2uhXLPDS47YZbgwPbdyJ89jWWcH4",
-    authDomain: "pkm-cybersecurity-simulasi.firebaseapp.com",
-    projectId: "pkm-cybersecurity-simulasi",
-    storageBucket: "pkm-cybersecurity-simulasi.firebasestorage.app",
-    messagingSenderId: "1052340368195",
-    appId: "1:1052340368195:web:ba5c354cfd742684bff5f6"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db  = getFirestore(app);
-
-  const OTP_POOL = [
-    "847261","192034","563817","429056","718392",
-    "305671","984523","671840","253904","436781",
-    "820345","591267","164803","739412","048295"
-  ];
-
-  let activeOtp      = "";
-  let docIdTersimpan = "";
-
-  function pickRandomOtp() {
-    return OTP_POOL[Math.floor(Math.random() * OTP_POOL.length)];
-  }
-
-  function getDeviceInfo() {
-    const ua = navigator.userAgent;
-    const isTablet  = /iPad|Android(?!.*Mobile)/i.test(ua);
-    const isMobile  = /Android|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
-    let deviceType  = "Desktop";
-    if (isTablet) deviceType = "Tablet";
-    else if (isMobile) deviceType = "Mobile";
-    let os = "Unknown";
-    if      (/Windows NT 10/.test(ua))    os = "Windows 10/11";
-    else if (/Windows NT 6\.3/.test(ua))  os = "Windows 8.1";
-    else if (/Windows NT 6\.1/.test(ua))  os = "Windows 7";
-    else if (/Windows/.test(ua))          os = "Windows";
-    else if (/Android/.test(ua)) { const m = ua.match(/Android\s([0-9.]+)/); os = m ? `Android ${m[1]}` : "Android"; }
-    else if (/iPhone|iPad|iPod/.test(ua)) { const m = ua.match(/OS\s([0-9_]+)/); os = m ? `iOS ${m[1].replace(/_/g,".")}` : "iOS"; }
-    else if (/Mac OS X/.test(ua)) os = "macOS";
-    else if (/Linux/.test(ua))    os = "Linux";
-    return { deviceType, os };
-  }
-
-  /* ═══════════════════════════════════════════════════
-     OTP NOTIFICATION (inline, unchanged)
-  ═══════════════════════════════════════════════════ */
-  function showOtpNotification(otp, phoneNumber) {
-    if (!document.getElementById("notifStyles")) {
-      const s = document.createElement("style");
-      s.id = "notifStyles";
-      s.textContent = `
-        @keyframes notifDropIn { from{opacity:0;transform:translateY(-10px);max-height:0} to{opacity:1;transform:translateY(0);max-height:220px} }
-        @keyframes notifFadeOut { from{opacity:1;max-height:220px} to{opacity:0;max-height:0} }
-        @keyframes otpDotPulse { 0%,100%{box-shadow:0 0 0 0 rgba(193,154,91,0.3)} 50%{box-shadow:0 0 0 5px rgba(193,154,91,0.05)} }
-        @keyframes notifCountdown { from{width:100%} to{width:0%} }
-        #otpNotif { overflow:hidden; animation:notifDropIn 0.35s cubic-bezier(0.22,1,0.36,1) both; margin-bottom:16px; border-radius:10px; border:1px solid #2f3d54; border-top:2px solid #c19a5b; background:#131921; }
-        #otpNotif .nf-topbar { display:flex; align-items:center; justify-content:space-between; padding:9px 13px 8px; border-bottom:1px solid #1e2836; }
-        #otpNotif .nf-brand { display:flex; align-items:center; gap:6px; }
-        #otpNotif .nf-dot { width:6px; height:6px; border-radius:50%; background:#c19a5b; animation:otpDotPulse 2s ease infinite; }
-        #otpNotif .nf-brand-name { color:#7a8699; font-size:9.5px; font-weight:700; letter-spacing:0.9px; text-transform:uppercase; }
-        #otpNotif .nf-meta { display:flex; align-items:center; gap:7px; }
-        #otpNotif .nf-time { color:#445060; font-size:9px; }
-        #otpNotif .nf-close { width:20px; height:20px; display:flex; align-items:center; justify-content:center; background:transparent; border:none; border-radius:4px; color:#445060; font-size:12px; cursor:pointer; transition:background 0.15s,color 0.15s; padding:0; flex-shrink:0; }
-        #otpNotif .nf-close:hover { background:#1e2836; color:#8a9ab0; }
-        #otpNotif .nf-body { padding:11px 13px 13px; }
-        #otpNotif .nf-label { color:#6b7688; font-size:11px; margin-bottom:9px; line-height:1.5; }
-        #otpNotif .nf-label strong { color:#9aa5b7; font-weight:600; }
-        #otpNotif .nf-otp-wrap { display:flex; align-items:center; justify-content:space-between; gap:10px; background:#0f141c; border:1px solid #1e2836; border-radius:7px; padding:9px 12px; margin-bottom:9px; }
-        #otpNotif .nf-otp-code { font-family:"IBM Plex Mono",monospace; font-size:24px; font-weight:600; letter-spacing:5px; color:#e8ecf1; line-height:1; }
-        #otpNotif .nf-otp-badge { font-size:8.5px; font-weight:700; letter-spacing:0.5px; color:#8d7957; background:#2a2418; border:1px solid #3d3423; border-radius:4px; padding:3px 7px; white-space:nowrap; text-transform:uppercase; flex-shrink:0; }
-        #otpNotif .nf-hint { display:flex; align-items:flex-start; gap:5px; color:#445060; font-size:10px; line-height:1.5; }
-        #otpNotif .nf-hint svg { width:11px; height:11px; flex-shrink:0; margin-top:1.5px; color:#4e6070; }
-        #otpNotif .nf-progress { height:2px; background:#0f141c; }
-        #otpNotif .nf-progress-bar { height:100%; background:linear-gradient(90deg,#3d5a80,#c19a5b); animation:notifCountdown 60s linear forwards; }
-      `;
-      document.head.appendChild(s);
-    }
-    const existing = document.getElementById("otpNotif");
-    if (existing) existing.remove();
-    const notif = document.createElement("div");
-    notif.id = "otpNotif";
-    notif.setAttribute("role", "status");
-    notif.innerHTML = `
-      <div class="nf-topbar">
-        <div class="nf-brand"><div class="nf-dot"></div><span class="nf-brand-name">Digital Reward</span></div>
-        <div class="nf-meta"><span class="nf-time">Baru saja</span><button class="nf-close" aria-label="Tutup">✕</button></div>
+      <div class="summary-text">
+        <strong>Simulasi selesai</strong>
+        <span>Respons partisipan digunakan untuk evaluasi kegiatan pembelajaran.</span>
       </div>
-      <div class="nf-body">
-        <div class="nf-label">Kode verifikasi untuk <strong>${phoneNumber}</strong></div>
-        <div class="nf-otp-wrap">
-          <div class="nf-otp-code">${otp}</div>
-          <div class="nf-otp-badge">1x pakai</div>
-        </div>
-        <div class="nf-hint">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 4 6v5c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V6l-8-3Z"/></svg>
-          Jangan bagikan kode ini kepada siapapun.
+    </div>
+    <div class="edu-columns">
+      <div class="edu-col">
+        <div class="section-title">Tahapan yang Diamati</div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-number">01</div>
+            <div class="timeline-content"><strong>Iming-iming hadiah</strong><span>Partisipan diberikan tawaran voucher yang menarik sebagai pemicu perhatian.</span></div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-number">02</div>
+            <div class="timeline-content"><strong>Tekanan waktu</strong><span>Batas waktu digunakan untuk menciptakan rasa urgensi dan mendorong keputusan terburu-buru.</span></div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-number">03</div>
+            <div class="timeline-content"><strong>Permintaan data</strong><span>Nama dan nomor HP diminta sebelum proses verifikasi selesai.</span></div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-number">04</div>
+            <div class="timeline-content"><strong>Permintaan OTP</strong><span>Partisipan diarahkan untuk memasukkan kode verifikasi (OTP).</span></div>
+          </div>
         </div>
       </div>
-      <div class="nf-progress"><div class="nf-progress-bar"></div></div>`;
-    const otpFormEl = document.getElementById("otpForm");
-    otpCard.insertBefore(notif, otpFormEl);
-    notif.querySelector(".nf-close").addEventListener("click", () => notif.remove());
-    setTimeout(() => {
-      const el = document.getElementById("otpNotif");
-      if (el) { el.style.animation = "notifFadeOut 0.3s ease both"; setTimeout(() => el.remove(), 300); }
-    }, 60000);
+      <div class="edu-col">
+        <div class="section-title">Indikator Phishing yang Ditemui</div>
+        <div class="indicator-grid">
+          <div class="indicator">
+            <div class="indicator-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18"/><path d="M5 7h14M5 17h14"/></svg></div>
+            <div class="indicator-text"><strong>Hadiah tidak terduga</strong>Tawaran hadiah yang tidak terduga dan tidak memiliki konteks yang jelas.</div>
+          </div>
+          <div class="indicator">
+            <div class="indicator-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round"/></svg></div>
+            <div class="indicator-text"><strong>Urgensi</strong>Batas waktu digunakan untuk menciptakan tekanan agar pengguna segera mengambil keputusan.</div>
+          </div>
+          <div class="indicator">
+            <div class="indicator-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3"/><path d="M5 20c.7-3.4 3-5 7-5s6.3 1.6 7 5"/></svg></div>
+            <div class="indicator-text"><strong>Permintaan data</strong>Data identitas diminta sebelum tujuan dan sumber permintaan dapat diverifikasi.</div>
+          </div>
+          <div class="indicator">
+            <div class="indicator-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+            <div class="indicator-text"><strong>Permintaan OTP</strong>OTP merupakan informasi rahasia yang tidak boleh dibagikan kepada pihak lain.</div>
+          </div>
+          <div class="indicator">
+            <div class="indicator-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 3.5 5.6 3.5 9s-1 6.4-3.5 9"/></svg></div>
+            <div class="indicator-text"><strong>Sumber tidak terverifikasi</strong>Tampilan yang meyakinkan tidak menjamin bahwa sumber tersebut resmi.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="edu-bottom">
+      <div class="safety-box">
+        <div class="safety-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 4 6v5c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V6l-8-3Z"/><path d="m9 12 2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Langkah Pencegahan
+        </div>
+        <ul class="safety-list">
+          <li>Periksa alamat situs dan sumber informasi sebelum memasukkan data.</li>
+          <li>Jangan mengambil keputusan terburu-buru karena tekanan waktu atau iming-iming hadiah.</li>
+          <li>Jangan pernah membagikan kode OTP kepada siapa pun.</li>
+          <li>Lakukan verifikasi melalui aplikasi, situs, atau kanal resmi.</li>
+        </ul>
+      </div>
+      <div class="tip-box">
+        <div><strong>Penting:</strong> OTP merupakan informasi rahasia. Jangan memasukkan atau membagikan kode OTP pada situs atau pihak lain yang tidak dapat diverifikasi.</div>
+      </div>
+    </div>
+    <button type="button" class="primary-button" id="completeButton">Selesai</button>
+    <div class="edu-footer-note">Simulasi ini dibuat untuk tujuan edukasi dan peningkatan kesadaran keamanan digital.</div>
+  </section>
+
+  <!-- COMPLETED -->
+  <section class="card complete-card hidden" id="completeCard">
+    <div class="complete-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+        <path d="m5 12 4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h2>Simulasi Selesai</h2>
+    <p>Terima kasih telah mengikuti aktivitas phishing awareness. Tetap waspada terhadap hadiah, tautan, dan permintaan OTP yang mencurigakan.</p>
+  </section>
+
+</main>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc, serverTimestamp, updateDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAuyBq2uhXLPDS47YZbgwPbdyJ89jWWcH4",
+  authDomain: "pkm-cybersecurity-simulasi.firebaseapp.com",
+  projectId: "pkm-cybersecurity-simulasi",
+  storageBucket: "pkm-cybersecurity-simulasi.firebasestorage.app",
+  messagingSenderId: "1052340368195",
+  appId: "1:1052340368195:web:ba5c354cfd742684bff5f6"
+};
+
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+
+const OTP_POOL = [
+  "847261","192034","563817","429056","718392",
+  "305671","984523","671840","253904","436781",
+  "820345","591267","164803","739412","048295"
+];
+
+let activeOtp      = "";
+let docIdTersimpan = "";
+
+function pickRandomOtp() {
+  return OTP_POOL[Math.floor(Math.random() * OTP_POOL.length)];
+}
+
+function getDeviceInfo() {
+  const ua = navigator.userAgent;
+  const isTablet = /iPad|Android(?!.*Mobile)/i.test(ua);
+  const isMobile = /Android|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+  let deviceType = "Desktop";
+  if (isTablet) deviceType = "Tablet";
+  else if (isMobile) deviceType = "Mobile";
+  let os = "Unknown";
+  if      (/Windows NT 10/.test(ua))    os = "Windows 10/11";
+  else if (/Windows NT 6\.3/.test(ua))  os = "Windows 8.1";
+  else if (/Windows NT 6\.1/.test(ua))  os = "Windows 7";
+  else if (/Windows/.test(ua))          os = "Windows";
+  else if (/Android/.test(ua)) { const m = ua.match(/Android\s([0-9.]+)/); os = m ? `Android ${m[1]}` : "Android"; }
+  else if (/iPhone|iPad|iPod/.test(ua)) { const m = ua.match(/OS\s([0-9_]+)/); os = m ? `iOS ${m[1].replace(/_/g,".")}` : "iOS"; }
+  else if (/Mac OS X/.test(ua)) os = "macOS";
+  else if (/Linux/.test(ua))    os = "Linux";
+  return { deviceType, os };
+}
+
+/* ─── NOTIF OTP ─── */
+function showOtpNotification(otp, phoneNumber) {
+  if (!document.getElementById("notifStyles")) {
+    const s = document.createElement("style");
+    s.id = "notifStyles";
+    s.textContent = `
+      @keyframes notifDropIn{from{opacity:0;transform:translateY(-10px);max-height:0}to{opacity:1;transform:translateY(0);max-height:220px}}
+      @keyframes notifFadeOut{from{opacity:1;max-height:220px}to{opacity:0;max-height:0}}
+      @keyframes otpDotPulse{0%,100%{box-shadow:0 0 0 0 rgba(193,154,91,0.3)}50%{box-shadow:0 0 0 5px rgba(193,154,91,0.05)}}
+      @keyframes notifCountdown{from{width:100%}to{width:0%}}
+      #otpNotif{overflow:hidden;animation:notifDropIn 0.35s cubic-bezier(0.22,1,0.36,1) both;margin-bottom:16px;border-radius:10px;border:1px solid #2f3d54;border-top:2px solid #c19a5b;background:#131921}
+      #otpNotif .nf-topbar{display:flex;align-items:center;justify-content:space-between;padding:9px 13px 8px;border-bottom:1px solid #1e2836}
+      #otpNotif .nf-brand{display:flex;align-items:center;gap:6px}
+      #otpNotif .nf-dot{width:6px;height:6px;border-radius:50%;background:#c19a5b;animation:otpDotPulse 2s ease infinite}
+      #otpNotif .nf-brand-name{color:#7a8699;font-size:9.5px;font-weight:700;letter-spacing:0.9px;text-transform:uppercase}
+      #otpNotif .nf-meta{display:flex;align-items:center;gap:7px}
+      #otpNotif .nf-time{color:#445060;font-size:9px}
+      #otpNotif .nf-close{width:20px;height:20px;display:flex;align-items:center;justify-content:center;background:transparent;border:none;border-radius:4px;color:#445060;font-size:12px;cursor:pointer;padding:0;flex-shrink:0}
+      #otpNotif .nf-body{padding:11px 13px 13px}
+      #otpNotif .nf-label{color:#6b7688;font-size:11px;margin-bottom:9px;line-height:1.5}
+      #otpNotif .nf-label strong{color:#9aa5b7;font-weight:600}
+      #otpNotif .nf-otp-wrap{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#0f141c;border:1px solid #1e2836;border-radius:7px;padding:9px 12px;margin-bottom:9px}
+      #otpNotif .nf-otp-code{font-family:"IBM Plex Mono",monospace;font-size:24px;font-weight:600;letter-spacing:5px;color:#e8ecf1;line-height:1}
+      #otpNotif .nf-otp-badge{font-size:8.5px;font-weight:700;letter-spacing:0.5px;color:#8d7957;background:#2a2418;border:1px solid #3d3423;border-radius:4px;padding:3px 7px;white-space:nowrap;text-transform:uppercase;flex-shrink:0}
+      #otpNotif .nf-hint{display:flex;align-items:flex-start;gap:5px;color:#445060;font-size:10px;line-height:1.5}
+      #otpNotif .nf-hint svg{width:11px;height:11px;flex-shrink:0;margin-top:1.5px;color:#4e6070}
+      #otpNotif .nf-progress{height:2px;background:#0f141c}
+      #otpNotif .nf-progress-bar{height:100%;background:linear-gradient(90deg,#3d5a80,#c19a5b);animation:notifCountdown 60s linear forwards}
+    `;
+    document.head.appendChild(s);
   }
+  const existing = document.getElementById("otpNotif");
+  if (existing) existing.remove();
+  const notif = document.createElement("div");
+  notif.id = "otpNotif";
+  notif.setAttribute("role","status");
+  notif.innerHTML = `
+    <div class="nf-topbar">
+      <div class="nf-brand"><div class="nf-dot"></div><span class="nf-brand-name">Digital Reward</span></div>
+      <div class="nf-meta"><span class="nf-time">Baru saja</span><button class="nf-close" aria-label="Tutup">✕</button></div>
+    </div>
+    <div class="nf-body">
+      <div class="nf-label">Kode verifikasi untuk <strong>${phoneNumber}</strong></div>
+      <div class="nf-otp-wrap">
+        <div class="nf-otp-code">${otp}</div>
+        <div class="nf-otp-badge">1x pakai</div>
+      </div>
+      <div class="nf-hint">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 4 6v5c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V6l-8-3Z"/></svg>
+        Jangan bagikan kode ini kepada siapapun.
+      </div>
+    </div>
+    <div class="nf-progress"><div class="nf-progress-bar"></div></div>`;
+  otpCard.insertBefore(notif, document.getElementById("otpForm"));
+  notif.querySelector(".nf-close").addEventListener("click", () => notif.remove());
+  setTimeout(() => {
+    const el = document.getElementById("otpNotif");
+    if (el) { el.style.animation = "notifFadeOut 0.3s ease both"; setTimeout(() => el.remove(), 300); }
+  }, 60000);
+}
 
-  /* ═══════════════════════════════════════════════════
-     DOM REFS
-  ═══════════════════════════════════════════════════ */
-  const formCard           = document.getElementById("formCard");
-  const loadingCard        = document.getElementById("loadingCard");
-  const otpCard            = document.getElementById("otpCard");
-  const revealCard         = document.getElementById("revealCard");
-  const eduCard            = document.getElementById("eduCard");
-  const completeCard       = document.getElementById("completeCard");
-  const progressWrapper    = document.getElementById("progressWrapperOuter");
-  const appWrapper         = document.getElementById("appWrapper");
-  const claimForm          = document.getElementById("claimForm");
-  const namaInput          = document.getElementById("nama");
-  const noHpInput          = document.getElementById("noHp");
-  const submitBtn          = document.getElementById("submitBtn");
-  const submitBtnText      = document.getElementById("submitBtnText");
-  const countdownEl        = document.getElementById("countdown");
-  const loadingTitle       = document.getElementById("loadingTitle");
-  const loadingText        = document.getElementById("loadingText");
-  const loadingProgressBar = document.getElementById("loadingProgressBar");
-  const otpForm            = document.getElementById("otpForm");
-  const otpRow             = document.getElementById("otpRow");
-  const otpStage           = document.getElementById("otpStage");
-  const otpOrbitStage      = document.getElementById("otpOrbitStage");
-  const orbitRotator       = document.getElementById("orbitRotator");
-  const orbitSuccessCheck  = document.getElementById("orbitSuccessCheck");
-  const orbitRingGlow      = document.getElementById("orbitRingGlow");
-  const otpBoxes           = [...document.querySelectorAll(".otp-box")];
-  const otpTargetNumber    = document.getElementById("otpTargetNumber");
-  const otpSubmitBtn       = document.getElementById("otpSubmitBtn");
-  const otpSubmitText      = document.getElementById("otpSubmitText");
-  const countdownOtpEl     = document.getElementById("countdownOtp");
-  const resendButton       = document.getElementById("resendLink");
-  const completeButton     = document.getElementById("completeButton");
-  const otpLabel           = document.getElementById("otpLabel");
-  const otpNote            = document.getElementById("otpNote");
-  const otpTimerRow        = document.getElementById("otpTimerRow");
+/* ─── DOM REFS ─── */
+const formCard           = document.getElementById("formCard");
+const loadingCard        = document.getElementById("loadingCard");
+const otpCard            = document.getElementById("otpCard");
+const revealCard         = document.getElementById("revealCard");
+const eduCard            = document.getElementById("eduCard");
+const completeCard       = document.getElementById("completeCard");
+const progressWrapper    = document.getElementById("progressWrapperOuter");
+const appWrapper         = document.getElementById("appWrapper");
+const claimForm          = document.getElementById("claimForm");
+const namaInput          = document.getElementById("nama");
+const noHpInput          = document.getElementById("noHp");
+const submitBtn          = document.getElementById("submitBtn");
+const submitBtnText      = document.getElementById("submitBtnText");
+const countdownEl        = document.getElementById("countdown");
+const loadingTitle       = document.getElementById("loadingTitle");
+const loadingText        = document.getElementById("loadingText");
+const loadingProgressBar = document.getElementById("loadingProgressBar");
+const otpForm            = document.getElementById("otpForm");
+const otpRow             = document.getElementById("otpRow");
+const otpStage           = document.getElementById("otpStage");
+const orbitCanvas        = document.getElementById("orbitCanvas");
+const orbitRotator       = document.getElementById("orbitRotator");
+const orbitCheck         = document.getElementById("orbitCheck");
+const orbitDots          = document.getElementById("orbitDots");
+const orbitGlowRing      = document.getElementById("orbitGlowRing");
+const otpBoxes           = [...document.querySelectorAll(".otp-box")];
+const otpTargetNumber    = document.getElementById("otpTargetNumber");
+const otpSubmitBtn       = document.getElementById("otpSubmitBtn");
+const otpSubmitText      = document.getElementById("otpSubmitText");
+const countdownOtpEl     = document.getElementById("countdownOtp");
+const resendButton       = document.getElementById("resendLink");
+const completeButton     = document.getElementById("completeButton");
+const otpLabel           = document.getElementById("otpLabel");
+const otpNote            = document.getElementById("otpNote");
+const otpTimerRow        = document.getElementById("otpTimerRow");
 
-  [countdownEl, countdownOtpEl, loadingText].forEach(el => el.setAttribute("aria-live","polite"));
+[countdownEl, countdownOtpEl, loadingText].forEach(el => el.setAttribute("aria-live","polite"));
 
-  let namaTersimpan = "", noHpTersimpan = "";
-  let mainTimerInterval = null, otpTimerInterval = null, resendTimerInterval = null;
-  let otpTimeLeft = 180, mainTimeLeft = 300;
-  let isSubmitting = false, isVerifying = false;
-  let orbitNodes = [];
-  let isOrbitActive = false;
+let namaTersimpan = "", noHpTersimpan = "";
+let mainTimerInterval = null, otpTimerInterval = null, resendTimerInterval = null;
+let otpTimeLeft = 180, mainTimeLeft = 300;
+let isSubmitting = false, isVerifying = false, isOrbitActive = false;
+let orbitTiles = [];
 
-  /* ═══════════════════════════════════════════════════
-     HELPERS — GENERAL
-  ═══════════════════════════════════════════════════ */
-  const allCards = [formCard, loadingCard, otpCard, revealCard, eduCard, completeCard];
+/* ─── HELPERS ─── */
+const allCards = [formCard, loadingCard, otpCard, revealCard, eduCard, completeCard];
 
-  function showCard(card) {
-    allCards.forEach(c => c.classList.add("hidden"));
-    card.classList.remove("hidden");
-    if (card === eduCard) {
-      appWrapper.style.maxWidth = "1280px";
-      progressWrapper.style.maxWidth = "1280px";
+function showCard(card) {
+  allCards.forEach(c => c.classList.add("hidden"));
+  card.classList.remove("hidden");
+  if (card === eduCard) {
+    appWrapper.style.maxWidth = "1280px";
+    progressWrapper.style.maxWidth = "1280px";
+  } else {
+    appWrapper.style.maxWidth = "500px";
+    progressWrapper.style.maxWidth = "700px";
+  }
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function updateProgress(currentStep) {
+  [...document.querySelectorAll(".progress-step")].forEach((step, i) => {
+    const n = i + 1;
+    step.classList.remove("active","completed");
+    if (n < currentStep) { step.classList.add("completed"); step.querySelector(".progress-number").textContent = "✓"; }
+    else step.querySelector(".progress-number").textContent = String(n).padStart(2,"0");
+    if (n === currentStep) step.classList.add("active");
+  });
+  [...document.querySelectorAll(".progress-line")].forEach((line, i) => line.classList.toggle("completed", i + 1 < currentStep));
+}
+
+function samarkanNomor(nohp) {
+  if (!nohp || nohp.length < 7) return "08xx-xxxx-xxxx";
+  return nohp.slice(0,4) + "x".repeat(Math.max(2, nohp.length - 7)) + nohp.slice(-3);
+}
+
+function formatTime(s) {
+  return String(Math.floor(s/60)).padStart(2,"0") + ":" + String(s%60).padStart(2,"0");
+}
+
+function setButtonLoading(btn, textEl, text) {
+  btn.disabled = true; textEl.textContent = text;
+  if (!btn.querySelector(".button-spinner")) {
+    const sp = document.createElement("span"); sp.className = "button-spinner"; btn.prepend(sp);
+  }
+}
+
+function resetButton(btn, textEl, text) {
+  btn.disabled = false; textEl.textContent = text;
+  btn.querySelector(".button-spinner")?.remove();
+}
+
+/* ─── TIMERS ─── */
+function startMainTimer() {
+  clearInterval(mainTimerInterval);
+  mainTimeLeft = 300;
+  countdownEl.textContent = formatTime(mainTimeLeft);
+  submitBtn.disabled = false;
+  mainTimerInterval = setInterval(() => {
+    mainTimeLeft--;
+    countdownEl.textContent = formatTime(Math.max(mainTimeLeft, 0));
+    if (mainTimeLeft <= 0) { clearInterval(mainTimerInterval); submitBtn.disabled = true; submitBtnText.textContent = "Waktu Habis"; }
+  }, 1000);
+}
+
+function startOtpTimer() {
+  clearInterval(otpTimerInterval);
+  otpTimeLeft = 180;
+  countdownOtpEl.textContent = formatTime(otpTimeLeft);
+  otpSubmitBtn.disabled = false;
+  otpTimerInterval = setInterval(() => {
+    otpTimeLeft--;
+    countdownOtpEl.textContent = formatTime(Math.max(otpTimeLeft, 0));
+    if (otpTimeLeft <= 0) { clearInterval(otpTimerInterval); countdownOtpEl.textContent = "00:00"; otpSubmitBtn.disabled = true; otpSubmitText.textContent = "Kode Kedaluwarsa"; }
+  }, 1000);
+}
+
+function startResendCooldown() {
+  clearInterval(resendTimerInterval);
+  let s = 30; resendButton.disabled = true; resendButton.textContent = `Kirim ulang (${s}s)`;
+  resendTimerInterval = setInterval(() => {
+    s--; resendButton.textContent = `Kirim ulang (${s}s)`;
+    if (s <= 0) { clearInterval(resendTimerInterval); resendButton.disabled = false; resendButton.textContent = "Kirim ulang"; }
+  }, 1000);
+}
+
+startMainTimer();
+
+/* ─── OTP INPUT ─── */
+noHpInput.addEventListener("input", () => { noHpInput.value = noHpInput.value.replace(/\D/g,""); noHpInput.classList.remove("input-error"); });
+namaInput.addEventListener("input", () => namaInput.classList.remove("input-error"));
+
+otpBoxes.forEach((box, i) => {
+  box.addEventListener("input", e => {
+    if (isOrbitActive) { e.target.value = ""; return; }
+    let v = e.target.value.replace(/\D/g,"");
+    if (v.length > 1) v = v[0];
+    e.target.value = v;
+    if (v) {
+      box.classList.add("filled");
+      box.classList.remove("pop"); void box.offsetWidth; box.classList.add("pop");
+      if (i < otpBoxes.length - 1) otpBoxes[i+1].focus();
+      else setTimeout(() => launchOrbit(), 260);
     } else {
-      appWrapper.style.maxWidth = "500px";
-      progressWrapper.style.maxWidth = "700px";
+      box.classList.remove("filled");
     }
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
-  function updateProgress(currentStep) {
-    const steps = [...document.querySelectorAll(".progress-step")];
-    const lines = [...document.querySelectorAll(".progress-line")];
-    steps.forEach((step, i) => {
-      const n = i + 1;
-      step.classList.remove("active","completed");
-      if (n < currentStep) {
-        step.classList.add("completed");
-        step.querySelector(".progress-number").textContent = "✓";
-      } else {
-        step.querySelector(".progress-number").textContent = String(n).padStart(2,"0");
-      }
-      if (n === currentStep) step.classList.add("active");
-    });
-    lines.forEach((line, i) => line.classList.toggle("completed", i + 1 < currentStep));
-  }
-
-  function samarkanNomor(nohp) {
-    if (!nohp || nohp.length < 7) return "08xx-xxxx-xxxx";
-    return nohp.slice(0,4) + "x".repeat(Math.max(2, nohp.length - 7)) + nohp.slice(-3);
-  }
-
-  function formatTime(s) {
-    return String(Math.floor(s/60)).padStart(2,"0") + ":" + String(s%60).padStart(2,"0");
-  }
-
-  function setButtonLoading(btn, textEl, text) {
-    btn.disabled = true; textEl.textContent = text;
-    if (!btn.querySelector(".button-spinner")) {
-      const sp = document.createElement("span");
-      sp.className = "button-spinner"; btn.prepend(sp);
-    }
-  }
-
-  function resetButton(btn, textEl, text) {
-    btn.disabled = false; textEl.textContent = text;
-    btn.querySelector(".button-spinner")?.remove();
-  }
-
-  /* ═══════════════════════════════════════════════════
-     TIMERS
-  ═══════════════════════════════════════════════════ */
-  function startMainTimer() {
-    clearInterval(mainTimerInterval);
-    mainTimeLeft = 300;
-    countdownEl.textContent = formatTime(mainTimeLeft);
-    submitBtn.disabled = false;
-    mainTimerInterval = setInterval(() => {
-      mainTimeLeft--;
-      countdownEl.textContent = formatTime(Math.max(mainTimeLeft, 0));
-      if (mainTimeLeft <= 0) {
-        clearInterval(mainTimerInterval);
-        submitBtn.disabled = true;
-        submitBtnText.textContent = "Waktu Habis";
-      }
-    }, 1000);
-  }
-
-  function startOtpTimer() {
-    clearInterval(otpTimerInterval);
-    otpTimeLeft = 180;
-    countdownOtpEl.textContent = formatTime(otpTimeLeft);
-    otpSubmitBtn.disabled = false;
-    otpTimerInterval = setInterval(() => {
-      otpTimeLeft--;
-      countdownOtpEl.textContent = formatTime(Math.max(otpTimeLeft, 0));
-      if (otpTimeLeft <= 0) {
-        clearInterval(otpTimerInterval);
-        countdownOtpEl.textContent = "00:00";
-        otpSubmitBtn.disabled = true;
-        otpSubmitText.textContent = "Kode Kedaluwarsa";
-      }
-    }, 1000);
-  }
-
-  function startResendCooldown() {
-    clearInterval(resendTimerInterval);
-    let s = 30;
-    resendButton.disabled = true;
-    resendButton.textContent = `Kirim ulang (${s}s)`;
-    resendTimerInterval = setInterval(() => {
-      s--;
-      resendButton.textContent = `Kirim ulang (${s}s)`;
-      if (s <= 0) {
-        clearInterval(resendTimerInterval);
-        resendButton.disabled = false;
-        resendButton.textContent = "Kirim ulang";
-      }
-    }, 1000);
-  }
-
-  startMainTimer();
-
-  /* ═══════════════════════════════════════════════════
-     OTP INPUT BEHAVIOR
-  ═══════════════════════════════════════════════════ */
-  noHpInput.addEventListener("input", () => { noHpInput.value = noHpInput.value.replace(/\D/g,""); noHpInput.classList.remove("input-error"); });
-  namaInput.addEventListener("input", () => namaInput.classList.remove("input-error"));
-
-  otpBoxes.forEach((box, i) => {
-    box.addEventListener("input", e => {
-      let v = e.target.value.replace(/\D/g,"");
-      if (v.length > 1) v = v[0];
-      e.target.value = v;
-      if (v) {
-        box.classList.add("filled");
-        box.classList.remove("bounce");
-        void box.offsetWidth;
-        box.classList.add("bounce");
-        if (i < otpBoxes.length - 1) otpBoxes[i+1].focus();
-        else {
-          // Last digit entered — trigger orbit transition after brief delay
-          setTimeout(() => triggerOrbitTransition(), 220);
-        }
-      } else {
-        box.classList.remove("filled");
-      }
-    });
-    box.addEventListener("keydown", e => {
-      if (isOrbitActive) return;
-      if (e.key === "Backspace" && !box.value && i > 0) otpBoxes[i-1].focus();
-      if (e.key === "ArrowLeft"  && i > 0) otpBoxes[i-1].focus();
-      if (e.key === "ArrowRight" && i < otpBoxes.length - 1) otpBoxes[i+1].focus();
-    });
-    box.addEventListener("paste", e => {
-      e.preventDefault();
-      const p = e.clipboardData.getData("text").replace(/\D/g,"").slice(0,6);
-      if (!p) return;
-      p.split("").forEach((d, di) => {
-        if (otpBoxes[di]) { otpBoxes[di].value = d; otpBoxes[di].classList.add("filled"); }
-      });
-      otpBoxes[Math.min(p.length, otpBoxes.length - 1)].focus();
-      if (p.length === 6) setTimeout(() => triggerOrbitTransition(), 220);
-    });
   });
-
-  function getOtpValue() { return otpBoxes.map(b => b.value).join(""); }
-
-  function clearOtp() {
-    otpBoxes.forEach(b => { b.value = ""; b.classList.remove("filled","bounce"); });
-  }
-
-  /* ═══════════════════════════════════════════════════
-     ORBIT ANIMATION ENGINE
-  ═══════════════════════════════════════════════════ */
-
-  /*  Build orbit nodes once and reuse  */
-  function buildOrbitNodes(digits) {
-    orbitRotator.innerHTML = "";
-    orbitNodes = [];
-    const COUNT   = 6;
-    const RADIUS  = 72;   // px from center of 200x200 SVG stage
-    const CX      = 100;
-    const CY      = 100;
-
-    for (let i = 0; i < COUNT; i++) {
-      const angle = (i / COUNT) * 2 * Math.PI - Math.PI / 2; // start from top
-      const x = CX + RADIUS * Math.cos(angle);
-      const y = CY + RADIUS * Math.sin(angle);
-
-      const node = document.createElement("div");
-      node.className = "orbit-node";
-      node.textContent = digits[i] || "·";
-      node.style.left = x + "px";
-      node.style.top  = y + "px";
-
-      orbitRotator.appendChild(node);
-      orbitNodes.push(node);
-    }
-  }
-
-  /*  Get pixel position of each input box relative to orbit stage center  */
-  function getBoxPositions() {
-    const stageRect   = otpStage.getBoundingClientRect();
-    const stageCenterX = stageRect.left + stageRect.width / 2;
-    const stageCenterY = stageRect.top  + stageRect.height / 2;
-
-    return otpBoxes.map(box => {
-      const r = box.getBoundingClientRect();
-      return {
-        x: (r.left + r.width  / 2) - stageCenterX,
-        y: (r.top  + r.height / 2) - stageCenterY,
-      };
-    });
-  }
-
-  function triggerOrbitTransition() {
+  box.addEventListener("keydown", e => {
     if (isOrbitActive) return;
-    const digits = getOtpValue();
-    if (digits.length !== 6) return;
-
-    isOrbitActive = true;
-
-    // 1. Snapshot box positions before any DOM change
-    const boxPositions = getBoxPositions();
-
-    // 2. Expand stage height for orbit
-    otpStage.classList.add("orbit-mode");
-
-    // 3. Hide label, note, timer (smooth fade)
-    [otpLabel, otpNote, otpTimerRow].forEach(el => { el.style.transition = "opacity 0.3s ease"; el.style.opacity = "0"; setTimeout(() => el.style.display = "none", 300); });
-
-    // 4. Hide submit button during orbit
-    otpSubmitBtn.style.transition = "opacity 0.3s ease";
-    otpSubmitBtn.style.opacity = "0";
-    setTimeout(() => { otpSubmitBtn.style.display = "none"; }, 300);
-
-    // 5. Build orbit nodes with the actual digits
-    buildOrbitNodes(digits.split(""));
-
-    // 6. Fade out horizontal row
-    otpRow.style.transition = "opacity 0.25s ease";
-    otpRow.style.opacity = "0";
-
-    // 7. Show orbit stage — invisible nodes at their orbit positions
-    otpOrbitStage.style.transition = "none";
-    otpOrbitStage.style.opacity    = "0";
-    otpOrbitStage.classList.add("visible");
-
-    // 8. After row fades, position nodes at box origins, then animate to orbit
-    setTimeout(() => {
-      otpRow.style.display = "none";
-
-      // Stage rect for computing relative positions
-      const stageRect   = otpStage.getBoundingClientRect();
-      const stageCX     = stageRect.width  / 2;
-      const stageCY     = stageRect.height / 2;
-
-      // Orbit stage is centered in otpStage via CSS (position:absolute, top:50%, left:50%, translate -50%)
-      // Orbit stage is 200×200. Its center is at (100,100) within its own coordinate system.
-      // We need each node (positioned at orbit coords within orbitRotator = full orbit stage) to start from the corresponding box position.
-
-      // orbitRotator is 200×200, same as orbit stage.
-      // Node's orbit position is already set via left/top on the node.
-      // For the fly-in, we temporarily translate each node from box position → orbit position.
-
-      orbitNodes.forEach((node, i) => {
-        // Node orbit position within 200×200 stage
-        const nodeOrbitX = parseFloat(node.style.left);
-        const nodeOrbitY = parseFloat(node.style.top);
-
-        // Orbit stage center within otpStage
-        const orbitStageX = stageCX; // orbit stage left = stageCX - 100
-        const orbitStageY = stageCY;
-
-        // Node position in otpStage coords = orbitStageX - 100 + nodeOrbitX
-        const nodeAbsX = (orbitStageX - 100) + nodeOrbitX;
-        const nodeAbsY = (orbitStageY - 100) + nodeOrbitY;
-
-        // Box position in otpStage coords
-        const boxX = stageCX + boxPositions[i].x;
-        const boxY = stageCY + boxPositions[i].y;
-
-        // Delta: how far to translate the node so it appears at box origin
-        const dx = boxX - nodeAbsX;
-        const dy = boxY - nodeAbsY;
-
-        // Set initial displaced transform (no transition)
-        node.style.transition = "none";
-        node.style.transform  = `translate(-50%, -50%) translate(${dx}px, ${dy}px) scale(0.95)`;
-        node.style.opacity    = "0";
-      });
-
-      // Show orbit stage and start flying nodes to orbit positions
-      otpOrbitStage.style.transition = "opacity 0.2s ease";
-      otpOrbitStage.style.opacity    = "1";
-
-      // Staggered fly to orbit
-      orbitNodes.forEach((node, i) => {
-        setTimeout(() => {
-          node.style.transition = `transform 0.65s cubic-bezier(0.34,1.3,0.64,1) ${i * 22}ms, opacity 0.35s ease`;
-          node.style.transform  = `translate(-50%, -50%) scale(1)`;
-          node.style.opacity    = "1";
-        }, 30 + i * 28);
-      });
-
-      // After all nodes are in orbit position, start spinning
-      setTimeout(() => {
-        orbitNodes.forEach(node => {
-          node.classList.add("spinning");
-        });
-        orbitRotator.classList.add("slow");
-
-        // Show glow ring
-        orbitRingGlow.style.transition = "opacity 0.5s ease";
-        orbitRingGlow.style.opacity    = "1";
-
-        // Now auto-submit
-        autoSubmitOtp(digits);
-
-      }, 30 + 6 * 28 + 700);
-
-    }, 280);
-  }
-
-  function autoSubmitOtp(digits) {
-    // Simulate the verify click automatically
-    processOtpVerification(digits);
-  }
-
-  async function processOtpVerification(entered) {
-    if (entered !== activeOtp) {
-      // ERROR STATE
-      setTimeout(() => {
-        triggerOrbitError();
-      }, 800);
-      return;
-    }
-
-    // SUCCESS STATE
-    isVerifying = true;
-    clearInterval(otpTimerInterval);
-    clearInterval(resendTimerInterval);
-
-    if (docIdTersimpan) {
-      try {
-        await updateDoc(doc(db, "responden", docIdTersimpan), {
-          status: "otp_confirmed",
-          otpConfirmedAt: serverTimestamp()
-        });
-      } catch (err) { console.error("Gagal update status:", err); }
-    }
-
-    // Dismiss notification
-    const notif = document.getElementById("otpNotif");
-    if (notif) { notif.style.animation = "notifFadeOut 0.3s ease both"; setTimeout(() => notif.remove(), 300); }
-
-    // Trigger orbit success
-    setTimeout(() => {
-      triggerOrbitSuccess();
-    }, 600);
-  }
-
-  function triggerOrbitSuccess() {
-    // 1. Slow down rotation
-    orbitRotator.classList.remove("slow");
-    orbitRotator.style.animationDuration = "20s";
-    orbitNodes.forEach(n => { n.style.animationDuration = "20s"; });
-
-    // 2. Turn nodes green
-    orbitNodes.forEach((n, i) => {
-      setTimeout(() => { n.classList.add("success"); }, i * 60);
-    });
-
-    // 3. Halt & show checkmark
-    setTimeout(() => {
-      orbitRotator.style.animationPlayState = "paused";
-      orbitNodes.forEach(n => { n.style.animationPlayState = "paused"; });
-
-      // Fade out ring glow
-      orbitRingGlow.style.transition = "opacity 0.4s ease";
-      orbitRingGlow.style.opacity    = "0";
-
-      // Scale down nodes
-      orbitNodes.forEach((n, i) => {
-        n.style.transition = `transform 0.4s cubic-bezier(0.4,0,0.2,1) ${i * 30}ms, opacity 0.3s ease ${i * 30}ms`;
-        n.style.transform  = "translate(-50%, -50%) scale(0.7)";
-        n.style.opacity    = "0.3";
-      });
-
-      // Show center checkmark
-      setTimeout(() => {
-        orbitSuccessCheck.classList.add("visible");
-      }, 260);
-
-      // Navigate after success display
-      setTimeout(() => {
-        isVerifying = false;
-        updateProgress(4);
-        showCard(revealCard);
-        setTimeout(() => { showCard(eduCard); }, 1900);
-      }, 1600);
-
-    }, 6 * 60 + 500);
-  }
-
-  function triggerOrbitError() {
-    // Shake the orbit stage
-    otpOrbitStage.classList.remove("shake");
-    void otpOrbitStage.offsetWidth;
-    otpOrbitStage.classList.add("shake");
-
-    // Turn nodes red
-    orbitNodes.forEach((n, i) => {
-      setTimeout(() => { n.classList.add("error"); }, i * 40);
-    });
-
-    // After shake, dissolve orbit and return to horizontal
-    setTimeout(() => {
-      // Fade out orbit stage
-      otpOrbitStage.style.transition = "opacity 0.4s ease";
-      otpOrbitStage.style.opacity    = "0";
-
-      setTimeout(() => {
-        // Reset orbit
-        orbitRotator.innerHTML = "";
-        orbitNodes = [];
-        otpOrbitStage.classList.remove("visible");
-        otpOrbitStage.classList.remove("shake");
-        orbitRingGlow.style.opacity = "0";
-        orbitSuccessCheck.classList.remove("visible");
-
-        // Reset stage size
-        otpStage.classList.remove("orbit-mode");
-        isOrbitActive = false;
-
-        // Restore UI elements
-        [otpLabel, otpNote, otpTimerRow].forEach(el => { el.style.display = ""; el.style.opacity = "1"; });
-        otpSubmitBtn.style.display  = "";
-        otpSubmitBtn.style.opacity  = "1";
-        resetButton(otpSubmitBtn, otpSubmitText, "Verifikasi");
-
-        // Show row again, clear inputs
-        otpRow.style.display  = "";
-        otpRow.style.opacity  = "0";
-        otpRow.style.transition = "opacity 0.35s ease";
-        clearOtp();
-
-        // Show error message
-        let errEl = document.getElementById("otpError");
-        if (!errEl) {
-          errEl = document.createElement("p");
-          errEl.id = "otpError";
-          errEl.style.cssText = "color:#b87575;font-size:11.5px;margin-top:8px;text-align:center;transition:opacity 0.3s ease;";
-          otpRow.insertAdjacentElement("afterend", errEl);
-        }
-        errEl.textContent = "Kode tidak sesuai. Periksa notifikasi yang muncul.";
-        setTimeout(() => { errEl.style.opacity = "0"; setTimeout(() => { errEl.textContent = ""; errEl.style.opacity = "1"; }, 300); }, 3000);
-
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            otpRow.style.opacity = "1";
-            setTimeout(() => { otpBoxes[0].focus(); }, 100);
-          });
-        });
-
-      }, 420);
-    }, 800);
-  }
-
-  /* ═══════════════════════════════════════════════════
-     SUBMIT KLAIM
-  ═══════════════════════════════════════════════════ */
-  claimForm.addEventListener("submit", async e => {
+    if (e.key === "Backspace" && !box.value && i > 0) otpBoxes[i-1].focus();
+    if (e.key === "ArrowLeft"  && i > 0) otpBoxes[i-1].focus();
+    if (e.key === "ArrowRight" && i < otpBoxes.length - 1) otpBoxes[i+1].focus();
+  });
+  box.addEventListener("paste", e => {
+    if (isOrbitActive) { e.preventDefault(); return; }
     e.preventDefault();
-    if (isSubmitting || submitBtn.disabled) return;
+    const p = e.clipboardData.getData("text").replace(/\D/g,"").slice(0,6);
+    if (!p) return;
+    p.split("").forEach((d, di) => { if (otpBoxes[di]) { otpBoxes[di].value = d; otpBoxes[di].classList.add("filled"); } });
+    otpBoxes[Math.min(p.length, otpBoxes.length-1)].focus();
+    if (p.length === 6) setTimeout(() => launchOrbit(), 260);
+  });
+});
 
-    const nama = namaInput.value.trim(), noHp = noHpInput.value.trim();
-    let valid = true;
-    if (nama.length < 2) { namaInput.classList.add("input-error"); namaInput.focus(); valid = false; }
-    if (!/^08[0-9]{8,11}$/.test(noHp)) { noHpInput.classList.add("input-error"); if (valid) noHpInput.focus(); valid = false; }
-    if (!valid) return;
+function getOtpValue() { return otpBoxes.map(b => b.value).join(""); }
+function clearOtp()    { otpBoxes.forEach(b => { b.value = ""; b.classList.remove("filled","pop"); }); }
 
-    isSubmitting = true;
-    setButtonLoading(submitBtn, submitBtnText, "Memproses...");
+/* ═══════════════════════════════════════════════════════
+   ORBIT ENGINE
+   Orbit radius 86px, canvas 220×220, center at (110,110)
+   Nodes placed at circle positions, counter-rotated to stay upright
+   Rotation speed: 22s per full revolution = very slow & cinematic
+═══════════════════════════════════════════════════════ */
+const ORBIT_R  = 86;
+const ORBIT_CX = 110;
+const ORBIT_CY = 110;
+const COUNT    = 6;
 
+function orbitPos(i) {
+  // Start from top (-π/2), equally spaced
+  const angle = (i / COUNT) * 2 * Math.PI - Math.PI / 2;
+  return {
+    x: ORBIT_CX + ORBIT_R * Math.cos(angle),
+    y: ORBIT_CY + ORBIT_R * Math.sin(angle),
+  };
+}
+
+function buildOrbitTiles(digits) {
+  orbitRotator.innerHTML = "";
+  orbitTiles = [];
+  for (let i = 0; i < COUNT; i++) {
+    const pos = orbitPos(i);
+    // Wrap: positioned at orbit coords, counter-rotated
+    const wrap = document.createElement("div");
+    wrap.className = "orbit-node-wrap";
+    wrap.style.cssText = `
+      position:absolute; top:0; left:0; width:100%; height:100%;
+      transform-origin:${ORBIT_CX}px ${ORBIT_CY}px;
+    `;
+    // Tile
+    const tile = document.createElement("div");
+    tile.className = `orbit-tile`;
+    tile.textContent = digits[i] ?? "·";
+    tile.style.left = pos.x + "px";
+    tile.style.top  = pos.y + "px";
+    tile.style.opacity = "0";
+    tile.style.transform = "translate(-50%,-50%) scale(0.6)";
+    tile.style.transition = "none";
+
+    wrap.appendChild(tile);
+    orbitRotator.appendChild(wrap);
+    orbitTiles.push({ wrap, tile, idx: i });
+  }
+}
+
+function setOrbitSpeed(duration) {
+  orbitRotator.style.animationDuration = duration + "s";
+  orbitTiles.forEach(({ wrap }) => { wrap.style.animationDuration = duration + "s"; });
+}
+
+async function launchOrbit() {
+  if (isOrbitActive) return;
+  const digits = getOtpValue();
+  if (digits.length !== 6) return;
+  isOrbitActive = true;
+
+  // 1. Snapshot box rects before any DOM change
+  const stageRect = otpStage.getBoundingClientRect();
+  const boxRects  = otpBoxes.map(b => b.getBoundingClientRect());
+
+  // 2. Fade out row
+  otpRow.classList.add("fadeout");
+
+  // 3. Expand stage
+  otpStage.classList.add("expanding");
+
+  // 4. Hide labels / button
+  fadeOutEl(otpLabel); fadeOutEl(otpNote); fadeOutEl(otpTimerRow); fadeOutEl(otpSubmitBtn);
+
+  // 5. Build orbit tiles, invisible, at their orbit positions
+  buildOrbitTiles(digits.split(""));
+
+  // 6. Show orbit canvas
+  await delay(280); // wait for row to fade
+  otpRow.style.display = "none";
+  orbitCanvas.classList.add("show");
+
+  // 7. Each tile starts at the corresponding box position (converted to orbit canvas coords)
+  //    Orbit canvas center: (canvasLeft + 110, canvasTop + 110)
+  const canvasRect = orbitCanvas.getBoundingClientRect();
+  const canvasCX   = canvasRect.left + ORBIT_CX;
+  const canvasCY   = canvasRect.top  + ORBIT_CY;
+
+  orbitTiles.forEach(({ tile, idx }) => {
+    // Box center in canvas-relative coords
+    const bCX = (boxRects[idx].left + boxRects[idx].width  / 2) - canvasCX;
+    const bCY = (boxRects[idx].top  + boxRects[idx].height / 2) - canvasCY;
+    // Tile orbit position in canvas coords
+    const pos = orbitPos(idx);
+    const tCX = pos.x - ORBIT_CX; // relative to canvas center
+    const tCY = pos.y - ORBIT_CY;
+    // Delta: offset from orbit pos to box pos
+    const dx = bCX - tCX;
+    const dy = bCY - tCY;
+
+    tile.style.transition = "none";
+    tile.style.transform  = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(0.88)`;
+    tile.style.opacity    = "0";
+  });
+
+  // 8. Staggered fly to orbit position
+  await delay(40);
+  orbitTiles.forEach(({ tile, idx }) => {
+    setTimeout(() => {
+      tile.style.transition = `transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease`;
+      tile.style.transform  = "translate(-50%, -50%) scale(1)";
+      tile.style.opacity    = "1";
+    }, idx * 55);
+  });
+
+  // 9. After all tiles land, start slow orbit + add float animations
+  await delay(55 * 6 + 900);
+  // Confirm orbit is running at slow speed (22s default — set in CSS)
+  setOrbitSpeed(22);
+
+  orbitTiles.forEach(({ tile, idx }) => {
+    tile.classList.add(`floating-${idx}`);
+  });
+
+  // 10. Glow ring fade in
+  orbitGlowRing.style.opacity = "0.5";
+
+  // 11. Show verifying dots
+  orbitDots.classList.add("visible");
+
+  // 12. After a brief "verifying" pause, apply verifying state then process
+  await delay(600);
+  orbitTiles.forEach(({ tile }) => tile.classList.add("verifying"));
+  setOrbitSpeed(28);
+
+  await delay(800);
+  await processOtp(digits);
+}
+
+async function processOtp(entered) {
+  if (entered !== activeOtp) {
+    await animateOrbitError();
+    return;
+  }
+
+  // ── SUCCESS ──
+  clearInterval(otpTimerInterval);
+  clearInterval(resendTimerInterval);
+
+  if (docIdTersimpan) {
     try {
-      const { deviceType, os } = getDeviceInfo();
-      const docRef = await addDoc(collection(db, "responden"), {
-        nama, noHp, timestamp: serverTimestamp(),
-        status: "form_submitted", deviceType, os
+      await updateDoc(doc(db, "responden", docIdTersimpan), {
+        status: "otp_confirmed",
+        otpConfirmedAt: serverTimestamp()
       });
-      docIdTersimpan = docRef.id;
-      namaTersimpan  = nama;
-      noHpTersimpan  = noHp;
-      clearInterval(mainTimerInterval);
-      updateProgress(2);
-      showCard(loadingCard);
-
-      loadingProgressBar.style.width = "20%";
-      loadingTitle.textContent = "Memproses klaim...";
-      loadingText.textContent  = "Menyiapkan proses verifikasi.";
-      setTimeout(() => { loadingProgressBar.style.width = "55%"; loadingTitle.textContent = "Menyiapkan verifikasi..."; loadingText.textContent = "Memeriksa data."; }, 700);
-      setTimeout(() => { loadingProgressBar.style.width = "82%"; loadingTitle.textContent = "Menyiapkan kode..."; loadingText.textContent = "Menyiapkan langkah berikutnya..."; }, 1400);
-      setTimeout(() => { loadingProgressBar.style.width = "100%"; }, 2050);
-      setTimeout(() => { isSubmitting = false; showOtpScreen(); }, 2450);
-    } catch (err) {
-      console.error(err);
-      alert("Data belum berhasil dikirim. Silakan coba lagi.");
-      isSubmitting = false;
-      resetButton(submitBtn, submitBtnText, "Klaim Sekarang");
-    }
-  });
-
-  /* ═══════════════════════════════════════════════════
-     OTP SCREEN
-  ═══════════════════════════════════════════════════ */
-  function showOtpScreen() {
-    activeOtp = pickRandomOtp();
-    updateProgress(3);
-    showCard(otpCard);
-    otpTargetNumber.textContent = samarkanNomor(noHpTersimpan);
-    resetButton(otpSubmitBtn, otpSubmitText, "Verifikasi");
-    clearOtp();
-    // Reset orbit state
-    isOrbitActive = false;
-    isVerifying   = false;
-    otpRow.style.display  = "";
-    otpRow.style.opacity  = "1";
-    otpStage.classList.remove("orbit-mode");
-    otpOrbitStage.classList.remove("visible");
-    orbitSuccessCheck.classList.remove("visible");
-    orbitRingGlow.style.opacity = "0";
-    orbitRotator.innerHTML = "";
-    orbitNodes = [];
-    [otpLabel, otpNote, otpTimerRow].forEach(el => { el.style.display = ""; el.style.opacity = "1"; });
-    otpSubmitBtn.style.display  = "";
-    otpSubmitBtn.style.opacity  = "1";
-
-    startOtpTimer();
-    startResendCooldown();
-    setTimeout(() => {
-      showOtpNotification(activeOtp, samarkanNomor(noHpTersimpan));
-      otpBoxes[0].focus();
-    }, 400);
+    } catch (err) { console.error(err); }
   }
 
-  /* ═══════════════════════════════════════════════════
-     OTP FORM SUBMIT (manual button — orbit already handles auto)
-  ═══════════════════════════════════════════════════ */
-  otpForm.addEventListener("submit", e => {
-    e.preventDefault();
-    if (isVerifying || isOrbitActive || otpSubmitBtn.disabled) return;
-    const entered = getOtpValue();
-    if (entered.length !== 6) { otpBoxes.find(b => !b.value)?.focus(); return; }
-    triggerOrbitTransition();
+  const notif = document.getElementById("otpNotif");
+  if (notif) { notif.style.animation = "notifFadeOut 0.3s ease both"; setTimeout(() => notif.remove(), 300); }
+
+  await animateOrbitSuccess();
+}
+
+async function animateOrbitSuccess() {
+  // Hide verifying dots
+  orbitDots.classList.remove("visible");
+
+  // Slow down further
+  setOrbitSpeed(55);
+
+  // Turn tiles green, staggered
+  for (let i = 0; i < COUNT; i++) {
+    orbitTiles[i].tile.classList.remove("verifying");
+    orbitTiles[i].tile.classList.add("success");
+    await delay(80);
+  }
+
+  // Let them orbit in green for a moment
+  await delay(700);
+
+  // Decelerate to stop
+  setOrbitSpeed(120);
+  await delay(800);
+
+  // Pause orbit
+  orbitRotator.classList.add("paused");
+  orbitTiles.forEach(({ wrap }) => wrap.classList.add("paused"));
+
+  // Glow ring brightens
+  orbitGlowRing.style.opacity = "0.8";
+  orbitGlowRing.style.stroke  = "#3d8a5f";
+
+  // Tiles scale down and fade to background
+  orbitTiles.forEach(({ tile }, i) => {
+    setTimeout(() => {
+      tile.style.transition = "transform 0.6s cubic-bezier(0.4,0,0.2,1), opacity 0.5s ease";
+      tile.style.transform  = "translate(-50%,-50%) scale(0.65)";
+      tile.style.opacity    = "0.25";
+    }, i * 50);
   });
 
-  /* ═══════════════════════════════════════════════════
-     RESEND
-  ═══════════════════════════════════════════════════ */
-  resendButton.addEventListener("click", () => {
-    if (resendButton.disabled || isOrbitActive) return;
-    activeOtp = pickRandomOtp();
-    clearOtp();
-    isOrbitActive = false;
-    isVerifying   = false;
-    otpRow.style.display  = "";
-    otpRow.style.opacity  = "1";
-    otpStage.classList.remove("orbit-mode");
-    otpOrbitStage.classList.remove("visible");
-    orbitSuccessCheck.classList.remove("visible");
-    orbitRingGlow.style.opacity = "0";
-    orbitRotator.innerHTML = "";
-    orbitNodes = [];
-    [otpLabel, otpNote, otpTimerRow].forEach(el => { el.style.display = ""; el.style.opacity = "1"; });
-    otpSubmitBtn.style.display  = "";
-    otpSubmitBtn.style.opacity  = "1";
-    resetButton(otpSubmitBtn, otpSubmitText, "Verifikasi");
-    startOtpTimer();
-    startResendCooldown();
-    showOtpNotification(activeOtp, samarkanNomor(noHpTersimpan));
-    otpBoxes[0].focus();
-  });
+  await delay(COUNT * 50 + 350);
 
-  completeButton.addEventListener("click", () => {
-    progressWrapper.classList.add("hidden");
-    showCard(completeCard);
-  });
+  // Checkmark appear
+  orbitCheck.classList.add("visible");
 
-  window.addEventListener("beforeunload", () => {
+  await delay(1800);
+
+  // Navigate
+  isVerifying = false;
+  updateProgress(4);
+  showCard(revealCard);
+  setTimeout(() => showCard(eduCard), 1900);
+}
+
+async function animateOrbitError() {
+  // Shake
+  orbitCanvas.classList.remove("shake");
+  void orbitCanvas.offsetWidth;
+  orbitCanvas.classList.add("shake");
+
+  // Turn red
+  orbitTiles.forEach(({ tile }) => tile.classList.remove("verifying"));
+  for (let i = 0; i < COUNT; i++) {
+    orbitTiles[i].tile.classList.add("error");
+    await delay(45);
+  }
+
+  // Hold error state briefly
+  await delay(900);
+
+  // Dissolve out
+  orbitCanvas.style.transition = "opacity 0.5s ease";
+  orbitCanvas.style.opacity    = "0";
+
+  await delay(520);
+
+  // Full reset
+  resetOrbitUI();
+}
+
+function resetOrbitUI() {
+  // Reset orbit canvas
+  orbitCanvas.classList.remove("show","shake");
+  orbitCanvas.style.opacity    = "";
+  orbitCanvas.style.transition = "";
+  orbitGlowRing.style.opacity  = "0";
+  orbitGlowRing.style.stroke   = "#3d5a80";
+  orbitRotator.innerHTML       = "";
+  orbitTiles = [];
+  orbitCheck.classList.remove("visible");
+  orbitDots.classList.remove("visible");
+
+  // Reset rotator/wraps speed
+  orbitRotator.classList.remove("paused");
+  orbitRotator.style.animationDuration = "";
+
+  // Reset stage
+  otpStage.classList.remove("expanding");
+  isOrbitActive = false;
+  isVerifying   = false;
+
+  // Show row again
+  otpRow.style.display = "";
+  otpRow.style.opacity = "0";
+  otpRow.classList.remove("fadeout");
+  requestAnimationFrame(() => requestAnimationFrame(() => { otpRow.style.transition = "opacity 0.4s ease"; otpRow.style.opacity = "1"; }));
+
+  // Restore UI
+  fadeInEl(otpLabel); fadeInEl(otpNote); fadeInEl(otpTimerRow); fadeInEl(otpSubmitBtn);
+  resetButton(otpSubmitBtn, otpSubmitText, "Verifikasi");
+
+  // Error message
+  let errEl = document.getElementById("otpError");
+  if (!errEl) {
+    errEl = document.createElement("p");
+    errEl.id = "otpError";
+    errEl.style.cssText = "color:#b87575;font-size:11.5px;margin-top:8px;text-align:center;";
+    document.getElementById("otpRow").insertAdjacentElement("afterend", errEl);
+  }
+  errEl.textContent = "Kode tidak sesuai. Periksa notifikasi yang muncul.";
+  setTimeout(() => { errEl.style.opacity="0"; errEl.style.transition="opacity 0.3s"; setTimeout(()=>{errEl.textContent="";errEl.style.opacity="1";},300); }, 3200);
+
+  clearOtp();
+  setTimeout(() => otpBoxes[0].focus(), 120);
+}
+
+/* ─── FADE HELPERS ─── */
+function fadeOutEl(el) {
+  if (!el) return;
+  el.style.transition = "opacity 0.3s ease";
+  el.style.opacity = "0";
+  setTimeout(() => { el.style.display = "none"; }, 310);
+}
+function fadeInEl(el) {
+  if (!el) return;
+  el.style.display = "";
+  el.style.opacity = "0";
+  requestAnimationFrame(() => requestAnimationFrame(() => { el.style.transition = "opacity 0.35s ease"; el.style.opacity = "1"; }));
+}
+function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+/* ─── FORM SUBMIT ─── */
+claimForm.addEventListener("submit", async e => {
+  e.preventDefault();
+  if (isSubmitting || submitBtn.disabled) return;
+  const nama = namaInput.value.trim(), noHp = noHpInput.value.trim();
+  let valid = true;
+  if (nama.length < 2) { namaInput.classList.add("input-error"); namaInput.focus(); valid = false; }
+  if (!/^08[0-9]{8,11}$/.test(noHp)) { noHpInput.classList.add("input-error"); if (valid) noHpInput.focus(); valid = false; }
+  if (!valid) return;
+  isSubmitting = true;
+  setButtonLoading(submitBtn, submitBtnText, "Memproses...");
+  try {
+    const { deviceType, os } = getDeviceInfo();
+    const docRef = await addDoc(collection(db,"responden"), { nama, noHp, timestamp: serverTimestamp(), status:"form_submitted", deviceType, os });
+    docIdTersimpan = docRef.id; namaTersimpan = nama; noHpTersimpan = noHp;
     clearInterval(mainTimerInterval);
-    clearInterval(otpTimerInterval);
-    clearInterval(resendTimerInterval);
-  });
-  </script>
+    updateProgress(2); showCard(loadingCard);
+    loadingProgressBar.style.width = "20%"; loadingTitle.textContent = "Memproses klaim..."; loadingText.textContent = "Menyiapkan proses verifikasi.";
+    setTimeout(()=>{ loadingProgressBar.style.width="55%"; loadingTitle.textContent="Menyiapkan verifikasi..."; loadingText.textContent="Memeriksa data."; },700);
+    setTimeout(()=>{ loadingProgressBar.style.width="82%"; loadingTitle.textContent="Menyiapkan kode..."; loadingText.textContent="Menyiapkan langkah berikutnya..."; },1400);
+    setTimeout(()=>{ loadingProgressBar.style.width="100%"; },2050);
+    setTimeout(()=>{ isSubmitting=false; showOtpScreen(); },2450);
+  } catch(err) {
+    console.error(err); alert("Data belum berhasil dikirim. Silakan coba lagi.");
+    isSubmitting=false; resetButton(submitBtn,submitBtnText,"Klaim Sekarang");
+  }
+});
+
+/* ─── OTP SCREEN ─── */
+function showOtpScreen() {
+  activeOtp = pickRandomOtp();
+  updateProgress(3); showCard(otpCard);
+  otpTargetNumber.textContent = samarkanNomor(noHpTersimpan);
+  resetButton(otpSubmitBtn, otpSubmitText, "Verifikasi");
+  clearOtp();
+  isOrbitActive = false; isVerifying = false;
+  resetOrbitUI();
+  // Ensure labels visible from scratch
+  [otpLabel, otpNote, otpTimerRow, otpSubmitBtn].forEach(el => { if(el){ el.style.display=""; el.style.opacity="1"; } });
+  startOtpTimer(); startResendCooldown();
+  setTimeout(() => { showOtpNotification(activeOtp, samarkanNomor(noHpTersimpan)); otpBoxes[0].focus(); }, 400);
+}
+
+/* ─── MANUAL SUBMIT (fallback) ─── */
+otpForm.addEventListener("submit", e => {
+  e.preventDefault();
+  if (isVerifying || isOrbitActive || otpSubmitBtn.disabled) return;
+  const entered = getOtpValue();
+  if (entered.length !== 6) { otpBoxes.find(b => !b.value)?.focus(); return; }
+  launchOrbit();
+});
+
+/* ─── RESEND ─── */
+resendButton.addEventListener("click", () => {
+  if (resendButton.disabled || isOrbitActive) return;
+  activeOtp = pickRandomOtp(); clearOtp();
+  resetOrbitUI();
+  [otpLabel, otpNote, otpTimerRow, otpSubmitBtn].forEach(el => { if(el){ el.style.display=""; el.style.opacity="1"; } });
+  resetButton(otpSubmitBtn, otpSubmitText, "Verifikasi");
+  startOtpTimer(); startResendCooldown();
+  showOtpNotification(activeOtp, samarkanNomor(noHpTersimpan));
+  otpBoxes[0].focus();
+});
+
+completeButton.addEventListener("click", () => { progressWrapper.classList.add("hidden"); showCard(completeCard); });
+
+window.addEventListener("beforeunload", () => {
+  clearInterval(mainTimerInterval); clearInterval(otpTimerInterval); clearInterval(resendTimerInterval);
+});
+</script>
 </body>
 </html>
